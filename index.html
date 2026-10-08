@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#FF6B6B" />
+  <meta name="description" content="EducaKids - Aprendé jugando. Mundos educativos para niños." />
+  <title>EducaKids · Aprendé jugando</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Fuente infantil (Fredoka, Education/Learning) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Barra superior: estrellas, medallas, perfil, sonido -->
+  <header id="topbar" class="topbar">
+    <button class="top-btn" id="btn-inicio" aria-label="Inicio" title="Inicio">🏠</button>
+    <div class="top-stats">
+      <span class="stat-pill" id="stat-estrellas" title="Estrellas">⭐ <b>0</b></span>
+      <span class="stat-pill" id="stat-medallas" title="Medallas">🏅 <b>0</b></span>
+      <span class="stat-pill" id="stat-racha" title="Días de racha">🔥 <b>1</b></span>
+    </div>
+    <div class="top-right">
+      <button class="top-btn" id="btn-sonido" aria-label="Sonido" title="Sonido">🔊</button>
+      <button class="top-btn avatar-btn" id="btn-perfil" aria-label="Perfil" title="Perfil">👤</button>
+    </div>
+  </header>
+
+  <!-- Contenedor único: TODO el contenido se renderiza aquí por JS -->
+  <main id="app" class="app"></main>
+
+  <!-- Capa de confeti / celebraciones -->
+  <div id="fx" class="fx-layer" aria-hidden="true"></div>
+
+  <!-- Modal genérico (medallas, avisos) -->
+  <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" id="modal-card"></div>
+  </div>
+
+  <!-- Módulos del proyecto (orden de carga importante) -->
+  <script src="js/store.js"></script>     <!-- guardado, puntos, niveles, medallas -->
+  <script src="js/audio.js"></script>     <!-- efectos de sonido WebAudio -->
+  <script src="js/engine.js"></script>    <!-- motor de preguntas reutilizable -->
+  <script src="js/mundos.js"></script>    <!-- datos de los mundos + generadores -->
+  <script src="js/minijuegos.js"></script><!-- minijuegos del Mundo Juegos -->
+  <script src="js/dibujo.js"></script>    <!-- tablero de dibujo (Creatividad) -->
+  <script src="js/app.js"></script>       <!-- navegación, pantallas, inicio -->
+</body>
+</html>
