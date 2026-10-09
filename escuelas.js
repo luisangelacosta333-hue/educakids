@@ -1,8 +1,6 @@
 /* ============================================================
    escuelas.js — 3 ESCUELAS DEL FUTURO (IA, Programación, Robótica)
-   Cada escuela tiene 5 niveles (Explorador → Experto) y 10
-   actividades reales: quiz, ordenar secuencias, clasificar y
-   construir/ensamblar. Al completar los 5 niveles → certificado.
+   VERSIÓN PREMIUM: Voz interactiva, refuerzo positivo y animaciones.
    ============================================================ */
 (function () {
   'use strict';
@@ -11,6 +9,25 @@
   var timers = [];
   function limpiarTimers() { timers.forEach(clearTimeout); timers = []; }
   function despues(ms, fn) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+
+  /* --- NUEVAS FUNCIONES PREMIUM --- */
+  
+  // 1. Lector de voz seguro
+  function hablar(texto) {
+    if (window.EK && EK.Voz) {
+      // Limpiamos los emojis para que la voz no lea "cara sonriente" y suene natural
+      var textoLimpio = texto.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '').trim();
+      if (typeof EK.Voz.leer === 'function') EK.Voz.leer(textoLimpio);
+      else if (typeof EK.Voz.hablar === 'function') EK.Voz.hablar(textoLimpio);
+    }
+  }
+
+  // 2. Frases motivadoras aleatorias (Refuerzo Positivo)
+  var frasesError = ['¡Ups! Intenta de nuevo.', '¡Casi! Sigue buscando.', '¡No te rindas! Tú puedes.', 'Ese no es, fíjate bien.'];
+  var frasesAcierto = ['¡Muy bien!', '¡Genial!', '¡Excelente!', '¡Perfecto!', '¡Sigue así!'];
+  
+  function randomAcierto() { return frasesAcierto[Math.floor(Math.random() * frasesAcierto.length)]; }
+  function randomError() { return frasesError[Math.floor(Math.random() * frasesError.length)]; }
 
   var NIVELES_NOMBRES = ['Explorador', 'Aprendiz', 'Creador', 'Inventor', 'Experto'];
   var NIVELES_EMOJIS = ['🔍', '📘', '🎨', '💡', '🏆'];
@@ -29,13 +46,13 @@
             qz('¿Puede la IA equivocarse?','Sí, hay que verificar',['Sí, hay que verificar','No, siempre acierta','Nunca se equivoca']),
             qz('¿Qué aprende una IA?','De ejemplos y datos',['De ejemplos y datos','De la nada','Solo de libros'])
           ]},
-          { tipo: 'clasificar', nombre: 'Detective de imágenes', emoji: '🔍', instruccion: 'Tocá SOLO los ANIMALES 🐾', items: [
+          { tipo: 'clasificar', nombre: 'Detective de imágenes', emoji: '🔍', instruccion: 'Tocá SOLO los ANIMALES', items: [
             { t: '🐶 Perro', ok: true }, { t: '🚗 Auto', ok: false }, { t: '🐱 Gato', ok: true },
             { t: '🍎 Manzana', ok: false }, { t: '🐦 Pájaro', ok: true }, { t: '⚽ Pelota', ok: false }, { t: '🐟 Pez', ok: true }
           ]}
         ]},
         { nombre: NIVELES_NOMBRES[1], actividades: [
-          { tipo: 'clasificar', nombre: 'Entrená a tu robot', emoji: '🎓', instruccion: 'Enseñale al robot: tocá SOLO las FRUTAS 🍎', items: [
+          { tipo: 'clasificar', nombre: 'Entrená a tu robot', emoji: '🎓', instruccion: 'Enseñale al robot: tocá SOLO las FRUTAS', items: [
             { t: '🍌 Banana', ok: true }, { t: '👟 Zapatilla', ok: false }, { t: '🍓 Frutilla', ok: true },
             { t: '📚 Libro', ok: false }, { t: '🍇 Uvas', ok: true }, { t: '🪑 Silla', ok: false }, { t: '🍉 Sandía', ok: true }
           ]},
@@ -47,7 +64,7 @@
           ]}
         ]},
         { nombre: NIVELES_NOMBRES[2], actividades: [
-          { tipo: 'ordenar', nombre: 'Robot obediente', emoji: '🦾', instruccion: 'Ordená los pasos para hacer un sándwich 🥪', pasos: ['1️⃣ Agarrar el pan','2️⃣ Untar queso','3️⃣ Poner el jamón','4️⃣ Cerrar el sándwich'] },
+          { tipo: 'ordenar', nombre: 'Robot obediente', emoji: '🦾', instruccion: 'Ordená los pasos para hacer un sándwich', pasos: ['1️⃣ Agarrar el pan','2️⃣ Untar queso','3️⃣ Poner el jamón','4️⃣ Cerrar el sándwich'] },
           { tipo: 'construir', nombre: 'Creá tu personaje', emoji: '🧑‍🚀', instruccion: 'Construí tu personaje en orden', partes: ['🟦 Cuerpo','😀 Cabeza','👀 Ojos','🎩 Accesorio'], final: '✨ ¡Personaje creado!' }
         ]},
         { nombre: NIVELES_NOMBRES[3], actividades: [
@@ -84,7 +101,7 @@
       nombre: 'Programación y Videojuegos', emoji: '💻', color: '#00B894',
       niveles: [
         { nombre: NIVELES_NOMBRES[0], actividades: [
-          { tipo: 'ordenar', nombre: 'Programá al robot', emoji: '🤖', instruccion: 'Ordená las instrucciones para que el robot llegue a la meta 🏁', pasos: ['⬆️ Avanzar','➡️ Girar a la derecha','⬆️ Avanzar','🏁 Llegar a la meta'] },
+          { tipo: 'ordenar', nombre: 'Programá al robot', emoji: '🤖', instruccion: 'Ordená las instrucciones para que el robot llegue a la meta', pasos: ['⬆️ Avanzar','➡️ Girar a la derecha','⬆️ Avanzar','🏁 Llegar a la meta'] },
           { tipo: 'quiz', nombre: 'Detecta el error', emoji: '🐛', preguntas: [
             qz('Para avanzar 3 veces, ¿cuál está bien?','Avanzar, Avanzar, Avanzar',['Avanzar, Avanzar, Avanzar','Saltar, Saltar','Girar, Parar']),
             qz('¿Qué es un error (bug)?','Una instrucción que no funciona',['Una instrucción que no funciona','Un insecto de verdad','Un premio']),
@@ -108,7 +125,7 @@
             qz('¿Qué es una condición?','Una pregunta con sí o no',['Una pregunta con sí o no','Un número','Un color']),
             qz('SI tenés 0 vidas, ENTONCES...','Perdés el nivel',['Perdés el nivel','Ganás','Seguís jugando para siempre'])
           ]},
-          { tipo: 'clasificar', nombre: 'Cazador de errores', emoji: '🔍', instruccion: 'Tocá SOLO las instrucciones CORRECTAS ✅', items: [
+          { tipo: 'clasificar', nombre: 'Cazador de errores', emoji: '🔍', instruccion: 'Tocá SOLO las instrucciones CORRECTAS', items: [
             { t: '✅ Avanzar', ok: true }, { t: '❌ Flotar en el aire', ok: false }, { t: '✅ Girar', ok: true },
             { t: '❌ Convertirse en mago', ok: false }, { t: '✅ Saltar', ok: true }, { t: '❌ Leer la mente', ok: false }, { t: '✅ Parar', ok: true }
           ]}
@@ -163,7 +180,7 @@
           ]}
         ]},
         { nombre: NIVELES_NOMBRES[4], actividades: [
-          { tipo: 'ordenar', nombre: 'Misión de rescate', emoji: '🚁', instruccion: 'Ordená el rescate del gatito atrapado 🐱', pasos: ['🚁 Ir al lugar','🔦 Buscar al gatito','🪜 Subir con cuidado','🤗 Rescatar al gatito','🏠 Llevarlo a casa'] },
+          { tipo: 'ordenar', nombre: 'Misión de rescate', emoji: '🚁', instruccion: 'Ordená el rescate del gatito atrapado', pasos: ['🚁 Ir al lugar','🔦 Buscar al gatito','🪜 Subir con cuidado','🤗 Rescatar al gatito','🏠 Llevarlo a casa'] },
           { tipo: 'construir', nombre: 'Proyecto final: tu invento', emoji: '🏆', instruccion: 'Diseñá tu gran invento en orden', partes: ['💡 Idea','📐 Diseño','🔧 Construcción','🧪 Prueba','🎉 ¡Invento terminado!'], final: '🎉 ¡Sos un inventor!' }
         ]}
       ]
@@ -213,36 +230,43 @@
     EK.Store.addActividad();
     var nuevas = EK.Store.revisarMedallas();
     if (nuevas.length) EK.Audio.medalla(); else EK.Audio.nivel();
+    
+    // Voz Premium al ganar
+    var fraseFinal = randomAcierto() + " Completaste la actividad.";
+    hablar(fraseFinal);
+    
     if (EK.Mascota) EK.Mascota.reaccionar('bien');
     EK.App.actualizarTopbar();
     var app = document.getElementById('app');
     var certHtml = '';
+    
+    // Certificado Premium (Mejor diseño)
     if (escuelaCompleta(escId) && darCertificado(escId)) {
       var e = ESCUELAS[escId];
       var fecha = new Date().toLocaleDateString('es-AR');
-      certHtml = '<div class="certificado pop" style="border-color:' + e.color + '">' +
-        '<div style="font-size:40px">🎓</div><h3>¡CERTIFICADO!</h3>' +
-        '<p>Otorgado a <b>' + esc(EK.Store.estado.nombre) + '</b></p>' +
-        '<p>por completar la escuela de <b style="color:' + e.color + '">' + esc(e.nombre) + '</b> ' + e.emoji + '</p>' +
-        '<p style="font-size:11px;color:#888">Certificado educativo de EducaKids. No es un título oficial ni habilitación profesional.</p>' +
-        '<p style="font-size:11px">Fecha: ' + fecha + '</p></div>';
+      certHtml = '<div class="certificado pop" style="border: 4px dashed ' + e.color + '; background: linear-gradient(135deg, #ffffff, #f0f4ff); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-radius: 20px; padding: 20px; margin-top: 15px;">' +
+        '<div style="font-size:50px; text-shadow: 2px 2px 5px rgba(0,0,0,0.2);">🏅</div><h3 style="color:' + e.color + '; font-size:24px; margin-bottom: 5px;">¡CERTIFICADO DE EXCELENCIA!</h3>' +
+        '<p style="font-size:18px;">Otorgado con honor a:<br> <b style="font-size:22px; color:#333;">' + esc(EK.Store.estado.nombre) + '</b></p>' +
+        '<p>por graduarse en la escuela de<br> <b style="color:' + e.color + '; font-size:20px;">' + esc(e.nombre) + '</b> ' + e.emoji + '</p>' +
+        '<p style="font-size:12px; color:#666; margin-top:15px; border-top: 1px solid #ccc; padding-top: 5px;">Firma de Luna 🦊 - Fecha: ' + fecha + '</p></div>';
     }
+    
     app.innerHTML = '<div class="screen premio-screen"><div class="premio-card pop">' +
-      '<div class="premio-emoji">' + emoji + '</div><h2>¡Actividad completada! 🎉</h2>' +
-      '<div class="premio-stats"><div class="premio-stat"><span class="big">+' + (primera ? 20 : 0) + '</span><span>estrellas ⭐</span></div></div>' +
+      '<div class="premio-emoji" style="animation: bounce 1s infinite;">' + emoji + '</div><h2>¡Misión Cumplida! 🎉</h2>' +
+      '<div class="premio-stats"><div class="premio-stat"><span class="big" style="color:#FFD700;">+' + (primera ? 20 : 0) + '</span><span>estrellas ⭐</span></div></div>' +
       certHtml +
-      '<div class="premio-btns"><button class="btn-sec" data-act="volver">🏠 Volver a la escuela</button></div></div></div>';
+      '<div class="premio-btns" style="margin-top:20px;"><button class="btn-sec" data-act="volver" style="transform: scale(1.1);">🏠 Siguiente Desafío</button></div></div></div>';
     app.querySelector('[data-act="volver"]').addEventListener('click', function () { EK.Audio.click(); EK.App.ir('mundo', { id: escId }); });
   }
 
   function header(t, e, c, color) {
-    return '<div class="quiz-head" style="--acento:' + (color || '#6C5CE7') + '"><button class="back-btn" data-act="volver">←</button><div class="quiz-title">' + e + ' ' + esc(t) + '</div><div class="quiz-counter">' + (c || '') + '</div></div>';
+    return '<div class="quiz-head" style="--acento:' + (color || '#6C5CE7') + '"><button class="back-btn" data-act="volver">←</button><div class="quiz-title">' + e + ' ' + esc(t) + '</div><div class="quiz-counter" style="background:'+color+'; color:white; padding:5px 10px; border-radius:15px;">' + (c || '') + '</div></div>';
   }
   function bindVolver(app, escId) {
     app.querySelector('[data-act="volver"]').addEventListener('click', function () { limpiarTimers(); EK.Audio.click(); EK.App.ir('mundo', { id: escId }); });
   }
 
-  /* ==================== TIPOS DE ACTIVIDADES ==================== */
+  /* ==================== TIPOS DE ACTIVIDADES PREMIUM ==================== */
   function jugarQuiz(escId, n, a, act) {
     var e = ESCUELAS[escId];
     EK.Engine.iniciar({
@@ -259,24 +283,40 @@
     var e = ESCUELAS[escId];
     var orden = barajar(act.pasos.map(function (p, i) { return { t: p, i: i }; }));
     var elegido = [];
+    
+    hablar(act.instruccion);
+
     function render() {
       app.innerHTML = '<div class="screen juego-screen">' + header(act.nombre, act.emoji, (elegido.length + '/' + act.pasos.length), e.color) +
-        '<p class="hint">' + esc(act.instruccion) + '</p>' +
-        '<div class="secuencia-elegida" id="elegida">' + elegido.map(function (x) { return '<span class="paso-ok">' + esc(x.t) + '</span>'; }).join('') + '</div>' +
+        '<p class="hint" style="font-size:1.2rem; font-weight:bold;">' + esc(act.instruccion) + '</p>' +
+        '<div class="secuencia-elegida" id="elegida">' + elegido.map(function (x) { return '<span class="paso-ok pop" style="background:'+e.color+'; color:white; border:2px solid #fff;">' + esc(x.t) + '</span>'; }).join('') + '</div>' +
         '<div class="bloques-grid">' + orden.map(function (p) {
-          return '<button class="bloque-btn ' + (elegido.indexOf(p) !== -1 ? 'usado' : '') + '" data-i="' + p.i + '" ' + (elegido.indexOf(p) !== -1 ? 'disabled' : '') + ' style="--acento:' + e.color + '">' + esc(p.t) + '</button>';
+          return '<button class="bloque-btn ' + (elegido.indexOf(p) !== -1 ? 'usado' : '') + '" data-i="' + p.i + '" ' + (elegido.indexOf(p) !== -1 ? 'disabled' : '') + ' style="--acento:' + e.color + '; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">' + esc(p.t) + '</button>';
         }).join('') + '</div><div class="feedback" id="feedback"></div></div>';
       bindVolver(app, escId);
       app.querySelectorAll('.bloque-btn:not(.usado)').forEach(function (b) {
         b.addEventListener('click', function () {
           var paso = orden.find(function (p) { return p.i === Number(b.dataset.i); });
+          
           if (Number(b.dataset.i) === elegido.length) {
             EK.Audio.correcto(); elegido.push(paso);
+            
+            // Premium: La voz lee la opción elegida
+            hablar(paso.t);
+            b.style.transform = "scale(1.1)"; // Efecto visual rápido
+            
             if (elegido.length === act.pasos.length) { despues(500, function () { ganar(escId, n, a, act.nombre, act.emoji); }); }
-            else render();
+            else { despues(200, render); }
           } else {
             EK.Audio.error(); if (EK.Mascota) EK.Mascota.reaccionar('mal');
-            b.classList.add('mal'); document.getElementById('feedback').innerHTML = '<div class="fb-msg mal">¡No! El paso correcto es el número ' + (elegido.length + 1) + '</div>';
+            
+            // Premium: Frase motivadora en caso de error
+            hablar(randomError());
+            b.style.transform = "translateX(-10px)"; // Efecto de sacudida (Shake) simulado
+            setTimeout(function(){ b.style.transform = "translateX(10px)"; }, 100);
+            setTimeout(function(){ b.style.transform = "translateX(0px)"; }, 200);
+            
+            b.classList.add('mal'); document.getElementById('feedback').innerHTML = '<div class="fb-msg mal" style="animation: pop 0.3s ease;">¡No! El paso correcto es el número ' + (elegido.length + 1) + '</div>';
             despues(1200, function () { elegido = []; render(); });
           }
         });
@@ -291,9 +331,12 @@
     var items = barajar(act.items.map(function (it, i) { return { t: it.t, ok: it.ok, i: i }; }));
     var correctas = items.filter(function (it) { return it.ok; }).length;
     var encontradas = 0, errores = 0, lock = false;
+    
+    hablar(act.instruccion);
+
     app.innerHTML = '<div class="screen juego-screen">' + header(act.nombre, act.emoji, (encontradas + '/' + correctas), e.color) +
-      '<p class="hint">' + esc(act.instruccion) + '</p>' +
-      '<div class="clasificar-grid">' + items.map(function (it) { return '<button class="clasif-btn" data-i="' + it.i + '" style="--acento:' + e.color + '">' + esc(it.t) + '</button>'; }).join('') + '</div>' +
+      '<p class="hint" style="font-size:1.2rem; font-weight:bold;">' + esc(act.instruccion) + '</p>' +
+      '<div class="clasificar-grid">' + items.map(function (it) { return '<button class="clasif-btn" data-i="' + it.i + '" style="--acento:' + e.color + '; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">' + esc(it.t) + '</button>'; }).join('') + '</div>' +
       '<div class="feedback" id="feedback"></div></div>';
     bindVolver(app, escId);
     app.querySelectorAll('.clasif-btn').forEach(function (b) {
@@ -301,14 +344,23 @@
         if (lock || b.disabled) return;
         var it = items.find(function (x) { return x.i === Number(b.dataset.i); });
         b.disabled = true;
+        
+        // Premium: Lee la opción que tocó el niño
+        hablar(it.t);
+
         if (it.ok) {
           encontradas++; EK.Audio.correcto(); b.classList.add('ok');
+          b.style.transform = "scale(1.1)";
           document.querySelector('.quiz-counter').textContent = encontradas + '/' + correctas;
           if (encontradas === correctas) { lock = true; despues(600, function () { ganar(escId, n, a, act.nombre, act.emoji); }); }
         } else {
           errores++; EK.Audio.error(); if (EK.Mascota) EK.Mascota.reaccionar('mal');
           b.classList.add('mal');
-          document.getElementById('feedback').innerHTML = '<div class="fb-msg mal">¡Ese no va! Errores: ' + errores + '</div>';
+          b.style.transform = "rotate(5deg)";
+          
+          hablar(randomError()); // Frase de apoyo
+          
+          document.getElementById('feedback').innerHTML = '<div class="fb-msg mal" style="animation: pop 0.3s ease;">¡Ese no va! Errores: ' + errores + '</div>';
           if (errores >= 3) { lock = true; document.getElementById('feedback').innerHTML = '<div class="fb-msg mal">¡Ups! Volvé a intentarlo 💪</div>'; despues(1500, function () { jugarClasificar(escId, n, a, act); }); }
         }
       });
@@ -320,26 +372,43 @@
     var e = ESCUELAS[escId];
     var partes = barajar(act.partes.map(function (p, i) { return { t: p, i: i }; }));
     var armado = [];
+    
+    hablar(act.instruccion);
+
     function render() {
       app.innerHTML = '<div class="screen juego-screen">' + header(act.nombre, act.emoji, (armado.length + '/' + act.partes.length), e.color) +
-        '<p class="hint">' + esc(act.instruccion) + '</p>' +
-        '<div class="ensamblado" id="ensamblado">' + armado.map(function (x) { return '<div class="parte-ok pop">' + esc(x.t) + '</div>'; }).join('') + '</div>' +
+        '<p class="hint" style="font-size:1.2rem; font-weight:bold;">' + esc(act.instruccion) + '</p>' +
+        '<div class="ensamblado" id="ensamblado" style="background:#f9f9f9; padding:15px; border-radius:15px; border:2px dashed '+e.color+';">' + armado.map(function (x) { return '<div class="parte-ok pop" style="color:'+e.color+'; font-weight:bold; font-size:1.1rem;">' + esc(x.t) + '</div>'; }).join('') + '</div>' +
         '<div class="bloques-grid">' + partes.map(function (p) {
-          return '<button class="bloque-btn ' + (armado.indexOf(p) !== -1 ? 'usado' : '') + '" data-i="' + p.i + '" ' + (armado.indexOf(p) !== -1 ? 'disabled' : '') + ' style="--acento:' + e.color + '">' + esc(p.t) + '</button>';
+          return '<button class="bloque-btn ' + (armado.indexOf(p) !== -1 ? 'usado' : '') + '" data-i="' + p.i + '" ' + (armado.indexOf(p) !== -1 ? 'disabled' : '') + ' style="--acento:' + e.color + '; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">' + esc(p.t) + '</button>';
         }).join('') + '</div><div class="feedback" id="feedback"></div></div>';
       bindVolver(app, escId);
       app.querySelectorAll('.bloque-btn:not(.usado)').forEach(function (b) {
         b.addEventListener('click', function () {
           var parte = partes.find(function (p) { return p.i === Number(b.dataset.i); });
+          
           if (Number(b.dataset.i) === armado.length) {
             EK.Audio.correcto(); armado.push(parte);
+            
+            // Premium: La voz lee la pieza del invento que acaba de colocar
+            hablar(parte.t);
+            b.style.transform = "scale(1.1)";
+            
             if (armado.length === act.partes.length) {
-              document.getElementById('ensamblado').innerHTML += '<div class="parte-final pop">' + esc(act.final || '¡Listo!') + '</div>';
+              document.getElementById('ensamblado').innerHTML += '<div class="parte-final pop" style="background:'+e.color+'; color:white; padding:10px; border-radius:10px; margin-top:10px; font-size:1.2rem;">' + esc(act.final || '¡Listo!') + '</div>';
               despues(1200, function () { ganar(escId, n, a, act.nombre, act.emoji); });
-            } else render();
+            } else { despues(200, render); }
           } else {
             EK.Audio.error(); if (EK.Mascota) EK.Mascota.reaccionar('mal');
-            b.classList.add('mal'); document.getElementById('feedback').innerHTML = '<div class="fb-msg mal">¡No! Primero va la parte ' + (armado.length + 1) + '</div>';
+            
+            hablar(randomError()); // Frase de ánimo
+            
+            b.classList.add('mal'); 
+            b.style.transform = "translateX(-10px)";
+            setTimeout(function(){ b.style.transform = "translateX(10px)"; }, 100);
+            setTimeout(function(){ b.style.transform = "translateX(0px)"; }, 200);
+            
+            document.getElementById('feedback').innerHTML = '<div class="fb-msg mal" style="animation: pop 0.3s ease;">¡No! Primero va la parte ' + (armado.length + 1) + '</div>';
             despues(1200, render);
           }
         });
