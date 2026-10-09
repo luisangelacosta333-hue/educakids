@@ -9,19 +9,18 @@
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/svg+xml" href="icon.svg" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
 
   <!-- Fuente infantil -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
 
-  <!-- ARCHIVO DE ESTILOS -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- RUTA AL CSS NUEVO -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- Barra superior -->
   <header id="topbar" class="topbar">
     <button class="top-btn" id="btn-inicio" aria-label="Inicio" title="Inicio">🏠</button>
     <div class="top-stats">
@@ -35,30 +34,33 @@
     </div>
   </header>
 
-  <!-- Contenedor único de la aplicación -->
+  <!-- Contenedor único -->
   <main id="app" class="app">
-    <!-- Mensaje temporal en caso de que tarde el internet -->
-    <div style="display:flex; justify-content:center; align-items:center; height: 80vh; font-family: 'Fredoka', sans-serif; color: #666; font-size: 1.2rem;">
-      Iniciando el juego... 🚀
+    <!-- Texto temporal por si Vercel tarda en cargar el JS -->
+    <div style="display: flex; justify-content: center; align-items: center; height: 80vh; font-family: 'Fredoka', sans-serif; color: #555;">
+      <h2>Cargando EducaKids... 🚀</h2>
     </div>
   </main>
 
-  <!-- Capa de confeti -->
   <div id="fx" class="fx-layer" aria-hidden="true"></div>
 
-  <!-- Modal genérico -->
   <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
     <div class="modal-card" id="modal-card"></div>
   </div>
 
-  <!-- Módulos JS (El atributo 'defer' es vital en producción) -->
-  <script defer src="store.js"></script>
-  <script defer src="audio.js"></script>
-  <script defer src="engine.js"></script>
-  <script defer src="mundos.js"></script>
-  <script defer src="minijuegos.js"></script>
-  <script defer src="dibujo.js"></script>
-  <script defer src="app.js"></script>
+  <!-- TUS 13 SCRIPTS NUEVOS (Con defer para optimizar la carga) -->
+  <script defer src="js/store.js"></script>
+  <script defer src="js/audio.js"></script>
+  <script defer src="js/voz.js"></script>
+  <script defer src="js/engine.js"></script>
+  <script defer src="js/mundos.js"></script>
+  <script defer src="js/geografia.js"></script>
+  <script defer src="js/lengua-sociales.js"></script>
+  <script defer src="js/minijuegos.js"></script>
+  <script defer src="js/juegos-nuevos.js"></script>
+  <script defer src="js/dibujo.js"></script>
+  <script defer src="js/mascota.js"></script>
+  <script defer src="js/escuelas.js"></script>
+  <script defer src="js/app.js"></script>
 </body>
 </html>
-
