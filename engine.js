@@ -1,7 +1,7 @@
 /* ============================================================
-   engine.js — MOTOR DE PREGUNTAS REUTILIZABLE (v3 con VOZ)
-   Novedades: lee cada pregunta en voz alta, botón 🔊 repetir,
-   y la mascota reacciona al acertar o equivocarse.
+   engine.js — MOTOR DE PREGUNTAS REUTILIZABLE (ULTRA PREMIUM)
+   Novedades: Accesibilidad total para niños que no saben leer.
+   Lee preguntas, lee las opciones tocadas y da feedback auditivo.
    ============================================================ */
 (function () {
   'use strict';
@@ -18,6 +18,15 @@
       var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
     }
     return a;
+  }
+
+  /* Función segura para enviar texto a la voz, limpiando emojis */
+  function hablar(texto) {
+    if (window.EK && EK.Voz) {
+      var textoLimpio = texto.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '').trim();
+      if (typeof EK.Voz.leer === 'function') EK.Voz.leer(textoLimpio);
+      else if (typeof EK.Voz.hablar === 'function') EK.Voz.hablar(textoLimpio);
+    }
   }
 
   function iniciar(opts) {
@@ -40,7 +49,7 @@
   function leerPregunta(p) {
     if (!EK.Voz) return;
     if (p.audio) { EK.Voz.hablar(p.audio.texto, p.audio.lang); return; }
-    EK.Voz.hablar(p.pregunta || '');
+    hablar(p.pregunta || '');
   }
 
   function renderPregunta() {
@@ -64,7 +73,7 @@
         '<div class="pregunta-card">' +
           (p.emojiPregunta ? '<div class="pregunta-emoji">' + p.emojiPregunta + '</div>' : '') +
           '<div class="pregunta-texto">' + escapeHtml(p.pregunta) + '</div>' +
-          '<button class="btn-sec escuchar-preg" data-act="repetir">🔊 Repetir</button>' +
+          '<button class="btn-sec escuchar-preg" data-act="repetir" style="margin-top: 15px; font-weight: bold;">🔊 Escuchar de nuevo</button>' +
         '</div>' +
         '<div class="opciones-grid cols-' + cols + '">' + opcionesHtml + '</div>' +
         '<div class="feedback" id="feedback"></div>' +
@@ -79,14 +88,21 @@
     });
     app.querySelector('[data-act="repetir"]').addEventListener('click', function () { EK.Audio.click(); leerPregunta(p); });
     if (q.opts.onPreguntaRender) q.opts.onPreguntaRender(p);
-    despues(350, function () { leerPregunta(p); });
+    
+    // Leemos la pregunta al entrar
+    despues(400, function () { leerPregunta(p); });
   }
 
   function responder(btn) {
     if (q.lock) return;
     q.lock = true;
+    
     var p = q.preguntas[q.idx];
     var elegido = btn.textContent;
+    
+    // PREMIUM: Leemos en voz alta la opción que el niño tocó
+    hablar(elegido);
+
     var esCorrecto = elegido === p.correcta;
     var botones = document.querySelectorAll('.opcion-btn');
     botones.forEach(function (b) {
@@ -94,6 +110,7 @@
       if (b.textContent === p.correcta) b.classList.add('ok');
       else if (b === btn) b.classList.add('mal');
     });
+    
     var fb = document.getElementById('feedback');
     if (esCorrecto) {
       q.correctas++;
@@ -107,9 +124,13 @@
     } else {
       EK.Audio.error();
       if (EK.Mascota) EK.Mascota.reaccionar('mal');
-      fb.innerHTML = '<div class="fb-msg mal">¡Casi! La respuesta era <b>' + escapeHtml(p.correcta) + '</b></div>';
+      fb.innerHTML = '<div class="fb-msg mal">¡Casi! Era <b>' + escapeHtml(p.correcta) + '</b></div>';
+      // PREMIUM: Si se equivoca, la voz le dice cuál era la correcta
+      despues(800, function() { hablar("La correcta era " + p.correcta); });
     }
-    despues(1900, siguiente);
+    
+    // Le damos un poquito más de tiempo para que la voz termine de hablar antes de pasar a la siguiente
+    despues(2500, siguiente);
   }
 
   function siguiente() {
@@ -132,14 +153,17 @@
 
     var nuevasMedallas = EK.Store.revisarMedallas();
     if (nuevasMedallas.length) EK.Audio.medalla(); else EK.Audio.nivel();
-    if (EK.Mascota) EK.Mascota.decir('¡Felicitaciones! Ganaste ' + q.estrellasSesion + ' estrellas.', 3500);
-    EK.App.actualizarTopbar();
-
+    
     var porcentaje = Math.round(q.correctas / total * 100);
     var msg = porcentaje === 100 ? '¡Perfecto! 🏆'
             : porcentaje >= 70  ? '¡Muy bien! 🌟'
             : porcentaje >= 40  ? '¡Buen trabajo! 💪'
             : '¡Seguí practicando! 📚';
+            
+    // Premium: Luna dice el mensaje de finalización en voz alta
+    if (EK.Mascota) EK.Mascota.decir(msg + ' Ganaste ' + q.estrellasSesion + ' estrellas.', 3500);
+
+    EK.App.actualizarTopbar();
 
     var medallasHtml = nuevasMedallas.length
       ? '<div class="nuevas-medallas">' +
