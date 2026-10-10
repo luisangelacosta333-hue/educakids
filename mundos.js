@@ -952,7 +952,166 @@
     {es:'¿Quién?',en:'Who?',pt:'Quem?',fr:'Qui?',it:'Chi?',de:'Wer?',emoji:'❓'},
     {es:'¿Dónde?',en:'Where?',pt:'Onde?',fr:'Où?',it:'Dove?',de:'Wo?',emoji:'📍'},
     {es:'¿Cuándo?',en:'When?',pt:'Quando?',fr:'Quand?',it:'Quando?',de:'Wann?',emoji:'⏰'},
-    {es:'Reloj',en:'Watch',pt:'Relógio',fr:'Montre',it:'Orologio',de:'Uhr',emoji:'⌚'}
+    {es:'Reloj',en:'Watch',pt:'Relógio',fr:'Montre',it:'Orologio',de:'Uhr',emoji:'⌚'},
+    // ---- EXTRA v3.2: 150 palabras nuevas (total 550 por idioma) ----
+    // A: Números 11-100 y Ordinales (20)
+    {es:'Once',en:'Eleven',pt:'Onze',fr:'Onze',it:'Undici',de:'Elf',emoji:'🔢'},
+    {es:'Doce',en:'Twelve',pt:'Doze',fr:'Douze',it:'Dodici',de:'Zwölf',emoji:'🔢'},
+    {es:'Quince',en:'Fifteen',pt:'Quinze',fr:'Quinze',it:'Quindici',de:'Fünfzehn',emoji:'🔢'},
+    {es:'Veinte',en:'Twenty',pt:'Vinte',fr:'Vingt',it:'Venti',de:'Zwanzig',emoji:'🔢'},
+    {es:'Treinta',en:'Thirty',pt:'Trinta',fr:'Trente',it:'Trenta',de:'Dreißig',emoji:'🔢'},
+    {es:'Cincuenta',en:'Fifty',pt:'Cinquenta',fr:'Cinquante',it:'Cinquanta',de:'Fünfzig',emoji:'🔢'},
+    {es:'Mil',en:'Thousand',pt:'Mil',fr:'Mille',it:'Mille',de:'Tausend',emoji:'🔢'},
+    {es:'Millón',en:'Million',pt:'Milhão',fr:'Million',it:'Milione',de:'Million',emoji:'💰'},
+    {es:'Primero',en:'First',pt:'Primeiro',fr:'Premier',it:'Primo',de:'Erster',emoji:'🥇'},
+    {es:'Segundo',en:'Second',pt:'Segundo',fr:'Deuxième',it:'Secondo',de:'Zweiter',emoji:'🥈'},
+    {es:'Tercero',en:'Third',pt:'Terceiro',fr:'Troisième',it:'Terzo',de:'Dritter',emoji:'🥉'},
+    {es:'Último',en:'Last',pt:'Último',fr:'Dernier',it:'Ultimo',de:'Letzter',emoji:'🔚'},
+    {es:'Mitad',en:'Half',pt:'Metade',fr:'Moitié',it:'Metà',de:'Hälfte',emoji:'➗'},
+    {es:'Doble',en:'Double',pt:'Dobro',fr:'Double',it:'Doppio',de:'Doppel',emoji:'✌️'},
+    {es:'Par',en:'Even',pt:'Par',fr:'Pair',it:'Pari',de:'Gerade',emoji:'2️⃣'},
+    {es:'Impar',en:'Odd',pt:'Ímpar',fr:'Impair',it:'Dispari',de:'Ungerade',emoji:'3️⃣'},
+    {es:'Decimal',en:'Decimal',pt:'Decimal',fr:'Décimal',it:'Decimale',de:'Dezimal',emoji:'🔢'},
+    {es:'Fracción',en:'Fraction',pt:'Fração',fr:'Fraction',it:'Frazione',de:'Bruch',emoji:'➗'},
+    {es:'Porcentaje',en:'Percentage',pt:'Porcentagem',fr:'Pourcentage',it:'Percentuale',de:'Prozentsatz',emoji:'💯'},
+    {es:'Infinito',en:'Infinity',pt:'Infinito',fr:'Infini',it:'Infinito',de:'Unendlichkeit',emoji:'♾️'},
+    // B: Formas y Posiciones (15)
+    {es:'Círculo',en:'Circle',pt:'Círculo',fr:'Cercle',it:'Cerchio',de:'Kreis',emoji:'⭕'},
+    {es:'Cuadrado',en:'Square',pt:'Quadrado',fr:'Carré',it:'Quadrato',de:'Quadrat',emoji:'⬛'},
+    {es:'Triángulo',en:'Triangle',pt:'Triângulo',fr:'Triangle',it:'Triangolo',de:'Dreieck',emoji:'🔺'},
+    {es:'Rectángulo',en:'Rectangle',pt:'Retângulo',fr:'Rectangle',it:'Rettangolo',de:'Rechteck',emoji:'▭'},
+    {es:'Estrella',en:'Star',pt:'Estrela',fr:'Étoile',it:'Stella',de:'Stern',emoji:'⭐'},
+    {es:'Corazón',en:'Heart',pt:'Coração',fr:'Cœur',it:'Cuore',de:'Herz',emoji:'❤️'},
+    {es:'Esfera',en:'Sphere',pt:'Esfera',fr:'Sphère',it:'Sfera',de:'Kugel',emoji:'🌐'},
+    {es:'Cubo',en:'Cube',pt:'Cubo',fr:'Cube',it:'Cubo',de:'Würfel',emoji:'🧊'},
+    {es:'Arriba',en:'Up',pt:'Acima',fr:'En haut',it:'Su',de:'Oben',emoji:'⬆️'},
+    {es:'Abajo',en:'Down',pt:'Abaixo',fr:'En bas',it:'Giù',de:'Unten',emoji:'⬇️'},
+    {es:'Izquierda',en:'Left',pt:'Esquerda',fr:'Gauche',it:'Sinistra',de:'Links',emoji:'⬅️'},
+    {es:'Derecha',en:'Right',pt:'Direita',fr:'Droite',it:'Destra',de:'Rechts',emoji:'➡️'},
+    {es:'Dentro',en:'Inside',pt:'Dentro',fr:'Dedans',it:'Dentro',de:'Drinnen',emoji:'📥'},
+    {es:'Fuera',en:'Outside',pt:'Fora',fr:'Dehors',it:'Fuori',de:'Draußen',emoji:'📤'},
+    {es:'Medio',en:'Middle',pt:'Meio',fr:'Milieu',it:'Mezzo',de:'Mitte',emoji:'🎯'},
+    // C: Materias Escolares (15)
+    {es:'Matemáticas',en:'Math',pt:'Matemática',fr:'Mathématiques',it:'Matematica',de:'Mathematik',emoji:'🔢'},
+    {es:'Ciencias',en:'Science',pt:'Ciências',fr:'Sciences',it:'Scienze',de:'Wissenschaft',emoji:'🔬'},
+    {es:'Historia',en:'History',pt:'História',fr:'Histoire',it:'Storia',de:'Geschichte',emoji:'📜'},
+    {es:'Geografía',en:'Geography',pt:'Geografia',fr:'Géographie',it:'Geografia',de:'Geographie',emoji:'🗺️'},
+    {es:'Inglés',en:'English',pt:'Inglês',fr:'Anglais',it:'Inglese',de:'Englisch',emoji:'🇬🇧'},
+    {es:'Arte',en:'Art',pt:'Arte',fr:'Art',it:'Arte',de:'Kunst',emoji:'🎨'},
+    {es:'Música',en:'Music',pt:'Música',fr:'Musique',it:'Musica',de:'Musik',emoji:'🎵'},
+    {es:'Educación Física',en:'Physical Education',pt:'Educação Física',fr:'Éducation physique',it:'Educazione fisica',de:'Sportunterricht',emoji:'⚽'},
+    {es:'Literatura',en:'Literature',pt:'Literatura',fr:'Littérature',it:'Letteratura',de:'Literatur',emoji:'📚'},
+    {es:'Química',en:'Chemistry',pt:'Química',fr:'Chimie',it:'Chimica',de:'Chemie',emoji:'⚗️'},
+    {es:'Física',en:'Physics',pt:'Física',fr:'Physique',it:'Fisica',de:'Physik',emoji:'🚀'},
+    {es:'Biología',en:'Biology',pt:'Biologia',fr:'Biologie',it:'Biologia',de:'Biologie',emoji:'🧬'},
+    {es:'Filosofía',en:'Philosophy',pt:'Filosofia',fr:'Philosophie',it:'Filosofia',de:'Philosophie',emoji:'🤔'},
+    {es:'Informática',en:'Computing',pt:'Informática',fr:'Informatique',it:'Informatica',de:'Informatik',emoji:'💻'},
+    {es:'Examen',en:'Exam',pt:'Prova',fr:'Examen',it:'Esame',de:'Prüfung',emoji:'📝'},
+    // D: Instrumentos y Arte (15)
+    {es:'Guitarra',en:'Guitar',pt:'Violão',fr:'Guitare',it:'Chitarra',de:'Gitarre',emoji:'🎸'},
+    {es:'Piano',en:'Piano',pt:'Piano',fr:'Piano',it:'Pianoforte',de:'Klavier',emoji:'🎹'},
+    {es:'Violín',en:'Violin',pt:'Violino',fr:'Violon',it:'Violino',de:'Geige',emoji:'🎻'},
+    {es:'Batería',en:'Drums',pt:'Bateria',fr:'Batterie',it:'Batteria',de:'Schlagzeug',emoji:'🥁'},
+    {es:'Flauta',en:'Flute',pt:'Flauta',fr:'Flûte',it:'Flauto',de:'Flöte',emoji:'🪈'},
+    {es:'Trompeta',en:'Trumpet',pt:'Trompeta',fr:'Trompette',it:'Tromba',de:'Trompete',emoji:'🎺'},
+    {es:'Arpa',en:'Harp',pt:'Harpa',fr:'Harpe',it:'Arpa',de:'Harfe',emoji:'🎼'},
+    {es:'Saxofón',en:'Saxophone',pt:'Saxofone',fr:'Saxophone',it:'Sassofono',de:'Saxophon',emoji:'🎷'},
+    {es:'Acuarela',en:'Watercolor',pt:'Aquarela',fr:'Aquarelle',it:'Acquerello',de:'Aquarell',emoji:'🎨'},
+    {es:'Escultura',en:'Sculpture',pt:'Escultura',fr:'Sculpture',it:'Scultura',de:'Skulptur',emoji:'🗿'},
+    {es:'Dibujo',en:'Drawing',pt:'Desenho',fr:'Dessin',it:'Disegno',de:'Zeichnung',emoji:'✏️'},
+    {es:'Pincel',en:'Brush',pt:'Pincel',fr:'Pinceau',it:'Pennello',de:'Pinsel',emoji:'🖌️'},
+    {es:'Lienzo',en:'Canvas',pt:'Tela',fr:'Toile',it:'Tela',de:'Leinwand',emoji:'🖼️'},
+    {es:'Collage',en:'Collage',pt:'Colagem',fr:'Collage',it:'Collage',de:'Collage',emoji:'🖼️'},
+    {es:'Ritmo',en:'Rhythm',pt:'Ritmo',fr:'Rythme',it:'Ritmo',de:'Rhythmus',emoji:'🎵'},
+    // E: Viaje y Objetos (20)
+    {es:'Pasaporte',en:'Passport',pt:'Passaporte',fr:'Passeport',it:'Passaporto',de:'Reisepass',emoji:'🛂'},
+    {es:'Maleta',en:'Suitcase',pt:'Mala',fr:'Valise',it:'Valigia',de:'Koffer',emoji:'🧳'},
+    {es:'Billete',en:'Ticket',pt:'Passagem',fr:'Billet',it:'Biglietto',de:'Ticket',emoji:'🎫'},
+    {es:'Hotel',en:'Hotel',pt:'Hotel',fr:'Hôtel',it:'Hotel',de:'Hotel',emoji:'🏨'},
+    {es:'Mapamundi',en:'World map',pt:'Mapa-múndi',fr:'Planisphère',it:'Mappamondo',de:'Weltkarte',emoji:'🗺️'},
+    {es:'Cámara',en:'Camera',pt:'Câmera',fr:'Appareil photo',it:'Fotocamera',de:'Kamera',emoji:'📷'},
+    {es:'Sombrilla',en:'Umbrella',pt:'Guarda-chuva',fr:'Parapluie',it:'Ombrello',de:'Regenschirm',emoji:'☂️'},
+    {es:'Gafas de sol',en:'Sunglasses',pt:'Óculos de sol',fr:'Lunettes de soleil',it:'Occhiali da sole',de:'Sonnenbrille',emoji:'🕶️'},
+    {es:'Protector solar',en:'Sunscreen',pt:'Protetor solar',fr:'Crème solaire',it:'Crema solare',de:'Sonnencreme',emoji:'🧴'},
+    {es:'Botella de agua',en:'Water bottle',pt:'Garrafa de água',fr:'Bouteille d\'eau',it:'Borraccia',de:'Wasserflasche',emoji:'💧'},
+    {es:'Toalla',en:'Towel',pt:'Toalha',fr:'Serviette de plage',it:'Asciugamano',de:'Handtuch',emoji:'🧖'},
+    {es:'Zapatillas',en:'Sneakers',pt:'Tênis',fr:'Baskets',it:'Scarpe da ginnastica',de:'Turnschuhe',emoji:'👟'},
+    {es:'Linterna',en:'Flashlight',pt:'Lanterna',fr:'Lampe de poche',it:'Torcia',de:'Taschenlampe',emoji:'🔦'},
+    {es:'Brújula',en:'Compass',pt:'Bússola',fr:'Boussole',it:'Bussola',de:'Kompass',emoji:'🧭'},
+    {es:'Tienda de campaña',en:'Tent',pt:'Barraca',fr:'Tente',it:'Tenda',de:'Zelt',emoji:'⛺'},
+    {es:'Saco de dormir',en:'Sleeping bag',pt:'Saco de dormir',fr:'Sac de couchage',it:'Sacco a pelo',de:'Schlafsack',emoji:'🛌'},
+    {es:'Mochila de viaje',en:'Travel backpack',pt:'Mochila de viagem',fr:'Sac à dos de voyage',it:'Zaino da viaggio',de:'Reise-Rucksack',emoji:'🎒'},
+    {es:'Souvenir',en:'Souvenir',pt:'Lembrança',fr:'Souvenir',it:'Ricordo',de:'Andenken',emoji:'🎁'},
+    {es:'Guía turística',en:'Guidebook',pt:'Guia de viagem',fr:'Guide touristique',it:'Guida turistica',de:'Reiseführer',emoji:'📖'},
+    {es:'Dinero extranjero',en:'Foreign currency',pt:'Dinheiro estrangeiro',fr:'Devises étrangères',it:'Valuta estera',de:'Fremdwährung',emoji:'💱'},
+    // F: En Casa Detalle (20)
+    {es:'Aspiradora',en:'Vacuum cleaner',pt:'Aspirador',fr:'Aspirateur',it:'Aspirapolvere',de:'Staubsauger',emoji:'🧹'},
+    {es:'Lavarropas',en:'Washing machine',pt:'Máquina de lavar',fr:'Machine à laver',it:'Lavatrice',de:'Waschmaschine',emoji:'🧺'},
+    {es:'Microondas',en:'Microwave',pt:'Micro-ondas',fr:'Micro-ondes',it:'Microonde',de:'Mikrowelle',emoji:'📡'},
+    {es:'Cafetera',en:'Coffee maker',pt:'Cafeteira',fr:'Cafetière',it:'Caffettiera',de:'Kaffeemaschine',emoji:'☕'},
+    {es:'Tostadora',en:'Toaster',pt:'Torradeira',fr:'Grille-pain',it:'Tostapane',de:'Toaster',emoji:'🍞'},
+    {es:'Plancha',en:'Iron',pt:'Ferro de passar',fr:'Fer à repasser',it:'Ferro da stiro',de:'Bügeleisen',emoji:'👔'},
+    {es:'Cubiertos',en:'Cutlery',pt:'Talheres',fr:'Couverts',it:'Posate',de:'Besteck',emoji:'🍴'},
+    {es:'Plato',en:'Plate',pt:'Prato',fr:'Assiette',it:'Piatto',de:'Teller',emoji:'🍽️'},
+    {es:'Vaso',en:'Glass',pt:'Copo',fr:'Verre',it:'Bicchiere',de:'Glas',emoji:'🥛'},
+    {es:'Taza',en:'Cup',pt:'Xícara',fr:'Tasse',it:'Tazza',de:'Tasse',emoji:'☕'},
+    {es:'Almohada',en:'Pillow',pt:'Travesseiro',fr:'Oreiller',it:'Cuscino',de:'Kissen',emoji:'🛏️'},
+    {es:'Sábanas',en:'Bed sheets',pt:'Lençóis',fr:'Draps',it:'Lenzuola',de:'Bettwäsche',emoji:'🛏️'},
+    {es:'Perchero',en:'Coat rack',pt:'Cabide',fr:'Porte-manteaux',it:'Appendiabiti',de:'Garderobe',emoji:'🧥'},
+    {es:'Escoba',en:'Broom',pt:'Vassoura',fr:'Balai',it:'Scopa',de:'Besen',emoji:'🧹'},
+    {es:'Balde',en:'Bucket',pt:'Balde',fr:'Seau',it:'Secchio',de:'Eimer',emoji:'🪣'},
+    {es:'Jabón',en:'Soap',pt:'Sabão',fr:'Savon',it:'Sapone',de:'Seife',emoji:'🧼'},
+    {es:'Champú',en:'Shampoo',pt:'Shampoo',fr:'Shampoing',it:'Shampoo',de:'Shampoo',emoji:'🧴'},
+    {es:'Toalla de mano',en:'Hand towel',pt:'Toalha de mão',fr:'Serviette',it:'Asciugamano',de:'Handtuch',emoji:'🤚'},
+    {es:'Papel higiénico',en:'Toilet paper',pt:'Papel higiênico',fr:'Papier toilette',it:'Carta igienica',de:'Klopapier',emoji:'🧻'},
+    {es:'Botiquín',en:'First aid kit',pt:'Kit de primeiros socorros',fr:'Trousse de secours',it:'Cassetta di pronto soccorso',de:'Erste-Hilfe-Kasten',emoji:'🩹'},
+    // G: Fenómenos Naturales (15)
+    {es:'Tormenta',en:'Storm',pt:'Tempestade',fr:'Orage',it:'Tempesta',de:'Sturm',emoji:'⛈️'},
+    {es:'Terremoto',en:'Earthquake',pt:'Terremoto',fr:'Tremblement de terre',it:'Terremoto',de:'Erdbeben',emoji:'🌍'},
+    {es:'Tornado',en:'Tornado',pt:'Tornado',fr:'Tornade',it:'Tornado',de:'Tornado',emoji:'🌪️'},
+    {es:'Huracán',en:'Hurricane',pt:'Furacão',fr:'Ouragan',it:'Uragano',de:'Hurrikan',emoji:'🌀'},
+    {es:'Inundación',en:'Flood',pt:'Inundação',fr:'Inondation',it:'Inondazione',de:'Überschwemmung',emoji:'🌊'},
+    {es:'Sequía',en:'Drought',pt:'Seca',fr:'Sécheresse',it:'Siccità',de:'Dürre',emoji:'🏜️'},
+    {es:'Avalancha',en:'Avalanche',pt:'Avalanche',fr:'Avalanche',it:'Valanga',de:'Lawine',emoji:'🏔️'},
+    {es:'Erupción volcánica',en:'Volcanic eruption',pt:'Erupção vulcânica',fr:'Éruption volcanique',it:'Eruzione vulcanica',de:'Vulkanausbruch',emoji:'🌋'},
+    {es:'Maremoto',en:'Tsunami',pt:'Tsunami',fr:'Tsunami',it:'Tsunami',de:'Tsunami',emoji:'🌊'},
+    {es:'Aurora boreal',en:'Northern lights',pt:'Aurora boreal',fr:'Aurore boréale',it:'Aurora boreale',de:'Nordlicht',emoji:'🌌'},
+    {es:'Eclipse',en:'Eclipse',pt:'Eclipse',fr:'Éclipse',it:'Eclissi',de:'Finsternis',emoji:'🌑'},
+    {es:'Meteorito',en:'Meteorite',pt:'Meteorito',fr:'Météorite',it:'Meteorite',de:'Meteorit',emoji:'☄️'},
+    {es:'Géiser',en:'Geyser',pt:'Géiser',fr:'Geyser',it:'Geyser',de:'Geysir',emoji:'♨️'},
+    {es:'Glaciar',en:'Glacier',pt:'Geleira',fr:'Glacier',it:'Ghiacciaio',de:'Gletscher',emoji:'🧊'},
+    {es:'Deshielo',en:'Thaw',pt:'Degelo',fr:'Dégel',it:'Disgelo',de:'Tauwetter',emoji:'🏔️'},
+    // H: Expresiones Útiles (30)
+    {es:'Bienvenido',en:'Welcome',pt:'Bem-vindo',fr:'Bienvenue',it:'Benvenuto',de:'Willkommen',emoji:'🙌'},
+    {es:'Feliz cumpleaños',en:'Happy birthday',pt:'Feliz aniversário',fr:'Joyeux anniversaire',it:'Buon compleanno',de:'Alles Gute zum Geburtstag',emoji:'🎂'},
+    {es:'Feliz año nuevo',en:'Happy new year',pt:'Feliz ano novo',fr:'Bonne année',it:'Buon anno',de:'Frohes neues Jahr',emoji:'🎆'},
+    {es:'Salud (estornudo)',en:'Bless you',pt:'Saúde',fr:'Santé',it:'Salute',de:'Gesundheit',emoji:'🤧'},
+    {es:'¡Salud! (brindis)',en:'Cheers!',pt:'Saúde!',fr:'Santé !',it:'Cin cin!',de:'Prost!',emoji:'🥂'},
+    {es:'Buen provecho',en:'Enjoy your meal',pt:'Bom apetite',fr:'Bon appétit',it:'Buon appetito',de:'Mahlzeit',emoji:'🍽️'},
+    {es:'Disculpe',en:'Excuse me',pt:'Com licença',fr:'Pardon',it:'Scusi',de:'Entschuldigung',emoji:'🙇'},
+    {es:'¿Habla español?',en:'Do you speak Spanish?',pt:'Fala espanhol?',fr:'Parlez-vous espagnol ?',it:'Parla spagnolo?',de:'Sprechen Sie Spanisch?',emoji:'🗣️'},
+    {es:'No entiendo',en:'I don\'t understand',pt:'Não entendo',fr:'Je ne comprends pas',it:'Non capisco',de:'Ich verstehe nicht',emoji:'🤷'},
+    {es:'Repita, por favor',en:'Repeat, please',pt:'Repita, por favor',fr:'Répétez, s\'il vous plaît',it:'Ripeta, per favore',de:'Wiederholen Sie bitte',emoji:'🔁'},
+    {es:'Más despacio',en:'Slower, please',pt:'Mais devagar',fr:'Plus lentement',it:'Più lentamente',de:'Langsamer, bitte',emoji:'🐢'},
+    {es:'¿Cuánto cuesta?',en:'How much?',pt:'Quanto custa?',fr:'Combien ça coûte ?',it:'Quanto costa?',de:'Wie viel kostet es?',emoji:'💰'},
+    {es:'La cuenta, por favor',en:'The bill, please',pt:'A conta, por favor',fr:'L\'addition, s\'il vous plaît',it:'Il conto, per favore',de:'Die Rechnung, bitte',emoji:'🧾'},
+    {es:'¿Dónde está el baño?',en:'Where is the bathroom?',pt:'Onde fica o banheiro?',fr:'Où sont les toilettes ?',it:'Dov\'è il bagno?',de:'Wo ist die Toilette?',emoji:'🚻'},
+    {es:'Necesito ayuda',en:'I need help',pt:'Preciso de ajuda',fr:'J\'ai besoin d\'aide',it:'Ho bisogno di aiuto',de:'Ich brauche Hilfe',emoji:'🆘'},
+    {es:'Llame a la policía',en:'Call the police',pt:'Ligue a polícia',fr:'Appelez la police',it:'Chiama la polizia',de:'Rufen Sie die Polizei',emoji:'🚓'},
+    {es:'Estoy perdido',en:'I am lost',pt:'Estou perdido',fr:'Je suis perdu',it:'Sono perso',de:'Ich habe mich verlaufen',emoji:'🧭'},
+    {es:'A la derecha',en:'To the right',pt:'À direita',fr:'À droite',it:'A destra',de:'Nach rechts',emoji:'➡️'},
+    {es:'Todo recto',en:'Straight ahead',pt:'Sempre em frente',fr:'Tout droit',it:'Sempre dritto',de:'Geradeaus',emoji:'⬆️'},
+    {es:'Cerca',en:'Near',pt:'Perto',fr:'Près',it:'Vicino',de:'Nah',emoji:'📍'},
+    {es:'Lejos',en:'Far',pt:'Longe',fr:'Loin',it:'Lontano',de:'Fern',emoji:'🛣️'},
+    {es:'Abierto',en:'Open',pt:'Aberto',fr:'Ouvert',it:'Aperto',de:'Offen',emoji:'🟢'},
+    {es:'Cerrado',en:'Closed',pt:'Fechado',fr:'Fermé',it:'Chiuso',de:'Geschlossen',emoji:'🔴'},
+    {es:'Gratis',en:'Free',pt:'Grátis',fr:'Gratuit',it:'Gratuito',de:'Kostenlos',emoji:'🆓'},
+    {es:'Descuento',en:'Discount',pt:'Desconto',fr:'Réduction',it:'Sconto',de:'Rabatt',emoji:'🏷️'},
+    {es:'Factura',en:'Receipt',pt:'Recibo',fr:'Reçu',it:'Scontrino',de:'Quittung',emoji:'🧾'},
+    {es:'Tarjeta de crédito',en:'Credit card',pt:'Cartão de crédito',fr:'Carte de crédito',it:'Carta di credito',de:'Kreditkarte',emoji:'💳'},
+    {es:'Efectivo',en:'Cash',pt:'Dinheiro',fr:'Espèces',it:'Contanti',de:'Bargeld',emoji:'💵'},
+    {es:'Reservar',en:'To book',pt:'Reservar',fr:'Réserver',it:'Prenotare',de:'Reservieren',emoji:'📅'},
+    {es:'Hasta pronto',en:'See you soon',pt:'Até logo',fr:'À bientôt',it:'A presto',de:'Bis bald',emoji:'👋'}
   ];
 
   // Saludos y frases básicas (16) para cada idioma
@@ -1008,7 +1167,21 @@
       ['Llame a una ambulancia','Call an ambulance','Ligue uma ambulância','Appelez une ambulance','Chiama un\'ambulanza','Rufen Sie einen Krankenwagen'],
       ['Me lastimé','I hurt myself','Eu me machuquei','Je me suis fait mal','Mi sono fatto male','Ich habe mich verletzt'],
       ['Necesito un médico','I need a doctor','Preciso de um médico','J\'ai besoin d\'un médecin','Ho bisogno di un dottore','Ich brauche einen Arzt'],
-      ['¿Dónde está el hospital?','Where is the hospital?','Onde fica o hospital?','Où est l\'hôpital ?','Dov\'è l\'ospedale?','Wo ist das Krankenhaus?']
+      ['¿Dónde está el hospital?','Where is the hospital?','Onde fica o hospital?','Où est l\'hôpital ?','Dov\'è l\'ospedale?','Wo ist das Krankenhaus?'],
+    ],
+  '🛒 Compras': [
+      ['¿Cuánto cuesta esto?','How much is this?','Quanto custa isto?','Combien ça coûte ?','Quanto costa questo?','Wie viel kostet das?'],
+      ['¿Aceptan tarjeta?','Do you accept cards?','Aceitam cartão?','Acceptez-vous les cartes ?','Accettate carte?','Akzeptieren Sie Karten?'],
+      ['¿Tiene otro talle?','Do you have another size?','Tem outro tamanho?','Avez-vous une autre taille ?','Avete un\'altra taglia?','Haben Sie eine andere Größe?'],
+      ['Estoy buscando un regalo','I am looking for a gift','Estou procurando um presente','Je cherche un cadeau','Cerco un regalo','Ich suche ein Geschenk'],
+      ['¿Puedo probarme esto?','Can I try this on?','Posso provar isto?','Puis-je essayer ceci ?','Posso provarlo?','Kann ich das anprobieren?']
+    ],
+  '🏥 Médico': [
+      ['Me duele la cabeza','I have a headache','Estou com dor de cabeça','J\'ai mal à la tête','Ho mal di testa','Ich habe Kopfschmerzen'],
+      ['Tengo fiebre','I have a fever','Estou com febre','J\'ai de la fièvre','Ho la febbre','Ich habe Fieber'],
+      ['¿Tiene cita disponible?','Do you have an appointment available?','Tem horário disponível?','Avez-vous un rendez-vous disponible ?','Avete un appuntamento disponibile?','Haben Sie einen Termin frei?'],
+      ['Soy alérgico a...','I am allergic to...','Sou alérgico a...','Je suis allergique à...','Sono allergico a...','Ich bin allergisch gegen...'],
+      ['¿Cuándo viene el médico?','When does the doctor come?','Quando vem o médico?','Quand arrive le médecin ?','Quando arriva il dottore?','Wann kommt der Arzt?']
     ]
   };
 
@@ -1019,7 +1192,7 @@
 
   function frasesAvanzadasDe(lang) {
     var idx = { ingles: 1, portugues: 2, frances: 3, italiano: 4, aleman: 5 }[lang];
-    var emojis = { '🍽️ Restaurante':'🍽️', '🏫 Escuela':'🏫', '✈️ Viaje':'✈️', '🚑 Emergencias':'🚑' };
+    var emojis = { '🍽️ Restaurante':'🍽️', '🏫 Escuela':'🏫', '✈️ Viaje':'✈️', '🚑 Emergencias':'🚑', '🛒 Compras':'🛒', '🏥 Médico':'🏥' };
     var out = {};
     Object.keys(FRASES_AVANZADAS).forEach(function (cat) {
       out[cat] = FRASES_AVANZADAS[cat].map(function (fila) { return v(fila[0], fila[idx], emojis[cat]); });
@@ -1061,6 +1234,15 @@
     cats['🌿 Naturaleza Extra'] = base.slice(365, 380);
     cats['🦵 Cuerpo Extra'] = base.slice(380, 390);
     cats['👥 Pronombres y Preguntas'] = base.slice(390, 401);
+    // v3.2: 150 palabras nuevas (8 categorías, índices 401-550)
+    cats['🔢 Números y Ordinales'] = base.slice(401, 421);
+    cats['🔷 Formas y Posiciones'] = base.slice(421, 436);
+    cats['🎒 Materias Escolares'] = base.slice(436, 451);
+    cats['🎸 Instrumentos y Arte'] = base.slice(451, 466);
+    cats['🧳 Viaje y Objetos'] = base.slice(466, 486);
+    cats['🏠 En Casa Detalle'] = base.slice(486, 506);
+    cats['🌪️ Fenómenos Naturales'] = base.slice(506, 521);
+    cats['💬 Expresiones Útiles'] = base.slice(521, 551);
     return { nombre: nombre, bandera: bandera, lang: code, categorias: cats, totalPalabras: base.length };
   }
 
@@ -1805,7 +1987,9 @@
       {id:'sopa',             nombre:'Cazador de Palabras', emoji:'🔤', desc:'Encontrá todas en sopa de letras',xp:150,monedas:75},
       {id:'mision_diaria',    nombre:'Misionero Diario',    emoji:'📋', desc:'Completá una misión diaria',     xp:100, monedas:50},
       {id:'mision_semanal',   nombre:'Misionero Semanal',   emoji:'🗓️', desc:'Completá una misión semanal',    xp:300, monedas:150, gemas:1},
-      {id:'certificado_1',    nombre:'Primer Diploma',      emoji:'📜', desc:'Obtené tu primer certificado',   xp:500, monedas:250, gemas:2}
+      {id:'certificado_1',    nombre:'Primer Diploma',      emoji:'📜', desc:'Obtené tu primer certificado',   xp:500, monedas:250, gemas:2},
+      {id:'idioma_550',          nombre:'Polyglota 550',        emoji:'🌐', desc:'Aprendé 550 palabras en un idioma', xp:800, monedas:400, gemas:3},
+      {id:'todos_idiomas_550',   nombre:'Maestro de Idiomas',   emoji:'👑', desc:'Los 5 idiomas con 550 palabras',    xp:3000, monedas:1500, gemas:10}
     ],
     // Misiones diarias (5, rotan cada día)
     misionesDiarias: [
@@ -1892,7 +2076,9 @@
     {id:'supervivencia2',nombre:'Supervivencia Pro',emoji:'💀', desc:'1 sola vida, ¿cuántas seguís?', tipo:'vidas', nivelRecomendado:'avanzado'},
     {id:'duelo2',      nombre:'Duelo Relámpago',  emoji:'⚡', desc:'Duelo de 60 segundos por jugador', tipo:'duelo', nivelRecomendado:'todos'},
     {id:'cadenafria',  nombre:'Cadena Fría',      emoji:'🔗', desc:'Cada respuesta correcta suma a la cadena', tipo:'cadena', nivelRecomendado:'todos'},
-    {id:'retofinal',   nombre:'Reto Final',       emoji:'🏁', desc:'5 mundos en 1, premio legendario', tipo:'examen', nivelRecomendado:'avanzado'}
+    {id:'retofinal',   nombre:'Reto Final',       emoji:'🏁', desc:'5 mundos en 1, premio legendario', tipo:'examen', nivelRecomendado:'avanzado'},
+    {id:'aprender',       nombre:'Modo Aprender',      emoji:'🎓', desc:'Flashcards con repetición, sin presión', tipo:'aprender', nivelRecomendado:'todos'},
+    {id:'historiaidioma', nombre:'Historia de Idioma', emoji:'🌍', desc:'Recorrido por categorías de un idioma con certificado', tipo:'idioma', nivelRecomendado:'todos'}
   ];
 
   /* ============================================================
@@ -2043,8 +2229,8 @@
   };
 
   var PRODUCCION = {
-    version: '3.1 PRODUCCION — 400 PALABRAS',
-    totalPalabrasIdioma: 400,
+    version: '3.2 PRODUCCION — 550 PALABRAS',
+    totalPalabrasIdioma: 550,
     totalIdiomas: 5,
     totalMundos: MUNDOS.length,
     totalModosJuego: MODOS_JUEGO.length,
@@ -2060,7 +2246,7 @@
   };
 
   var Mundos = {
-    version: '3.1 PRODUCCION — 400 PALABRAS',
+    version: '3.2 PRODUCCION — 550 PALABRAS',
     MUNDOS: MUNDOS,
     NIVELES_EDAD: NIVELES_EDAD,
     genMate: genMate, genDinero: genDinero, genVerde: genVerde,
@@ -2087,4 +2273,3 @@
   window.EK = window.EK || {};
   window.EK.Mundos = Mundos;
 })();
-
