@@ -2154,6 +2154,9 @@
   EK.DATOS.arquitectura = ARQUITECTURA;
   EK.DATOS.huerta = HUERTA;
   EK.DATOS.energias = ENERGIAS;
+EK.DATOS.creatividad = CREATIVIDAD;
+EK.DATOS.dibujos = DIBUJOS;
+EK.DATOS.robotica = ROBOTICA;
 
   /* ============================================================
      PREGUNTAS EXTRA — más contenido en TODOS los mundos
@@ -2228,8 +2231,163 @@
     return base;
   };
 
+/* ============================================================ v3.3 — CREATIVIDAD / DIBUJOS PARA COLOREAR (bocetos remarcados para pincel) + ROBÓTICA EXTENDIDA (todo agregado, sin tocar el código original) ============================================================ */
+// Plantillas de dibujo con contorno remarcado (SVG) para que los niños elijan y coloreen con el pincel.
+// Cada una: id, nombre, emoji, categoría, dificultad (1=fácil, 3=difícil) y svg (solo trazos, sin relleno).
+var DIBUJOS = [
+  { id:'guerrero', nombre:'Guerrero de pelo puntiagudo (estilo Goku)', emoji:'🥋', categoria:'Personajes', dificultad:3,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="72" r="30"/><path d="M70 66 L60 30 L82 48 L78 22 L96 44 L100 18 L104 44 L122 22 L118 48 L140 30 L130 66"/><circle cx="90" cy="74" r="3"/><circle cx="110" cy="74" r="3"/><path d="M88 90 Q100 96 112 90"/><path d="M76 104 Q100 112 124 104 L130 150 L70 150 Z"/><path d="M78 118 L52 145 M122 118 L148 145"/><path d="M82 150 L78 185 M118 150 L122 185"/><path d="M70 150 L130 150 L125 160 L75 160 Z"/></svg>' },
+  { id:'nino', nombre:'Niño', emoji:'👦', categoria:'Personajes', dificultad:1,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="65" r="30"/><path d="M70 60 Q72 32 100 32 Q128 32 130 60"/><circle cx="90" cy="65" r="3"/><circle cx="110" cy="65" r="3"/><path d="M90 80 Q100 86 110 80"/><path d="M100 95 L100 148"/><path d="M100 110 L70 138 M100 110 L130 138"/><path d="M100 148 L82 185 M100 148 L118 185"/></svg>' },
+  { id:'nina', nombre:'Niña con trenzas', emoji:'👧', categoria:'Personajes', dificultad:2,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="68" r="30"/><path d="M70 62 Q72 34 100 34 Q128 34 130 62"/><path d="M68 60 Q58 90 64 110 M132 60 Q142 90 136 110"/><path d="M62 110 L58 130 M138 110 L142 130"/><circle cx="90" cy="68" r="3"/><circle cx="110" cy="68" r="3"/><path d="M90 82 Q100 88 110 82"/><path d="M100 98 L100 130"/><path d="M70 175 Q100 120 130 175 Z"/><path d="M100 112 L72 135 M100 112 L128 135"/></svg>' },
+  { id:'princesa', nombre:'Princesa con corona', emoji:'👸', categoria:'Personajes', dificultad:2,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M72 40 L80 20 L92 36 L100 16 L108 36 L120 20 L128 40 Z"/><circle cx="100" cy="72" r="28"/><circle cx="90" cy="70" r="3"/><circle cx="110" cy="70" r="3"/><path d="M88 84 Q100 90 112 84"/><path d="M100 100 L100 128"/><path d="M64 185 Q70 130 100 128 Q130 130 136 185 Z"/><path d="M100 110 L70 132 M100 110 L130 132"/><circle cx="100" cy="28" r="4"/></svg>' },
+  { id:'superheroe', nombre:'Superhéroe con capa', emoji:'🦸', categoria:'Personajes', dificultad:3,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 100 Q50 160 70 185 L100 130 L130 185 Q150 160 140 100"/><circle cx="100" cy="60" r="26"/><path d="M76 52 Q78 30 100 30 Q122 30 124 52"/><path d="M84 60 L116 60 M90 70 L110 70"/><path d="M80 86 Q100 94 120 86"/><path d="M100 86 L100 130"/><path d="M100 100 L72 120 M100 100 L128 120"/><path d="M92 130 L88 180 M108 130 L112 180"/><path d="M92 108 L108 108 L104 120 L96 120 Z"/></svg>' },
+  { id:'dinosaurio', nombre:'Dinosaurio', emoji:'🦕', categoria:'Animales', dificultad:2,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 150 Q20 120 45 105 Q60 80 95 85 Q120 60 145 75 Q165 85 160 110 L170 115 L165 125 L150 120 Q145 145 120 150 L125 175 L112 175 L108 155 L70 155 L66 175 L54 175 L58 155 Q40 155 30 150 Z"/><circle cx="140" cy="92" r="3"/><path d="M95 85 L90 70 M108 82 L106 66 M122 78 L124 62"/><path d="M45 130 L60 130"/></svg>' },
+  { id:'unicornio', nombre:'Unicornio', emoji:'🦄', categoria:'Animales', dificultad:3,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M110 60 L118 30 L128 60 Z"/><path d="M60 140 Q50 110 75 100 Q80 70 115 72 Q140 74 145 95 Q165 90 170 110 Q172 130 155 135 L150 170 L138 170 L136 145 L105 145 L103 170 L91 170 L93 145 L70 145 L68 170 L56 170 L60 145 Q58 143 60 140 Z"/><circle cx="132" cy="92" r="3"/><path d="M75 100 Q60 85 55 70 M82 95 Q70 78 68 62"/><path d="M150 115 Q160 125 158 135"/></svg>' },
+  { id:'mariposa', nombre:'Mariposa', emoji:'🦋', categoria:'Animales', dificultad:1,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="100" cy="100" rx="6" ry="40"/><circle cx="100" cy="58" r="8"/><path d="M96 52 Q80 35 70 45 Q55 55 62 75 Q70 92 96 88 Z"/><path d="M104 52 Q120 35 130 45 Q145 55 138 75 Q130 92 104 88 Z"/><path d="M96 108 Q70 105 58 125 Q52 145 72 152 Q92 155 98 135 Z"/><path d="M104 108 Q130 105 142 125 Q148 145 128 152 Q108 155 102 135 Z"/><path d="M96 50 Q88 38 82 32 M104 50 Q112 38 118 32"/></svg>' },
+  { id:'ballena', nombre:'Ballena', emoji:'🐳', categoria:'Animales', dificultad:1,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 120 Q20 90 55 85 Q90 80 130 95 Q165 105 175 125 Q180 140 160 145 L175 160 L155 155 L150 165 L135 150 Q90 160 50 150 Q25 145 30 120 Z"/><circle cx="60" cy="110" r="4"/><path d="M70 75 Q68 60 75 55 M82 78 Q80 62 88 58"/><path d="M140 120 Q150 118 155 125"/></svg>' },
+  { id:'cohete', nombre:'Cohete espacial', emoji:'🚀', categoria:'Objetos', dificultad:2,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M100 25 Q130 60 130 110 L130 140 L70 140 L70 110 Q70 60 100 25 Z"/><circle cx="100" cy="85" r="14"/><path d="M70 120 L45 155 L70 145 Z M130 120 L155 155 L130 145 Z"/><path d="M85 140 L80 170 L95 155 Z M115 140 L120 170 L105 155 Z M100 140 L100 175 L108 155 Z"/><path d="M100 25 L100 15"/></svg>' },
+  { id:'auto', nombre:'Auto', emoji:'🚗', categoria:'Objetos', dificultad:1,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M35 130 Q40 100 70 95 L85 70 Q90 62 100 62 L130 62 Q140 62 145 72 L155 95 Q175 100 175 130 L175 145 L35 145 Z"/><circle cx="70" cy="145" r="16"/><circle cx="145" cy="145" r="16"/><path d="M92 70 L92 95 L135 95 L140 72 Z"/><rect x="50" y="115" width="20" height="12"/><rect x="140" y="115" width="20" height="12"/></svg>' },
+  { id:'casa', nombre:'Casa', emoji:'🏠', categoria:'Objetos', dificultad:1,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M40 100 L100 45 L160 100 Z"/><rect x="55" y="100" width="90" height="75"/><rect x="90" y="130" width="22" height="45"/><rect x="65" y="112" width="18" height="18"/><rect x="117" y="112" width="18" height="18"/><rect x="130" y="55" width="14" height="25"/><circle cx="108" cy="152" r="2"/></svg>' },
+  { id:'flor', nombre:'Flor', emoji:'🌸', categoria:'Objetos', dificultad:1,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="70" r="16"/><ellipse cx="100" cy="38" rx="14" ry="20"/><ellipse cx="100" cy="102" rx="14" ry="20"/><ellipse cx="68" cy="70" rx="20" ry="14"/><ellipse cx="132" cy="70" rx="20" ry="14"/><ellipse cx="77" cy="47" rx="14" ry="18" transform="rotate(-45 77 47)"/><ellipse cx="123" cy="47" rx="14" ry="18" transform="rotate(45 123 47)"/><ellipse cx="77" cy="93" rx="14" ry="18" transform="rotate(45 77 93)"/><ellipse cx="123" cy="93" rx="14" ry="18" transform="rotate(-45 123 93)"/><path d="M100 86 Q98 130 100 175"/><path d="M100 140 Q75 130 68 110 M100 155 Q125 145 132 125"/></svg>' },
+  { id:'helado', nombre:'Helado', emoji:'🍦', categoria:'Objetos', dificultad:1,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="82" cy="70" r="24"/><circle cx="118" cy="70" r="24"/><circle cx="100" cy="50" r="22"/><path d="M62 88 L100 175 L138 88 Z"/><path d="M72 105 L128 105 M80 125 L120 125 M88 145 L112 145"/><circle cx="100" cy="30" r="5"/></svg>' },
+  { id:'dragon', nombre:'Dragón', emoji:'🐉', categoria:'Objetos', dificultad:3,
+    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M160 60 Q175 55 172 70 Q165 80 150 78 Q140 95 120 92 Q100 90 95 110 Q90 130 70 135 Q50 140 45 125 Q42 115 55 112 Q65 112 68 120"/><circle cx="155" cy="66" r="3"/><path d="M165 58 L172 48 M150 55 L152 42 M135 60 L130 48"/><path d="M120 92 L115 80 L108 92 M105 100 L100 88 L95 102"/><path d="M45 125 Q30 130 28 145 Q35 155 50 150"/><path d="M70 135 L66 160 L78 155 L82 170 L90 150"/><path d="M150 78 Q160 90 155 100"/></svg>' }
+];
+
+// Banco CREATIVIDAD (colores, formas, trazos, artistas) — antes no existía, por eso "personaje" no tenía función.
+var CREATIVIDAD = {
+  '🎨 Colores y Formas': banco([
+    {p:'¿Cuáles son los colores primarios?',c:'Rojo, amarillo y azul',opts:['Rojo, amarillo y azul','Verde, naranja, violeta','Blanco y negro','Rosa y celeste']},
+    {p:'¿Qué color da rojo + blanco?',c:'Rosa',opts:['Rosa','Naranja','Violeta','Marrón']},
+    {p:'¿Qué forma tiene una pelota?',c:'Redonda (esfera)',opts:['Redonda (esfera)','Cuadrada','Triangular','En forma de estrella']},
+    {p:'¿Cuántos lados tiene un triángulo?',c:'3',opts:['3','4','5','6']},
+    {p:'¿Qué color da azul + amarillo?',c:'Verde',opts:['Verde','Naranja','Violeta','Rosa']},
+    {p:'¿Qué es un boceto?',c:'Un dibujo rápido y sin detalles',opts:['Un dibujo rápido y sin detalles','Una pintura terminada','Una foto','Un escultura']},
+    {p:'¿Con qué se delinea un dibujo para colorear?',c:'Con lápiz negro o fibrona',opts:['Con lápiz negro o fibrona','Con agua','Con tijera','Con pegamento']},
+    {p:'¿Qué es un contorno?',c:'La línea que bordea una figura',opts:['La línea que bordea una figura','El color de adentro','El fondo','Un pincel']}
+  ], 8),
+  '✏️ Trazos y Técnicas': banco([
+    {p:'¿Qué es un trazo recto?',c:'Línea sin curvas',opts:['Línea sin curvas','Línea con curvas','Un punto','Un círculo']},
+    {p:'¿Qué pincel es para pintar áreas grandes?',c:'Pincel grande y plano',opts:['Pincel grande y plano','Pincel finito','Un lápiz','Una esponja']},
+    {p:'¿Qué es colorear sin salirse del borde?',c:'Respetar el contorno',opts:['Respetar el contorno','Pintar el fondo','Rasgar el papel','Usar tijera']},
+    {p:'¿Qué técnica usa puntos de color?',c:'Puntillismo',opts:['Puntillismo','Acuarela','Óleo','Collage']},
+    {p:'¿Qué hace un borrador?',c:'Borra lo dibujado con lápiz',opts:['Borra lo dibujado con lápiz','Pinta','Corta','Pega']},
+    {p:'¿Qué es un garabato?',c:'Trazo libre sin forma definida',opts:['Trazo libre sin forma definida','Un dibujo perfecto','Una foto','Un molde']},
+    {p:'¿Para qué sirven los bordes remarcados?',c:'Para guiarse al colorear',opts:['Para guiarse al colorear','Para borrar','Para cortar','Para pegar']},
+    {p:'¿Qué es la línea curva?',c:'Línea que se dobla suavemente',opts:['Línea que se dobla suavemente','Línea recta','Un punto','Un ángulo']}
+  ], 8),
+  '🖼️ Arte y Dibujos Famosos': banco([
+    {p:'¿Qué pintó Van Gogh con cielo estrellado?',c:'La noche estrellada',opts:['La noche estrellada','El grito','Guernica','Los girasoles solo']},
+    {p:'¿Qué personaje de ficción es amarillo y tiene pelo puntiagudo?',c:'Goku (o Super Saiyajin)',opts:['Goku (o Super Saiyajin)','Batman','La Sirenita','Spider-Man']},
+    {p:'¿Qué princesa vive en un castillo?',c:'Muchas: Cenicienta, Bella, Aurora…',opts:['Muchas: Cenicienta, Bella, Aurora…','Un dinosaurio','Un robot','Un coche']},
+    {p:'¿Qué es un personaje de ficción?',c:'Criatura o persona inventada por el autor',opts:['Criatura o persona inventada por el autor','Una persona real','Un animal del zoo','Un objeto']},
+    {p:'¿Qué color se asocia con una princesa?',c:'Rosa o violeta (comúnmente)',opts:['Rosa o violeta (comúnmente)','Gris','Marrón','Negro']},
+    {p:'¿Qué usan los superhéroes en la espalda?',c:'Capa',opts:['Capa','Alas de verdad','Cola','Aletas']},
+    {p:'¿Qué animal escupe fuego en los cuentos?',c:'Dragón',opts:['Dragón','Perro','Gato','Pez']},
+    {p:'¿Qué es un cómic?',c:'Historia con dibujos y viñetas',opts:['Historia con dibujos y viñetas','Un libro sin imágenes','Una canción','Una escultura']}
+  ], 8)
+};
+
+// Generadores de creatividad (nuevos, no existían)
+function genCreatividad(nivel) {
+  var cats = Object.keys(CREATIVIDAD);
+  var cat = CREATIVIDAD[cats[rand(0, cats.length - 1)]];
+  var base = barajar(cat).slice(0, 6);
+  // Siempre incluye una actividad de dibujo para colorear para elegir personaje
+  base.push({
+    pregunta: '🎨 Elegí un dibujo y colorealo con el pincel',
+    tipo: 'dibujoColorear',
+    emojiPregunta: '🖌️',
+    plantillas: barajar(DIBUJOS).slice(0, 6),
+    correcta: 'dibujo'
+  });
+  return barajar(base);
+}
+function genDibujoColorear(cantidad) {
+  return barajar(DIBUJOS).slice(0, Math.min(cantidad || 8, DIBUJOS.length));
+}
+function genPersonajeColorear() {
+  return barajar(DIBUJOS.filter(function (d) { return d.categoria === 'Personajes'; }));
+}
+
+/* ---------- ROBÓTICA EXTENDIDA (5 categorías nuevas) + wrapper sin romper genRobotica original ---------- */
+var ROBOTICA = {
+  '🔧 Piezas y Mecanismos': banco([
+    {p:'¿Qué transmite movimiento entre ejes?',c:'Engranaje',opts:['Engranaje','Sensor','Batería','Cable']},
+    {p:'¿Qué es una polea?',c:'Rueda con cuerda para levantar cosas',opts:['Rueda con cuerda para levantar cosas','Un sensor','Un motor','Un tornillo']},
+    {p:'¿Qué es una palanca?',c:'Barra que mueve cosas con poco esfuerzo',opts:['Barra que mueve cosas con poco esfuerzo','Un sensor','Una batería','Un engranaje']},
+    {p:'¿Qué motor gira un ángulo exacto?',c:'Servomotor',opts:['Servomotor','Motor común','Sensor','Batería']},
+    {p:'¿Qué es un motor paso a paso?',c:'Gira en pasos pequeños y precisos',opts:['Gira en pasos pequeños y precisos','Enciende una luz','Mide distancia','Es un sensor']},
+    {p:'¿Qué es un actuador?',c:'Pieza que mueve o empuja algo',opts:['Pieza que mueve o empuja algo','Un sensor','Una batería','Un cable']},
+    {p:'¿Qué une piezas y permite girar?',c:'Articulación (eje/ bisagra)',opts:['Articulación (eje/ bisagra)','Pegamento','Sensor','Batería']},
+    {p:'¿Qué es un robot articulado?',c:'Brazo con varias articulaciones',opts:['Brazo con varias articulaciones','Un coche','Un drone fijo','Una pantalla']}
+  ], 8),
+  '🤖 Robots Famosos': banco([
+    {p:'¿Qué robot limpia pisos solo?',c:'Roomba (aspiradora robot)',opts:['Roomba (aspiradora robot)','Un drone','Un robot industrial','Un androide']},
+    {p:'¿Qué robot de Boston Dynamics salta y corre?',c:'Atlas / Spot',opts:['Atlas / Spot','Roomba','Una calculadora','Un televisor']},
+    {p:'¿Qué robot explora Marte?',c:'Rovers (Curiosity, Perseverance)',opts:['Rovers (Curiosity, Perseverance)','Roomba','Un submarino','Un dron de carrera']},
+    {p:'¿Qué es un drone?',c:'Robot volador sin piloto',opts:['Robot volador sin piloto','Un robot con ruedas','Un robot humanoide','Un sensor']},
+    {p:'¿Qué robot es humanoide de Honda?',c:'ASIMO',opts:['ASIMO','Roomba','Spot','Voyager']},
+    {p:'¿Qué brazo robot fabrica autos?',c:'Robot industrial (KUKA, ABB)',opts:['Robot industrial (KUKA, ABB)','Roomba','Un drone','Un juguete']},
+    {p:'¿Qué robot operó por primera vez en el espacio?',c:'Canadarm2 (en la ISS)',opts:['Canadarm2 (en la ISS)','Roomba','Spot','Un coche']},
+    {p:'¿Qué pequeño helicóptero voló en Marte?',c:'Ingenuity',opts:['Ingenuity','Roomba','ASIMO','Voyager']}
+  ], 8),
+  '🧠 Programación y Ética': banco([
+    {p:'¿Cuántas leyes de la robótica propuso Asimov?',c:'3',opts:['3','10','1','5']},
+    {p:'¿Primera ley de Asimov?',c:'Un robot no puede dañar a un humano',opts:['Un robot no puede dañar a un humano','Obedecer siempre','Cuidarse a sí mismo','Cargar batería']},
+    {p:'¿Puede un robot sentir emociones?',c:'No, solo simula',opts:['No, solo simula','Sí, como las personas','Solo los robots grandes','Solo de noche']},
+    {p:'¿Qué es un autómata?',c:'Máquina que sigue instrucciones sola',opts:['Máquina que sigue instrucciones sola','Un animal','Una planta','Una piedra']},
+    {p:'¿Qué es un algoritmo para robots?',c:'Pasos para que el robot actúe',opts:['Pasos para que el robot actúe','Una batería','Un sensor','Una rueda']},
+    {p:'¿Qué es la retroalimentación (feedback)?',c:'El robot usa sensores para corregir',opts:['El robot usa sensores para corregir','Una luz','Un sonido','Un motor']},
+    {p:'¿Quién debe controlar a un robot?',c:'Una persona (programador/usuario)',opts:['Una persona (programador/usuario)','El robot solo','Otro robot','Nadie']},
+    {p:'¿Qué es la IA en un robot?',c:'Programa que le permite decidir',opts:['Programa que le permite decidir','Una batería más grande','Un motor nuevo','Una carcasa']}
+  ], 8),
+  '🚀 Robots en el Espacio': banco([
+    {p:'¿Qué robot explora la superficie de Marte?',c:'Rover',opts:['Rover','Roomba','Submarino','Ascensor']},
+    {p:'¿Qué es la ISS?',c:'Estación Espacial Internacional',opts:['Estación Espacial Internacional','Un robot','Un cohete de juguete','Un planeta']},
+    {p:'¿Qué hace un brazo robot en el espacio?',c:'Mueve satélites y repara',opts:['Mueve satélites y repara','Limpia pisos','Cocina','Pinta cuadros']},
+    {p:'¿Qué es una sonda espacial?',c:'Robot que viaja por el espacio sin tripulación',opts:['Robot que viaja por el espacio sin tripulación','Un avión','Un barco','Un auto']},
+    {p:'¿Qué mide un sensor de luz en un robot?',c:'Intensidad de luz',opts:['Intensidad de luz','Sonido','Temperatura','Distancia']},
+    {p:'¿Cómo se orienta un robot en Marte?',c:'Con cámaras y sensores',opts:['Con cámaras y sensores','Con un mapa de papel','Con olfato','No se orienta']},
+    {p:'¿Qué energía usan los rovers?',c:'Paneles solares / batería nuclear',opts:['Paneles solares / batería nuclear','Nafta','Carbón','Pilas comunes']},
+    {p:'¿Qué es un satélite artificial?',c:'Objeto robot que orbita la Tierra',opts:['Objeto robot que orbita la Tierra','Una estrella','Un planeta','Un cometa']}
+  ], 8),
+  '🦾 Robots que Ayudan (sociales/medicina)': banco([
+    {p:'¿Qué robot ayuda en cirugías?',c:'Da Vinci (brazo quirúrgico)',opts:['Da Vinci (brazo quirúrgico)','Roomba','Un drone','Un juguete']},
+    {p:'¿Qué robot acompaña a personas mayores o niños?',c:'Robot social (Pepper, Paro)',opts:['Robot social (Pepper, Paro)','Roomba','Un taladro','Una heladera']},
+    {p:'¿Qué es una prótesis robótica?',c:'Brazo/pierna artificial que se mueve',opts:['Brazo/pierna artificial que se mueve','Un juguete','Un sensor','Una rueda']},
+    {p:'¿Qué robot entrega medicamentos en hospitales?',c:'Robot de logística/entrega',opts:['Robot de logística/entrega','Roomba','Un drone de carrera','Una radio']},
+    {p:'¿Qué hace un exoesqueleto?',c:'Ayuda a caminar o levantar peso',opts:['Ayuda a caminar o levantar peso','Cocina','Limpia','Vuela']},
+    {p:'¿Pueden los robots ayudar a niños con autismo?',c:'Sí, algunos robots sociales lo hacen',opts:['Sí, algunos robots sociales lo hacen','No, nunca','Solo los robots grandes','Solo de noche']},
+    {p:'¿Qué sensor detecta a una persona cerca?',c:'Sensor de proximidad',opts:['Sensor de proximidad','Motor','Batería','Rueda']},
+    {p:'¿Qué es un robot de asistencia?',c:'Ayuda a personas en tareas diarias',opts:['Ayuda a personas en tareas diarias','Compite en carreras','Solo juega','Solo pinta']}
+  ], 8)
+};
+
+// Extender genRobotica sin romper el original (mismo patrón que genMate)
+var genRoboticaOriginal = genRobotica;
+genRobotica = function (nivel) {
+  var base = genRoboticaOriginal(nivel);
+  var cats = Object.keys(ROBOTICA);
+  var cat = ROBOTICA[cats[Math.min(Math.floor((nivel - 1) / 2), cats.length - 1)]];
+  return barajar(base.concat(cat.slice(0, 3)));
+};
+
   var PRODUCCION = {
-    version: '3.2 PRODUCCION — 550 PALABRAS',
+    version: '3.3 PRODUCCION — 550 PALABRAS + DIBUJOS PARA COLOREAR',
     totalPalabrasIdioma: 550,
     totalIdiomas: 5,
     totalMundos: MUNDOS.length,
@@ -2242,11 +2400,13 @@
     maxPreguntasPorQuiz: 10,
     tiempoPorPreguntaSeg: 30,
     privacidad: 'Todo local en el dispositivo, sin servidores',
-    compatibilidad: 'Chrome, Edge, Firefox, Safari (voz en Chrome/Edge con internet)'
+    compatibilidad: 'Chrome, Edge, Firefox, Safari (voz en Chrome/Edge con internet)',
+    totalDibujosColorear: DIBUJOS.length,
+    totalCategoriasRoboticaExtra: 5
   };
 
   var Mundos = {
-    version: '3.2 PRODUCCION — 550 PALABRAS',
+    version: '3.3 PRODUCCION — 550 PALABRAS + DIBUJOS PARA COLOREAR',
     MUNDOS: MUNDOS,
     NIVELES_EDAD: NIVELES_EDAD,
     genMate: genMate, genDinero: genDinero, genVerde: genVerde,
@@ -2256,7 +2416,13 @@
     SALUD: SALUD, ARTE: ARTE, MITOLOGIA: MITOLOGIA, PROFESIONES: PROFESIONES,
     COCINA: COCINA, ASTRONOMIA: ASTRONOMIA, AJEDREZ: AJEDREZ, SEGURIDAD: SEGURIDAD,
     PRIMEROS_AUXILIOS: PRIMEROS_AUXILIOS, ODS: ODS, FILOSOFIA: FILOSOFIA,
-    DANZA: DANZA, CINE: CINE, ARQUITECTURA: ARQUITECTURA, HUERTA: HUERTA, ENERGIAS: ENERGIAS,
+    DANZA: DANZA, CINE: CINE, ARQUITECTURA: ARQUITECTURA, HUERTA: HUERTA,   ENERGIAS: ENERGIAS,
+  CREATIVIDAD: CREATIVIDAD,
+  DIBUJOS: DIBUJOS,
+  ROBOTICA: ROBOTICA,
+  genCreatividad: genCreatividad,
+  genDibujoColorear: genDibujoColorear,
+  genPersonajeColorear: genPersonajeColorear,
     IDIOMAS: IDIOMAS, PALABRAS: PALABRAS, FRASES_AVANZADAS: FRASES_AVANZADAS,
     genQuizIdioma: genQuizIdioma, genQuizEscuchar: genQuizEscuchar,
     SUPERPREMIO: SUPERPREMIO, MODOS_JUEGO: MODOS_JUEGO, EVENTOS: EVENTOS,
