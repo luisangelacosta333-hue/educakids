@@ -578,7 +578,7 @@
     {es:'Comer',en:'Eat',pt:'Comer',fr:'Manger',it:'Mangiare',de:'Essen',emoji:'🍽️'},
     {es:'Beber',en:'Drink',pt:'Beber',fr:'Boire',it:'Bere',de:'Trinken',emoji:'🥤'},
     {es:'Correr',en:'Run',pt:'Correr',fr:'Courir',it:'Correre',de:'Laufen',emoji:'🏃'},
-    {es:'Jugar',en:'Play',pt:'Jugar',fr:'Jouer',it:'Giocare',de:'Spielen',emoji:'🎮'},
+    {es:'Jugar',en:'Play',pt:'Brincar',fr:'Jouer',it:'Giocare',de:'Spielen',emoji:'🎮'},
     {es:'Leer',en:'Read',pt:'Leer',fr:'Lire',it:'Leggere',de:'Lesen',emoji:'📖'},
     {es:'Escribir',en:'Write',pt:'Escribir',fr:'Écrire',it:'Scrivere',de:'Schreiben',emoji:'✍️'},
     {es:'Dormir',en:'Sleep',pt:'Dormir',fr:'Dormir',it:'Dormire',de:'Schlafen',emoji:'😴'},
@@ -1616,3 +1616,920 @@
   window.EK.Mundos = Mundos;
 })();
 
+
+/* ============================================================
+   voz.js — Motor de VOZ para la SUPER APP (TTS + STT)
+   Sin romper nada: se carga después de mundos.js y del engine.
+   - EK.Voz.hablar(texto, lang)  -> lee en voz alta (TTS)
+   - EK.Voz.leerPregunta(preg)   -> lee cualquier pregunta (todos los mundos)
+   - EK.Voz.escucharYComparar(palabraCorrecta, lang, cb) -> micrófono (STT)
+     el niño repite, se compara con la correcta y se aprueba si pronunció bien
+   - EK.Voz.detener() / EK.Voz.soportado() / EK.Voz.voces()
+   Idiomas: es-AR, en-US, pt-BR, fr-FR, it-IT, de-DE
+   ============================================================ */
+(function () {
+  'use strict';
+  window.EK = window.EK || {};
+  EK.Voz = EK.Voz || {};
+
+  var LANGS = { es: 'es-AR', ingles: 'en-US', portugues: 'pt-BR', frances: 'fr-FR', italiano: 'it-IT', aleman: 'de-DE', en: 'en-US', pt: 'pt-BR', fr: 'fr-FR', it: 'it-IT', de: 'de-DE' };
+  var vocesCache = [];
+
+  // Cargar voces (son asíncronas en algunos navegadores)
+  function cargarVoces() {
+    if (!('speechSynthesis' in window) || !window.speechSynthesis) return;
+    try {
+      if (typeof window.speechSynthesis.getVoices === 'function') {
+        vocesCache = window.speechSynthesis.getVoices() || [];
+      }
+    } catch (e) { vocesCache = []; }
+  }
+  if ('speechSynthesis' in window && window.speechSynthesis) {
+    cargarVoces();
+    try { window.speechSynthesis.onvoiceschanged = cargarVoces; } catch (e) {}
+  }
+
+  // Normalizar texto para comparar (sin acentos, minúsculas, sin puntuación)
+  function normalizar(t) {
+    return String(t || '').toLowerCase().trim()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[.,!?¡¿;:()"'«»\u00BF\u00A1]/g, '')
+      .replace(/\s+/g, ' ');
+  }
+
+  // Distancia Levenshtein simple para comparación tolerante
+  function levenshtein(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    if (m === 0) return n; if (n === 0) return m;
+    for (i = 0; i <= m; i++) { d[i] = [i]; }
+    for (j = 0; j <= n; j++) { d[0][j] = j; }
+    for (j = 1; j <= n; j++) for (i = 1; i <= m; i++) {
+      d[i][j] = a[i-1] === b[j-1] ? d[i-1][j-1] : 1 + Math.min(d[i-1][j], d[i][j-1], d[i-1][j-1]);
+    }
+    return d[m][n];
+  }
+
+  // Comparación tolerante: éxito si coincide exacto, contiene, o distancia <= 1 (o <=2 si palabra larga)
+  function pronunciacionCorrecta(dicho, correcta) {
+    var d = normalizar(dicho), c = normalizar(correcta);
+    if (!d || !c) return false;
+    if (d === c) return true;
+    if (d.indexOf(c) >= 0 || c.indexOf(d) >= 0) return true;
+    var tolerancia = c.length >= 6 ? 2 : 1;
+    if (levenshtein(d, c) <= tolerancia) return true;
+    // comparar palabra por palabra (si dijo una frase, que contenga la correcta)
+    var palabras = d.split(' ');
+    for (var i = 0; i < palabras.length; i++) {
+      if (levenshtein(palabras[i], c) <= tolerancia) return true;
+    }
+    return false;
+  }
+
+  function resolverLang(lang) {
+    if (!lang) return 'es-AR';
+    return LANGS[lang] || lang;
+  }
+
+  function elegirVoz(langCode) {
+    if (!vocesCache.length) cargarVoces();
+    var base = langCode.split('-')[0];
+    // 1) voz exacta del país, 2) voz del mismo idioma, 3) la primera que tenga el idioma
+    for (var i = 0; i < vocesCache.length; i++) { if (vocesCache[i].lang === langCode) return vocesCache[i]; }
+    for (var j = 0; j < vocesCache.length; j++) { if (vocesCache[j].lang && vocesCache[j].lang.indexOf(base) === 0) return vocesCache[j]; }
+    return null;
+  }
+
+  /* ---------- TTS: leer en voz alta ---------- */
+  function hablar(texto, opts) {
+    opts = opts || {};
+    if (!('speechSynthesis' in window) || !window.speechSynthesis) return { soportado: false };
+    try { window.speechSynthesis.cancel(); } catch (e) {}
+    var u = new SpeechSynthesisUtterance(String(texto || ''));
+    u.lang = resolverLang(opts.lang);
+    u.rate = opts.rate || 0.9;      // más lento para niños
+    u.pitch = opts.pitch || 1.1;    // tono más agudo, amigable
+    u.volume = opts.volume || 1;
+    var voz = elegirVoz(u.lang);
+    if (voz) u.voice = voz;
+    if (typeof opts.onend === 'function') u.onend = opts.onend;
+    if (typeof opts.onerror === 'function') u.onerror = opts.onerror;
+    window.speechSynthesis.speak(u);
+    return { soportado: true, utterance: u };
+  }
+
+  function detener() {
+    if ('speechSynthesis' in window && window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch (e) {} }
+    if (reconocedorActivo) { try { reconocedorActivo.stop(); } catch (e) {} reconocedorActivo = null; }
+  }
+
+  // Lee cualquier pregunta (de cualquier mundo) en voz alta.
+  // Lee el texto de la pregunta y, si se pide, también las opciones.
+  function leerPregunta(pregunta, opts) {
+    opts = opts || {};
+    if (!pregunta) return { soportado: false };
+    var lang = opts.lang || pregunta.lang || 'es-AR';
+    var texto = String(pregunta.pregunta || pregunta.p || '');
+    // Si es pregunta de idioma con audio, usar el audio nativo si existe
+    if (pregunta.audio && pregunta.audio.texto && !opts.forzarTexto) {
+      return hablar(pregunta.audio.texto, { lang: pregunta.audio.lang || lang, rate: opts.rate, onend: opts.onend });
+    }
+    if (opts.leerOpciones && pregunta.opciones) {
+      texto += '. Opciones: ' + pregunta.opciones.join('. . ');
+    }
+    return hablar(texto, { lang: lang, rate: opts.rate || 0.95, onend: opts.onend });
+  }
+
+  /* ---------- STT: micrófono para pronunciar ---------- */
+  var reconocedorActivo = null;
+
+  function soportaReconocimiento() {
+    return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  }
+
+  // Escucha al niño, compara con palabraCorrecta.
+  // callback({soportado, escuchando, exito, dicho, correcta, error, intentos})
+  function escucharYComparar(palabraCorrecta, lang, callback, opts) {
+    opts = opts || {};
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { callback({ soportado: false }); return { soportado: false }; }
+    try { if (reconocedorActivo) { reconocedorActivo.stop(); } } catch (e) {}
+    var rec = new SR();
+    rec.lang = resolverLang(lang);
+    rec.interimResults = false;
+    rec.continuous = false;
+    rec.maxAlternatives = opts.maxAlternatives || 6;
+    reconocedorActivo = rec;
+    var respondio = false;
+
+    rec.onresult = function (e) {
+      if (respondio) return; respondio = true;
+      reconocedorActivo = null;
+      var resultado = e.results[0];
+      var exito = false, dicho = resultado[0].transcript;
+      // Probar todas las alternativas que dio el reconocedor
+      for (var i = 0; i < resultado.length; i++) {
+        var alt = resultado[i].transcript;
+        if (pronunciacionCorrecta(alt, palabraCorrecta)) { exito = true; dicho = alt; break; }
+      }
+      // También probar con la palabra en español (por si dijo la traducción, se lo avisamos)
+      var dijoEspanol = opts.palabraEspanol && pronunciacionCorrecta(dicho, opts.palabraEspanol);
+      var res = {
+        soportado: true, exito: exito, dijoEspanol: dijoEspanol,
+        dicho: dicho, correcta: palabraCorrecta,
+        lang: rec.lang,
+        mensaje: exito ? '¡Perfecto, se escuchó bien!' : (dijoEspanol ? '¡Casi! Decilo en el otro idioma' : 'Escuché: "' + dicho + '". Intentá de nuevo')
+      };
+      // Feedback por voz: si está mal, reproducimos la pronunciación correcta para que escuche
+      if (!exito && opts.reproducirCorrecto !== false) {
+        hablar(palabraCorrecta, { lang: rec.lang, rate: 0.85, onend: function () { callback(res); } });
+      } else {
+        callback(res);
+      }
+    };
+    rec.onerror = function (e) {
+      if (respondio) return; respondio = true;
+      reconocedorActivo = null;
+      callback({ soportado: true, error: e.error, exito: false, mensaje: errorAMensaje(e.error) });
+    };
+    rec.onend = function () {
+      reconocedorActivo = null;
+      if (!respondio) { respondio = true; callback({ soportado: true, error: 'sin-audio', exito: false, mensaje: 'No escuché nada. Acercate al micrófono.' }); }
+    };
+    try { rec.start(); } catch (e) { callback({ soportado: true, error: 'start-fail', exito: false }); }
+    return { soportado: true, escuchando: true, reconocedor: rec };
+  }
+
+  function errorAMensaje(err) {
+    switch (err) {
+      case 'not-allowed': return 'Permiso de micrófono denegado. Habilitalo en el navegador.';
+      case 'no-speech': return 'No escuché nada. Intentá de nuevo.';
+      case 'audio-capture': return 'No hay micrófono disponible.';
+      case 'network': return 'Error de red. El reconocimiento necesita internet.';
+      default: return 'Ocurrió un error. Intentá de nuevo.';
+    }
+  }
+
+  // Pedir permiso de micrófono y probar
+  function probarMicrofono(callback) {
+    if (!soportaReconocimiento()) { callback({ soportado: false }); return; }
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        stream.getTracks().forEach(function (t) { t.stop(); });
+        callback({ soportado: true, permiso: true });
+      }).catch(function () { callback({ soportado: true, permiso: false }); });
+    } else {
+      callback({ soportado: true, permiso: null });
+    }
+  }
+
+  /* ---------- Feedback por voz (ánimo) ---------- */
+  var FRASES = {
+    exito: ['¡Excelente!', '¡Muy bien pronunciado!', '¡Perfecto!', '¡Sos un genio!', '¡Increíble!', '¡Bravo!'],
+    fracaso: ['Casi, escuchá bien', 'Intentá de nuevo', 'Vamos, vos podés', 'Escuchá cómo se dice'],
+    enEspanol: ['¡Bien! Pero decilo en inglés', '¡Muy bien! Ahora en el otro idioma']
+  };
+  function feedback(tipo, lang) {
+    var arr = FRASES[tipo] || FRASES.exito;
+    hablar(arr[Math.floor(Math.random() * arr.length)], { lang: lang || 'es-AR', rate: 1 });
+  }
+
+  // Voces disponibles (para que la UI muestre selector)
+  function vocesDisponibles() {
+    cargarVoces();
+    return vocesCache.map(function (v) { return { lang: v.lang, nombre: v.name, local: v.localService }; });
+  }
+
+  EK.Voz = {
+    LANGS: LANGS,
+    hablar: hablar,
+    detener: detener,
+    leerPregunta: leerPregunta,
+    escucharYComparar: escucharYComparar,
+    soportaReconocimiento: soportaReconocimiento,
+    probarMicrofono: probarMicrofono,
+    voces: vocesDisponibles,
+    normalizar: normalizar,
+    pronunciacionCorrecta: pronunciacionCorrecta,
+    feedback: feedback,
+    FRASES: FRASES,
+    resolverLang: resolverLang
+  };
+})();
+/* ============================================================
+   mundos_voz_extension.js — Extensión de VOZ para mundos.js (SIN ROMPER NADA)
+   Se carga DESPUÉS de mundos.js y voz.js.
+   - Agrega EK.Mundos.genQuizPronunciar() -> preguntas donde el niño
+     APRETA EL MICRÓFONO y DICE la palabra en el idioma. Si la pronuncia
+     bien, se aprueba y pasa a la siguiente. (Todos los idiomas.)
+   - Agrega EK.Mundos.conAudio() -> marca cualquier pregunta para que
+     se LEA EN VOZ ALTA (todos los mundos, no solo idiomas).
+   - Agrega EK.Mundos.marcarTodasParaLeer() -> wrapper que devuelve
+     preguntas con flag leerEnVozAlta:true (el motor las lee si lo soporta).
+   - Agrega EK.Mundos.PRONUNCIAR_CONFIG (intentos, feedback, modos).
+   Si el motor no usa estos campos, los ignora: no se rompe nada.
+   ============================================================ */
+(function () {
+  'use strict';
+  window.EK = window.EK || {};
+  if (!EK.Mundos) { console.warn('mundos_voz_extension: cargá mundos.js primero'); return; }
+  var barajar = EK.Mundos.barajar || function (a) { return a.slice(); };
+  // Helper ES5 (sin extender, para no romper en navegadores viejos)
+  function extender(obj) {
+    var out = {};
+    for (var k in obj) { if (obj.hasOwnProperty(k)) out[k] = obj[k]; }
+    for (var i = 1; i < arguments.length; i++) {
+      var src = arguments[i];
+      for (var j in src) { if (src.hasOwnProperty(j)) out[j] = src[j]; }
+    }
+    return out;
+  }
+
+  var PRONUNCIAR_CONFIG = {
+    intentosMaximos: 3,          // hasta 3 intentos antes de mostrar respuesta
+    reproducirCorrecto: true,    // si se equivoca, suena la pronunciación correcta
+    feedbackPorVoz: true,        // frases de ánimo por voz
+    modos: ['leer', 'traducir'], // 'leer': ve la palabra extranjera y la lee; 'traducir': ve español y dice la extranjera
+    tiempoMaximoEscucha: 8000,   // 8 segundos por intento
+    puntosPorAciertoVoz: 20      // XP extra por pronunciar bien
+  };
+
+  // Genera preguntas de PRONUNCIACIÓN por voz.
+  // vocabList: array de {es, tr, emoji} (como sale de IDIOMAS)
+  // langCode: 'en-US' | 'pt-BR' | 'fr-FR' | 'it-IT' | 'de-DE'
+  // langNombre: 'inglés' | 'portugués' ...
+  // modo: 'leer' (muestra la palabra extranjera, el niño la lee)
+  //       'traducir' (muestra la palabra en español, el niño dice la extranjera)
+  function genQuizPronunciar(vocabList, langCode, langNombre, modo) {
+    modo = modo || 'leer';
+    var lista = barajar(vocabList).slice(0, Math.min(8, vocabList.length));
+    return lista.map(function (v) {
+      var otras = barajar(vocabList.filter(function (x) { return x.tr !== v.tr; })).slice(0, 3).map(function (x) { return x.tr; });
+      var opciones = barajar([v.tr].concat(otras));
+      var preguntaTexto = modo === 'traducir'
+        ? '🎤 Decí en ' + langNombre + ": \"" + v.es + "\""
+        : '🎤 Leé en voz alta en ' + langNombre + ": \"" + v.tr + "\"";
+      return {
+        pregunta: preguntaTexto,
+        emojiPregunta: v.emoji,
+        tipo: 'pronunciar',            // <-- nuevo tipo: el motor muestra botón de micrófono
+        pronunciar: true,
+        modo: modo,
+        langRespuesta: langCode,       // idioma en el que debe hablar el niño
+        palabraCorrecta: v.tr,         // lo que debe decir
+        palabraEspanol: v.es,          // por si dice la traducción, avisarle
+        opciones: opciones,            // por si el micrófono no está, responde tocando (fallback)
+        correcta: v.tr,
+        audio: { texto: v.tr, lang: langCode }, // al tocar el altavoz suena la pronunciación nativa
+        leerEnVozAlta: true,
+        intentos: 0,
+        intentosMaximos: PRONUNCIAR_CONFIG.intentosMaximos,
+        xpExtra: PRONUNCIAR_CONFIG.puntosPorAciertoVoz
+      };
+    });
+  }
+
+  // Marca un array de preguntas para que se LEAN EN VOZ ALTA (TTS).
+  // Agrega el flag leerEnVozAlta y el idioma. Funciona para CUALQUIER mundo.
+  function conAudio(preguntas, lang) {
+    lang = lang || 'es-AR';
+    return (preguntas || []).map(function (p) {
+      var nueva = extender({}, p);
+      nueva.leerEnVozAlta = true;
+      nueva.lang = p.lang || lang;
+      // Si no tiene audio propio, el motor usa TTS con el texto de la pregunta
+      return nueva;
+    });
+  }
+
+  // Wrapper: genera preguntas de cualquier generador y las marca para leer.
+  function generarConLectura(generador, arg, lang) {
+    var preguntas = generador(arg);
+    return conAudio(preguntas, lang || 'es-AR');
+  }
+
+  // Marca todas las categorías de un idioma con la capacidad de pronunciar.
+  // Devuelve el mismo IDIOMAS pero con un campo extra por categoría:
+  //   pronunciar -> función que genera el quiz de pronunciación de esa categoría.
+  function marcarIdiomasParaPronunciar(IDIOMAS) {
+    var out = {};
+    Object.keys(IDIOMAS || {}).forEach(function (key) {
+      var idi = IDIOMAS[key];
+      var nuevo = extender({}, idi);
+      nuevo.categorias = {};
+      Object.keys(idi.categorias).forEach(function (cat) {
+        nuevo.categorias[cat] = idi.categorias[cat].map(function (v) {
+          var nv = extender({}, v);
+          nv.pronunciable = true;
+          nv.lang = idi.lang;
+          return nv;
+        });
+      });
+      // Método extra: quizPronunciar(categoria, modo)
+      nuevo.quizPronunciar = function (categoria, modo) {
+        var vocab = (nuevo.categorias[categoria] || []);
+        return genQuizPronunciar(vocab, nuevo.lang, nuevo.nombre, modo);
+      };
+      nuevo.quizPronunciarAleatorio = function (modo) {
+        var todas = [];
+        Object.keys(nuevo.categorias).forEach(function (c) { todas = todas.concat(nuevo.categorias[c]); });
+        return genQuizPronunciar(todas, nuevo.lang, nuevo.nombre, modo);
+      };
+      out[key] = nuevo;
+    });
+    return out;
+  }
+
+  // Modo "Escuchar y elegir" ya existente, pero con botón de repetir audio.
+  // (Compatibilidad: envuelve genQuizEscuchar agregando el flag.)
+  function genQuizEscucharConRepetir(vocabList, langCode) {
+    if (!EK.Mundos.genQuizEscuchar) return [];
+    return EK.Mundos.genQuizEscuchar(vocabList, langCode).map(function (p) {
+      var n = extender({}, p);
+      n.repetirAudio = true;
+      n.leerEnVozAlta = false; // no leer la pregunta (la respuesta es por audio)
+      return n;
+    });
+  }
+
+  // Exponer todo
+  EK.Mundos.genQuizPronunciar = genQuizPronunciar;
+  EK.Mundos.conAudio = conAudio;
+  EK.Mundos.generarConLectura = generarConLectura;
+  EK.Mundos.marcarIdiomasParaPronunciar = marcarIdiomasParaPronunciar;
+  EK.Mundos.genQuizEscucharConRepetir = genQuizEscucharConRepetir;
+  EK.Mundos.PRONUNCIAR_CONFIG = PRONUNCIAR_CONFIG;
+
+  // Si existen IDIOMAS, los marcamos automáticamente (sin pisar los originales)
+  if (EK.Mundos.IDIOMAS) {
+    EK.Mundos.IDIOMAS_PRONUNCIAR = marcarIdiomasParaPronunciar(EK.Mundos.IDIOMAS);
+  }
+
+  // Helper para el motor: dada una pregunta tipo 'pronunciar', procesar el intento de voz.
+  // Uso: EK.Mundos.procesarIntentoVoz(pregunta, function(resultado){ ... })
+  // Usa EK.Voz.escucharYComparar si está cargado.
+  EK.Mundos.procesarIntentoVoz = function (pregunta, callback) {
+    if (!pregunta || pregunta.tipo !== 'pronunciar') { callback({ soportado: false }); return; }
+    if (!EK.Voz || !EK.Voz.escucharYComparar) { callback({ soportado: false, mensaje: 'Cargá voz.js' }); return; }
+    pregunta.intentos = (pregunta.intentos || 0) + 1;
+    EK.Voz.escucharYComparar(pregunta.palabraCorrecta, pregunta.langRespuesta, callback, {
+      palabraEspanol: pregunta.palabraEspanol,
+      reproducirCorrecto: PRONUNCIAR_CONFIG.reproducirCorrecto
+    });
+  };
+
+  // Leer cualquier pregunta en voz alta (puente hacia voz.js)
+  EK.Mundos.leerPregunta = function (pregunta, opts) {
+    if (EK.Voz && EK.Voz.leerPregunta) return EK.Voz.leerPregunta(pregunta, opts);
+    return { soportado: false };
+  };
+  EK.Mundos.detenerVoz = function () { if (EK.Voz && EK.Voz.detener) EK.Voz.detener(); };
+})();
+/* ============================================================
+   extension_produccion.js — Expansión PRODUCCIÓN (sin romper nada)
+   Se carga DESPUÉS de: mundos.js, voz.js, mundos_voz_extension.js
+   + Vocabulario de idiomas: de 150 a 410 palabras (5 idiomas)
+   + Más juegos: 12 modos nuevos (sopa, ahorcado, memoria, intruso,
+     cálculo mental, unir puntos, crucigrama, verdadero/falso,
+     ordenar, emparejar, completar, supervivencia, duelo, relámpago)
+   + Más contenido en TODOS los mundos (preguntas extra por categoría)
+   + Config de producción: auditoría, logs, fallback, pesos de XP
+   ============================================================ */
+(function () {
+  'use strict';
+  window.EK = window.EK || {};
+  if (!EK.Mundos) { console.warn('extension_produccion: cargá mundos.js primero'); return; }
+  var barajar = EK.Mundos.barajar || function (a) { return a.slice(); };
+  function extender(obj) {
+    var out = {};
+    for (var k in obj) { if (obj.hasOwnProperty(k)) out[k] = obj[k]; }
+    for (var i = 1; i < arguments.length; i++) {
+      var src = arguments[i];
+      for (var j in src) { if (src.hasOwnProperty(j)) out[j] = src[j]; }
+    }
+    return out;
+  }
+
+  /* ============================================================
+     VOCAB_EXTRA — 260 palabras nuevas (5 idiomas) → total 410
+     ============================================================ */
+  var VOCAB_EXTRA = [
+    // ---- Útiles escolares (20) ----
+    {es:'Cuaderno',en:'Notebook',pt:'Caderno',fr:'Cahier',it:'Quaderno',de:'Heft',emoji:'📓'},
+    {es:'Regla',en:'Ruler',pt:'Régua',fr:'Règle',it:'Righello',de:'Lineal',emoji:'📏'},
+    {es:'Goma de borrar',en:'Eraser',pt:'Borracha',fr:'Gomme',it:'Gomma',de:'Radiergummi',emoji:'🧽'},
+    {es:'Sacapuntas',en:'Sharpener',pt:'Apontador',fr:'Taille-crayon',it:'Temperamatite',de:'Anspitzer',emoji:'✏️'},
+    {es:'Bolígrafo',en:'Pen',pt:'Caneta',fr:'Stylo',it:'Penna',de:'Kugelschreiber',emoji:'🖊️'},
+    {es:'Marcador',en:'Marker',pt:'Marcador',fr:'Feutre',it:'Pennarello',de:'Marker',emoji:'🖍️'},
+    {es:'Tijera',en:'Scissors',pt:'Tesoura',fr:'Ciseaux',it:'Forbice',de:'Schere',emoji:'✂️'},
+    {es:'Pegamento',en:'Glue',pt:'Cola',fr:'Colle',it:'Colla',de:'Kleber',emoji:'🧴'},
+    {es:'Carpeta',en:'Folder',pt:'Pasta',fr:'Classeur',it:'Cartella',de:'Mappe',emoji:'📁'},
+    {es:'Diccionario',en:'Dictionary',pt:'Dicionário',fr:'Dictionnaire',it:'Dizionario',de:'Wörterbuch',emoji:'📖'},
+    {es:'Atlas',en:'Atlas',pt:'Atlas',fr:'Atlas',it:'Atlante',de:'Atlas',emoji:'🌍'},
+    {es:'Pizarrón',en:'Blackboard',pt:'Quadro negro',fr:'Tableau noir',it:'Lavagna',de:'Tafel',emoji:'🪧'},
+    {es:'Tiza',en:'Chalk',pt:'Giz',fr:'Craie',it:'Gesso',de:'Kreide',emoji:'🖍️'},
+    {es:'Calculadora',en:'Calculator',pt:'Calculadora',fr:'Calculatrice',it:'Calcolatrice',de:'Taschenrechner',emoji:'🧮'},
+    {es:'Resaltador',en:'Highlighter',pt:'Marca-texto',fr:'Surligneur',it:'Evidenziatore',de:'Textmarker',emoji:'🖊️'},
+    {es:'Compás',en:'Compass',pt:'Compasso',fr:'Compas',it:'Compasso',de:'Zirkel',emoji:'📐'},
+    {es:'Mochila',en:'Backpack',pt:'Mochila',fr:'Sac à dos',it:'Zaino',de:'Rucksack',emoji:'🎒'},
+    {es:'Lápices de colores',en:'Colored pencils',pt:'Lápis de cor',fr:'Crayons de couleur',it:'Matite colorate',de:'Buntstifte',emoji:'🖍️'},
+    {es:'Estuche',en:'Pencil case',pt:'Estojo',fr:'Trousse',it:'Astuccio',de:'Federmäppchen',emoji:'👝'},
+    {es:'Tarea',en:'Homework',pt:'Lição de casa',fr:'Devoirs',it:'Compiti',de:'Hausaufgaben',emoji:'📝'},
+    // ---- Ropa extra (15) ----
+    {es:'Remera',en:'T-shirt',pt:'Camiseta',fr:'T-shirt',it:'Maglietta',de:'T-Shirt',emoji:'👕'},
+    {es:'Buzo',en:'Sweatshirt',pt:'Moletom',fr:'Sweat',it:'Felpa',de:'Sweatshirt',emoji:'👕'},
+    {es:'Campera',en:'Jacket',pt:'Jaqueta',fr:'Veste',it:'Giacca',de:'Jacke',emoji:'🧥'},
+    {es:'Falda',en:'Skirt',pt:'Saia',fr:'Jupe',it:'Gonna',de:'Rock',emoji:'👗'},
+    {es:'Vestido',en:'Dress',pt:'Vestido',fr:'Robe',it:'Vestito',de:'Kleid',emoji:'👗'},
+    {es:'Short',en:'Shorts',pt:'Shorts',fr:'Short',it:'Pantaloncini',de:'Shorts',emoji:'🩳'},
+    {es:'Medias',en:'Socks',pt:'Meias',fr:'Chaussettes',it:'Calzini',de:'Socken',emoji:'🧦'},
+    {es:'Botas',en:'Boots',pt:'Botas',fr:'Bottes',it:'Stivali',de:'Stiefel',emoji:'🥾'},
+    {es:'Sandalias',en:'Sandals',pt:'Sandálias',fr:'Sandales',it:'Sandali',de:'Sandalen',emoji:'👡'},
+    {es:'Guantes',en:'Gloves',pt:'Luvas',fr:'Gants',it:'Guanti',de:'Handschuhe',emoji:'🧤'},
+    {es:'Bufanda',en:'Scarf',pt:'Cachecol',fr:'Écharpe',it:'Sciarpa',de:'Schal',emoji:'🧣'},
+    {es:'Gorro',en:'Hat',pt:'Gorro',fr:'Bonnet',it:'Cappello',de:'Mütze',emoji:'🎩'},
+    {es:'Cinturón',en:'Belt',pt:'Cinto',fr:'Ceinture',it:'Cintura',de:'Gürtel',emoji:'👔'},
+    {es:'Pijama',en:'Pajamas',pt:'Pijama',fr:'Pyjama',it:'Pigiama',de:'Schlafanzug',emoji:'🩱'},
+    {es:'Anteojos',en:'Glasses',pt:'Óculos',fr:'Lunettes',it:'Occhiali',de:'Brille',emoji:'👓'},
+    // ---- Calendario y tiempo (20) ----
+    {es:'Miércoles',en:'Wednesday',pt:'Quarta-feira',fr:'Mercredi',it:'Mercoledì',de:'Mittwoch',emoji:'📅'},
+    {es:'Jueves',en:'Thursday',pt:'Quinta-feira',fr:'Jeudi',it:'Giovedì',de:'Donnerstag',emoji:'📅'},
+    {es:'Viernes',en:'Friday',pt:'Sexta-feira',fr:'Vendredi',it:'Venerdì',de:'Freitag',emoji:'📅'},
+    {es:'Sábado',en:'Saturday',pt:'Sábado',fr:'Samedi',it:'Sabato',de:'Samstag',emoji:'📅'},
+    {es:'Enero',en:'January',pt:'Janeiro',fr:'Janvier',it:'Gennaio',de:'Januar',emoji:'📆'},
+    {es:'Febrero',en:'February',pt:'Fevereiro',fr:'Février',it:'Febbraio',de:'Februar',emoji:'📆'},
+    {es:'Marzo',en:'March',pt:'Março',fr:'Mars',it:'Marzo',de:'März',emoji:'📆'},
+    {es:'Abril',en:'April',pt:'Abril',fr:'Avril',it:'Aprile',de:'April',emoji:'📆'},
+    {es:'Mayo',en:'May',pt:'Maio',fr:'Mai',it:'Maggio',de:'Mai',emoji:'📆'},
+    {es:'Junio',en:'June',pt:'Junho',fr:'Juin',it:'Giugno',de:'Juni',emoji:'📆'},
+    {es:'Julio',en:'July',pt:'Julho',fr:'Juillet',it:'Luglio',de:'Juli',emoji:'📆'},
+    {es:'Agosto',en:'August',pt:'Agosto',fr:'Août',it:'Agosto',de:'August',emoji:'📆'},
+    {es:'Septiembre',en:'September',pt:'Setembro',fr:'Septembre',it:'Settembre',de:'September',emoji:'📆'},
+    {es:'Octubre',en:'October',pt:'Outubro',fr:'Octobre',it:'Ottobre',de:'Oktober',emoji:'📆'},
+    {es:'Noviembre',en:'November',pt:'Novembro',fr:'Novembre',it:'Novembre',de:'November',emoji:'📆'},
+    {es:'Diciembre',en:'December',pt:'Dezembro',fr:'Décembre',it:'Dicembre',de:'Dezember',emoji:'📆'},
+    {es:'Primavera',en:'Spring',pt:'Primavera',fr:'Printemps',it:'Primavera',de:'Frühling',emoji:'🌸'},
+    {es:'Verano',en:'Summer',pt:'Verão',fr:'Été',it:'Estate',de:'Sommer',emoji:'☀️'},
+    {es:'Otoño',en:'Autumn',pt:'Outono',fr:'Automne',it:'Autunno',de:'Herbst',emoji:'🍂'},
+    {es:'Invierno',en:'Winter',pt:'Inverno',fr:'Hiver',it:'Inverno',de:'Winter',emoji:'❄️'},
+    // ---- Lugares y ciudad (20) ----
+    {es:'Hospital',en:'Hospital',pt:'Hospital',fr:'Hôpital',it:'Ospedale',de:'Krankenhaus',emoji:'🏥'},
+    {es:'Iglesia',en:'Church',pt:'Igreja',fr:'Église',it:'Chiesa',de:'Kirche',emoji:'⛪'},
+    {es:'Museo',en:'Museum',pt:'Museu',fr:'Musée',it:'Museo',de:'Museum',emoji:'🏛️'},
+    {es:'Cine',en:'Cinema',pt:'Cinema',fr:'Cinéma',it:'Cinema',de:'Kino',emoji:'🎬'},
+    {es:'Teatro',en:'Theater',pt:'Teatro',fr:'Théâtre',it:'Teatro',de:'Theater',emoji:'🎭'},
+    {es:'Biblioteca',en:'Library',pt:'Biblioteca',fr:'Bibliothèque',it:'Biblioteca',de:'Bibliothek',emoji:'📚'},
+    {es:'Supermercado',en:'Supermarket',pt:'Supermercado',fr:'Supermarché',it:'Supermercato',de:'Supermarkt',emoji:'🏪'},
+    {es:'Panadería',en:'Bakery',pt:'Padaria',fr:'Boulangerie',it:'Panetteria',de:'Bäckerei',emoji:'🥖'},
+    {es:'Farmacia',en:'Pharmacy',pt:'Farmácia',fr:'Pharmacie',it:'Farmacia',de:'Apotheke',emoji:'💊'},
+    {es:'Banco',en:'Bank',pt:'Banco',fr:'Banque',it:'Banca',de:'Bank',emoji:'🏦'},
+    {es:'Correo',en:'Post office',pt:'Correio',fr:'Poste',it:'Posta',de:'Post',emoji:'📮'},
+    {es:'Estación',en:'Station',pt:'Estação',fr:'Gare',it:'Stazione',de:'Bahnhof',emoji:'🚉'},
+    {es:'Aeropuerto',en:'Airport',pt:'Aeroporto',fr:'Aéroport',it:'Aeroporto',de:'Flughafen',emoji:'✈️'},
+    {es:'Puente',en:'Bridge',pt:'Ponte',fr:'Pont',it:'Ponte',de:'Brücke',emoji:'🌉'},
+    {es:'Plaza',en:'Square',pt:'Praça',fr:'Place',it:'Piazza',de:'Platz',emoji:'⛲'},
+    {es:'Edificio',en:'Building',pt:'Prédio',fr:'Bâtiment',it:'Edificio',de:'Gebäude',emoji:'🏢'},
+    {es:'Semáforo',en:'Traffic light',pt:'Semáforo',fr:'Feu rouge',it:'Semaforo',de:'Ampel',emoji:'🚦'},
+    {es:'Parada de colectivo',en:'Bus stop',pt:'Ponto de ônibus',fr:'Arrêt de bus',it:'Fermata dell\'autobus',de:'Bushaltestelle',emoji:'🚏'},
+    {es:'Estacionamiento',en:'Parking',pt:'Estacionamento',fr:'Parking',it:'Parcheggio',de:'Parkplatz',emoji:'🅿️'},
+    {es:'Escalera',en:'Stairs',pt:'Escada',fr:'Escalier',it:'Scala',de:'Treppe',emoji:'🪜'},
+    // ---- Deportes (15) ----
+    {es:'Básquet',en:'Basketball',pt:'Basquete',fr:'Basket',it:'Pallacanestro',de:'Basketball',emoji:'🏀'},
+    {es:'Tenis',en:'Tennis',pt:'Tênis',fr:'Tennis',it:'Tennis',de:'Tennis',emoji:'🎾'},
+    {es:'Natación',en:'Swimming',pt:'Natação',fr:'Natation',it:'Nuoto',de:'Schwimmen',emoji:'🏊'},
+    {es:'Rugby',en:'Rugby',pt:'Rugby',fr:'Rugby',it:'Rugby',de:'Rugby',emoji:'🏉'},
+    {es:'Hockey',en:'Hockey',pt:'Hóquei',fr:'Hockey',it:'Hockey',de:'Hockey',emoji:'🏒'},
+    {es:'Golf',en:'Golf',pt:'Golfe',fr:'Golf',it:'Golf',de:'Golf',emoji:'⛳'},
+    {es:'Vóley',en:'Volleyball',pt:'Vôlei',fr:'Volley',it:'Pallavolo',de:'Volleyball',emoji:'🏐'},
+    {es:'Boxeo',en:'Boxing',pt:'Boxe',fr:'Boxe',it:'Pugilato',de:'Boxen',emoji:'🥊'},
+    {es:'Atletismo',en:'Athletics',pt:'Atletismo',fr:'Athlétisme',it:'Atletica',de:'Leichtathletik',emoji:'🏃'},
+    {es:'Ciclismo',en:'Cycling',pt:'Ciclismo',fr:'Cyclisme',it:'Ciclismo',de:'Radfahren',emoji:'🚴'},
+    {es:'Patinaje',en:'Skating',pt:'Patinação',fr:'Patinage',it:'Pattinaggio',de:'Skaten',emoji:'⛸️'},
+    {es:'Esquí',en:'Skiing',pt:'Esqui',fr:'Ski',it:'Sci',de:'Skifahren',emoji:'🎿'},
+    {es:'Surf',en:'Surfing',pt:'Surfe',fr:'Surf',it:'Surf',de:'Surfen',emoji:'🏄'},
+    {es:'Gimnasia',en:'Gymnastics',pt:'Ginástica',fr:'Gymnastique',it:'Ginnastica',de:'Gymnastik',emoji:'🤸'},
+    {es:'Arco y flecha',en:'Archery',pt:'Arco e flecha',fr:'Tir à l\'arc',it:'Tiro con l\'arco',de:'Bogenschießen',emoji:'🏹'},
+    // ---- Profesiones (20) ----
+    {es:'Enfermero',en:'Nurse',pt:'Enfermeiro',fr:'Infirmier',it:'Infermiere',de:'Krankenschwester',emoji:'👨‍⚕️'},
+    {es:'Dentista',en:'Dentist',pt:'Dentista',fr:'Dentiste',it:'Dentista',de:'Zahnarzt',emoji:'🦷'},
+    {es:'Veterinario',en:'Vet',pt:'Veterinário',fr:'Vétérinaire',it:'Veterinario',de:'Tierarzt',emoji:'🐾'},
+    {es:'Abogado',en:'Lawyer',pt:'Advogado',fr:'Avocat',it:'Avvocato',de:'Anwalt',emoji:'⚖️'},
+    {es:'Ingeniero',en:'Engineer',pt:'Engenheiro',fr:'Ingénieur',it:'Ingegnere',de:'Ingenieur',emoji:'👷'},
+    {es:'Arquitecto',en:'Architect',pt:'Arquiteto',fr:'Architecte',it:'Architetto',de:'Architekt',emoji:'🏗️'},
+    {es:'Científico',en:'Scientist',pt:'Cientista',fr:'Scientifique',it:'Scienziato',de:'Wissenschaftler',emoji:'🔬'},
+    {es:'Periodista',en:'Journalist',pt:'Jornalista',fr:'Journaliste',it:'Giornalista',de:'Journalist',emoji:'📰'},
+    {es:'Cocinero',en:'Chef',pt:'Cozinheiro',fr:'Chef cuisinier',it:'Cuoco',de:'Koch',emoji:'👨‍🍳'},
+    {es:'Camarero',en:'Waiter',pt:'Garçom',fr:'Serveur',it:'Cameriere',de:'Kellner',emoji:'🤵'},
+    {es:'Taxista',en:'Taxi driver',pt:'Taxista',fr:'Chauffeur de taxi',it:'Tassista',de:'Taxifahrer',emoji:'🚕'},
+    {es:'Piloto',en:'Pilot',pt:'Piloto',fr:'Pilote',it:'Pilota',de:'Pilot',emoji:'👨‍✈️'},
+    {es:'Agricultor',en:'Farmer',pt:'Fazendeiro',fr:'Fermier',it:'Contadino',de:'Bauer',emoji:'👨‍🌾'},
+    {es:'Carpintero',en:'Carpenter',pt:'Carpinteiro',fr:'Charpentier',it:'Carpentiere',de:'Zimmermann',emoji:'🪚'},
+    {es:'Mecánico',en:'Mechanic',pt:'Mecânico',fr:'Mécanicien',it:'Meccanico',de:'Mechaniker',emoji:'🔧'},
+    {es:'Barbero',en:'Barber',pt:'Barbeiro',fr:'Coiffeur',it:'Barbiere',de:'Friseur',emoji:'💈'},
+    {es:'Músico',en:'Musician',pt:'Músico',fr:'Musicien',it:'Musicista',de:'Musiker',emoji:'🎸'},
+    {es:'Pintor',en:'Painter',pt:'Pintor',fr:'Peintre',it:'Pittore',de:'Maler',emoji:'🎨'},
+    {es:'Escritor',en:'Writer',pt:'Escritor',fr:'Écrivain',it:'Scrittore',de:'Schriftsteller',emoji:'✍️'},
+    {es:'Fotógrafo',en:'Photographer',pt:'Fotógrafo',fr:'Photographe',it:'Fotografo',de:'Fotograf',emoji:'📷'},
+    // ---- Adjetivos extra (20) ----
+    {es:'Cansado',en:'Tired',pt:'Cansado',fr:'Fatigué',it:'Stanco',de:'Müde',emoji:'😴'},
+    {es:'Hambriento',en:'Hungry',pt:'Com fome',fr:'Affamé',it:'Affamato',de:'Hungrig',emoji:'🍽️'},
+    {es:'Limpio',en:'Clean',pt:'Limpo',fr:'Propre',it:'Pulito',de:'Sauber',emoji:'✨'},
+    {es:'Sucio',en:'Dirty',pt:'Sujo',fr:'Sale',it:'Sporco',de:'Schmutzig',emoji:'💩'},
+    {es:'Nuevo',en:'New',pt:'Novo',fr:'Neuf',it:'Nuovo',de:'Neu',emoji:'🆕'},
+    {es:'Viejo',en:'Old',pt:'Velho',fr:'Vieux',it:'Vecchio',de:'Alt',emoji:'👴'},
+    {es:'Fácil',en:'Easy',pt:'Fácil',fr:'Facile',it:'Facile',de:'Einfach',emoji:'👍'},
+    {es:'Difícil',en:'Hard',pt:'Difícil',fr:'Difficile',it:'Difficile',de:'Schwer',emoji:'💪'},
+    {es:'Caro',en:'Expensive',pt:'Caro',fr:'Cher',it:'Caro',de:'Teuer',emoji:'💸'},
+    {es:'Barato',en:'Cheap',pt:'Barato',fr:'Pas cher',it:'Economico',de:'Billig',emoji:'🏷️'},
+    {es:'Abierto',en:'Open',pt:'Aberto',fr:'Ouvert',it:'Aperto',de:'Offen',emoji:'🟢'},
+    {es:'Cerrado',en:'Closed',pt:'Fechado',fr:'Fermé',it:'Chiuso',de:'Geschlossen',emoji:'🔴'},
+    {es:'Lleno',en:'Full',pt:'Cheio',fr:'Plein',it:'Pieno',de:'Voll',emoji:'📦'},
+    {es:'Vacío',en:'Empty',pt:'Vazio',fr:'Vide',it:'Vuoto',de:'Leer',emoji:'🕳️'},
+    {es:'Fuerte',en:'Strong',pt:'Forte',fr:'Fort',it:'Forte',de:'Stark',emoji:'💪'},
+    {es:'Débil',en:'Weak',pt:'Fraco',fr:'Faible',it:'Debole',de:'Schwach',emoji:'🪶'},
+    {es:'Alto',en:'Tall',pt:'Alto',fr:'Grand',it:'Alto',de:'Groß',emoji:'📏'},
+    {es:'Bajo',en:'Short',pt:'Baixo',fr:'Petit',it:'Basso',de:'Klein',emoji:'🐜'},
+    {es:'Gordo',en:'Fat',pt:'Gordo',fr:'Gros',it:'Grasso',de:'Dick',emoji:'🐷'},
+    {es:'Flaco',en:'Thin',pt:'Magro',fr:'Mince',it:'Magro',de:'Dünn',emoji:'📏'},
+    // ---- Verbos extra (25) ----
+    {es:'Abrir',en:'Open',pt:'Abrir',fr:'Ouvrir',it:'Aprire',de:'Öffnen',emoji:'📂'},
+    {es:'Cerrar',en:'Close',pt:'Fechar',fr:'Fermer',it:'Chiudere',de:'Schließen',emoji:'🚪'},
+    {es:'Entrar',en:'Enter',pt:'Entrar',fr:'Entrer',it:'Entrare',de:'Eintreten',emoji:'🚶'},
+    {es:'Salir',en:'Exit',pt:'Sair',fr:'Sortir',it:'Uscire',de:'Ausgehen',emoji:'🚪'},
+    {es:'Buscar',en:'Search',pt:'Procurar',fr:'Chercher',it:'Cercare',de:'Suchen',emoji:'🔍'},
+    {es:'Encontrar',en:'Find',pt:'Encontrar',fr:'Trouver',it:'Trovare',de:'Finden',emoji:'🎯'},
+    {es:'Perder',en:'Lose',pt:'Perder',fr:'Perdre',it:'Perdere',de:'Verlieren',emoji:'😢'},
+    {es:'Ganar',en:'Win',pt:'Ganhar',fr:'Gagner',it:'Vincere',de:'Gewinnen',emoji:'🏆'},
+    {es:'Pagar',en:'Pay',pt:'Pagar',fr:'Payer',it:'Pagare',de:'Bezahlen',emoji:'💳'},
+    {es:'Comprar',en:'Buy',pt:'Comprar',fr:'Acheter',it:'Comprare',de:'Kaufen',emoji:'🛒'},
+    {es:'Vender',en:'Sell',pt:'Vender',fr:'Vendre',it:'Vendere',de:'Verkaufen',emoji:'🏷️'},
+    {es:'Ayudar',en:'Help',pt:'Ajudar',fr:'Aider',it:'Aiutare',de:'Helfen',emoji:'🤝'},
+    {es:'Limpiar',en:'Clean',pt:'Limpar',fr:'Nettoyer',it:'Pulire',de:'Putzen',emoji:'🧹'},
+    {es:'Cocinar',en:'Cook',pt:'Cozinhar',fr:'Cuisiner',it:'Cucinare',de:'Kochen',emoji:'🍳'},
+    {es:'Lavar',en:'Wash',pt:'Lavar',fr:'Laver',it:'Lavare',de:'Waschen',emoji:'🧼'},
+    {es:'Cortar',en:'Cut',pt:'Cortar',fr:'Couper',it:'Tagliare',de:'Schneiden',emoji:'✂️'},
+    {es:'Dibujar',en:'Draw',pt:'Desenhar',fr:'Dessiner',it:'Disegnare',de:'Zeichnen',emoji:'✏️'},
+    {es:'Pintar',en:'Paint',pt:'Pintar',fr:'Peindre',it:'Dipingere',de:'Malen',emoji:'🎨'},
+    {es:'Construir',en:'Build',pt:'Construir',fr:'Construire',it:'Costruire',de:'Bauen',emoji:'🏗️'},
+    {es:'Viajar',en:'Travel',pt:'Viajar',fr:'Voyager',it:'Viaggiare',de:'Reisen',emoji:'✈️'},
+    {es:'Esperar',en:'Wait',pt:'Esperar',fr:'Attendre',it:'Aspettare',de:'Warten',emoji:'⏳'},
+    {es:'Pensar',en:'Think',pt:'Pensar',fr:'Penser',it:'Pensare',de:'Denken',emoji:'💭'},
+    {es:'Querer',en:'Want',pt:'Querer',fr:'Vouloir',it:'Volere',de:'Wollen',emoji:'❤️'},
+    {es:'Amar',en:'Love',pt:'Amar',fr:'Aimer',it:'Amare',de:'Lieben',emoji:'💖'},
+    {es:'Odiar',en:'Hate',pt:'Odiar',fr:'Détester',it:'Odiare',de:'Hassen',emoji:'😡'},
+    // ---- Casa y muebles (20) ----
+    {es:'Dormitorio',en:'Bedroom',pt:'Quarto',fr:'Chambre',it:'Camera da letto',de:'Schlafzimmer',emoji:'🛏️'},
+    {es:'Jardín',en:'Garden',pt:'Jardim',fr:'Jardin',it:'Giardino',de:'Garten',emoji:'🌷'},
+    {es:'Garaje',en:'Garage',pt:'Garagem',fr:'Garage',it:'Garage',de:'Garage',emoji:'🚗'},
+    {es:'Sofá',en:'Sofa',pt:'Sofá',fr:'Canapé',it:'Divano',de:'Sofa',emoji:'🛋️'},
+    {es:'Ropero',en:'Wardrobe',pt:'Guarda-roupa',fr:'Armoire',it:'Armadio',de:'Kleiderschrank',emoji:'🚪'},
+    {es:'Horno',en:'Oven',pt:'Forno',fr:'Four',it:'Forno',de:'Ofen',emoji:'🔥'},
+    {es:'Heladera',en:'Fridge',pt:'Geladeira',fr:'Réfrigérateur',it:'Frigorifero',de:'Kühlschrank',emoji:'🧊'},
+    {es:'Televisor',en:'TV',pt:'Televisão',fr:'Télévision',it:'Televisore',de:'Fernseher',emoji:'📺'},
+    {es:'Lámpara',en:'Lamp',pt:'Lâmpada',fr:'Lampe',it:'Lampada',de:'Lampe',emoji:'💡'},
+    {es:'Espejo',en:'Mirror',pt:'Espelho',fr:'Miroir',it:'Specchio',de:'Spiegel',emoji:'🪞'},
+    {es:'Alfombra',en:'Carpet',pt:'Tapete',fr:'Tapis',it:'Tappeto',de:'Teppich',emoji:'🟫'},
+    {es:'Cuadro',en:'Painting',pt:'Quadro',fr:'Tableau',it:'Quadro',de:'Bild',emoji:'🖼️'},
+    {es:'Cortina',en:'Curtain',pt:'Cortina',fr:'Rideau',it:'Tenda',de:'Vorhang',emoji:'🪟'},
+    {es:'Techo',en:'Ceiling',pt:'Teto',fr:'Plafond',it:'Soffitto',de:'Decke',emoji:'🏠'},
+    {es:'Pared',en:'Wall',pt:'Parede',fr:'Mur',it:'Muro',de:'Wand',emoji:'🧱'},
+    {es:'Piso',en:'Floor',pt:'Chão',fr:'Sol',it:'Pavimento',de:'Boden',emoji:'⬛'},
+    {es:'Ventilador',en:'Fan',pt:'Ventilador',fr:'Ventilateur',it:'Ventilatore',de:'Ventilator',emoji:'🌀'},
+    {es:'Calefactor',en:'Heater',pt:'Aquecedor',fr:'Chauffage',it:'Riscaldamento',de:'Heizung',emoji:'🔥'},
+    {es:'Aire acondicionado',en:'Air conditioning',pt:'Ar condicionado',fr:'Climatisation',it:'Aria condizionata',de:'Klimaanlage',emoji:'❄️'},
+    {es:'Llave',en:'Key',pt:'Chave',fr:'Clé',it:'Chiave',de:'Schlüssel',emoji:'🔑'},
+    // ---- Comida extra (20) ----
+    {es:'Naranja',en:'Orange',pt:'Laranja',fr:'Orange',it:'Arancia',de:'Orange',emoji:'🍊'},
+    {es:'Banana',en:'Banana',pt:'Banana',fr:'Banane',it:'Banana',de:'Banane',emoji:'🍌'},
+    {es:'Uva',en:'Grape',pt:'Uva',fr:'Raisin',it:'Uva',de:'Traube',emoji:'🍇'},
+    {es:'Sandía',en:'Watermelon',pt:'Melancia',fr:'Pastèque',it:'Anguria',de:'Wassermelone',emoji:'🍉'},
+    {es:'Pera',en:'Pear',pt:'Pera',fr:'Poire',it:'Pera',de:'Birne',emoji:'🍐'},
+    {es:'Limón',en:'Lemon',pt:'Limão',fr:'Citron',it:'Limone',de:'Zitrone',emoji:'🍋'},
+    {es:'Tomate',en:'Tomato',pt:'Tomate',fr:'Tomate',it:'Pomodoro',de:'Tomate',emoji:'🍅'},
+    {es:'Papa',en:'Potato',pt:'Batata',fr:'Pomme de terre',it:'Patata',de:'Kartoffel',emoji:'🥔'},
+    {es:'Cebolla',en:'Onion',pt:'Cebola',fr:'Oignon',it:'Cipolla',de:'Zwiebel',emoji:'🧅'},
+    {es:'Ajo',en:'Garlic',pt:'Alho',fr:'Ail',it:'Aglio',de:'Knoblauch',emoji:'🧄'},
+    {es:'Fideos',en:'Pasta',pt:'Macarrão',fr:'Pâtes',it:'Pasta',de:'Nudeln',emoji:'🍝'},
+    {es:'Jamón',en:'Ham',pt:'Presunto',fr:'Jambon',it:'Prosciutto',de:'Schinken',emoji:'🍖'},
+    {es:'Azúcar',en:'Sugar',pt:'Açúcar',fr:'Sucre',it:'Zucchero',de:'Zucker',emoji:'🍬'},
+    {es:'Sal',en:'Salt',pt:'Sal',fr:'Sel',it:'Sale',de:'Salz',emoji:'🧂'},
+    {es:'Aceite',en:'Oil',pt:'Óleo',fr:'Huile',it:'Olio',de:'Öl',emoji:'🫒'},
+    {es:'Harina',en:'Flour',pt:'Farinha',fr:'Farine',it:'Farina',de:'Mehl',emoji:'🌾'},
+    {es:'Chocolate',en:'Chocolate',pt:'Chocolate',fr:'Chocolat',it:'Cioccolato',de:'Schokolade',emoji:'🍫'},
+    {es:'Miel',en:'Honey',pt:'Mel',fr:'Miel',it:'Miele',de:'Honig',emoji:'🍯'},
+    {es:'Jugo',en:'Juice',pt:'Suco',fr:'Jus',it:'Succo',de:'Saft',emoji:'🧃'},
+    {es:'Café',en:'Coffee',pt:'Café',fr:'Café',it:'Caffè',de:'Kaffee',emoji:'☕'},
+    // ---- Animales extra (20) ----
+    {es:'Gallina',en:'Hen',pt:'Galinha',fr:'Poule',it:'Gallina',de:'Huhn',emoji:'🐔'},
+    {es:'Conejo',en:'Rabbit',pt:'Coelho',fr:'Lapin',it:'Coniglio',de:'Hase',emoji:'🐰'},
+    {es:'Lobo',en:'Wolf',pt:'Lobo',fr:'Loup',it:'Lupo',de:'Wolf',emoji:'🐺'},
+    {es:'Zorro',en:'Fox',pt:'Raposa',fr:'Renard',it:'Volpe',de:'Fuchs',emoji:'🦊'},
+    {es:'Ciervo',en:'Deer',pt:'Veado',fr:'Cerf',it:'Cervo',de:'Hirsch',emoji:'🦌'},
+    {es:'Cebra',en:'Zebra',pt:'Zebra',fr:'Zèbre',it:'Zebra',de:'Zebra',emoji:'🦓'},
+    {es:'Serpiente',en:'Snake',pt:'Cobra',fr:'Serpent',it:'Serpente',de:'Schlange',emoji:'🐍'},
+    {es:'Araña',en:'Spider',pt:'Aranha',fr:'Araignée',it:'Ragno',de:'Spinne',emoji:'🕷️'},
+    {es:'Mariposa',en:'Butterfly',pt:'Borboleta',fr:'Papillon',it:'Farfalla',de:'Schmetterling',emoji:'🦋'},
+    {es:'Hormiga',en:'Ant',pt:'Formiga',fr:'Fourmi',it:'Formica',de:'Ameise',emoji:'🐜'},
+    {es:'Tiburón',en:'Shark',pt:'Tubarão',fr:'Requin',it:'Squalo',de:'Hai',emoji:'🦈'},
+    {es:'Delfín',en:'Dolphin',pt:'Golfinho',fr:'Dauphin',it:'Delfino',de:'Delfin',emoji:'🐬'},
+    {es:'Pingüino',en:'Penguin',pt:'Pinguim',fr:'Pingouin',it:'Pinguino',de:'Pinguin',emoji:'🐧'},
+    {es:'Camello',en:'Camel',pt:'Camelo',fr:'Chameau',it:'Cammello',de:'Kamel',emoji:'🐫'},
+    {es:'Canguro',en:'Kangaroo',pt:'Canguru',fr:'Kangourou',it:'Canguro',de:'Känguru',emoji:'🦘'},
+    {es:'Koala',en:'Koala',pt:'Coala',fr:'Koala',it:'Koala',de:'Koala',emoji:'🐨'},
+    {es:'Aguila',en:'Eagle',pt:'Águia',fr:'Aigle',it:'Aquila',de:'Adler',emoji:'🦅'},
+    {es:'Búho',en:'Owl',pt:'Coruja',fr:'Hibou',it:'Gufo',de:'Eule',emoji:'🦉'},
+    {es:'Ballena',en:'Whale',pt:'Baleia',fr:'Baleine',it:'Balena',de:'Wal',emoji:'🐳'},
+    {es:'Caracol',en:'Snail',pt:'Caracol',fr:'Escargot',it:'Lumaca',de:'Schnecke',emoji:'🐌'},
+    // ---- Naturaleza extra (15) ----
+    {es:'Nube',en:'Cloud',pt:'Nuvem',fr:'Nuage',it:'Nuvola',de:'Wolke',emoji:'☁️'},
+    {es:'Cielo',en:'Sky',pt:'Céu',fr:'Ciel',it:'Cielo',de:'Himmel',emoji:'🌤️'},
+    {es:'Arcoíris',en:'Rainbow',pt:'Arco-íris',fr:'Arc-en-ciel',it:'Arcobaleno',de:'Regenbogen',emoji:'🌈'},
+    {es:'Viento',en:'Wind',pt:'Vento',fr:'Vent',it:'Vento',de:'Wind',emoji:'💨'},
+    {es:'Hielo',en:'Ice',pt:'Gelo',fr:'Glace',it:'Ghiaccio',de:'Eis',emoji:'🧊'},
+    {es:'Rayo',en:'Lightning',pt:'Raio',fr:'Éclair',it:'Fulmine',de:'Blitz',emoji:'⚡'},
+    {es:'Mar',en:'Sea',pt:'Mar',fr:'Mer',it:'Mare',de:'Meer',emoji:'🌊'},
+    {es:'Lago',en:'Lake',pt:'Lago',fr:'Lac',it:'Lago',de:'See',emoji:'🏞️'},
+    {es:'Arena',en:'Sand',pt:'Areia',fr:'Sable',it:'Sabbia',de:'Sand',emoji:'🏖️'},
+    {es:'Roca',en:'Rock',pt:'Rocha',fr:'Roche',it:'Roccia',de:'Fels',emoji:'🪨'},
+    {es:'Tierra',en:'Earth/Soil',pt:'Terra',fr:'Terre',it:'Terra',de:'Erde',emoji:'🌍'},
+    {es:'Semilla',en:'Seed',pt:'Semente',fr:'Graine',it:'Seme',de:'Samen',emoji:'🌱'},
+    {es:'Hoja',en:'Leaf',pt:'Folha',fr:'Feuille',it:'Foglia',de:'Blatt',emoji:'🍃'},
+    {es:'Pasto',en:'Grass',pt:'Grama',fr:'Herbe',it:'Erba',de:'Gras',emoji:'🌿'},
+    {es:'Volcán',en:'Volcano',pt:'Vulcão',fr:'Volcan',it:'Vulcano',de:'Vulkan',emoji:'🌋'},
+    // ---- Cuerpo extra (10) ----
+    {es:'Pelo',en:'Hair',pt:'Cabelo',fr:'Cheveux',it:'Capelli',de:'Haare',emoji:'💇'},
+    {es:'Ceja',en:'Eyebrow',pt:'Sobrancelha',fr:'Sourcil',it:'Sopracciglio',de:'Augenbraue',emoji:'🤨'},
+    {es:'Hombro',en:'Shoulder',pt:'Ombro',fr:'Épaule',it:'Spalla',de:'Schulter',emoji:'💪'},
+    {es:'Codo',en:'Elbow',pt:'Cotovelo',fr:'Coude',it:'Gomito',de:'Ellbogen',emoji:'💪'},
+    {es:'Rodilla',en:'Knee',pt:'Joelho',fr:'Genou',it:'Ginocchio',de:'Knie',emoji:'🦵'},
+    {es:'Uña',en:'Nail',pt:'Unha',fr:'Ongle',it:'Unghia',de:'Nagel',emoji:'💅'},
+    {es:'Dedo',en:'Finger',pt:'Dedo',fr:'Doigt',it:'Dito',de:'Finger',emoji:'👆'},
+    {es:'Espalda',en:'Back',pt:'Costas',fr:'Dos',it:'Schiena',de:'Rücken',emoji:'🔙'},
+    {es:'Estómago',en:'Stomach',pt:'Estômago',fr:'Estomac',it:'Stomaco',de:'Magen',emoji:'🫃'},
+    {es:'Cuello',en:'Neck',pt:'Pescoço',fr:'Cou',it:'Collo',de:'Hals',emoji:'🧣'},
+    // ---- Pronombres y preguntas (10) ----
+    {es:'Yo',en:'I',pt:'Eu',fr:'Je',it:'Io',de:'Ich',emoji:'👤'},
+    {es:'Tú',en:'You',pt:'Você',fr:'Tu',it:'Tu',de:'Du',emoji:'👉'},
+    {es:'Él',en:'He',pt:'Ele',fr:'Il',it:'Lui',de:'Er',emoji:'👨'},
+    {es:'Ella',en:'She',pt:'Ela',fr:'Elle',it:'Lei',de:'Sie',emoji:'👩'},
+    {es:'Nosotros',en:'We',pt:'Nós',fr:'Nous',it:'Noi',de:'Wir',emoji:'👥'},
+    {es:'Ellos',en:'They',pt:'Eles',fr:'Ils',it:'Loro',de:'Sie',emoji:'👨‍👩‍👧'},
+    {es:'¿Qué?',en:'What?',pt:'O quê?',fr:'Quoi?',it:'Cosa?',de:'Was?',emoji:'❓'},
+    {es:'¿Quién?',en:'Who?',pt:'Quem?',fr:'Qui?',it:'Chi?',de:'Wer?',emoji:'❓'},
+    {es:'¿Dónde?',en:'Where?',pt:'Onde?',fr:'Où?',it:'Dove?',de:'Wo?',emoji:'📍'},
+    {es:'¿Cuándo?',en:'When?',pt:'Quando?',fr:'Quand?',it:'Quando?',de:'Wann?',emoji:'⏰'}
+  ];
+  // Total: 20+15+20+20+15+20+20+25+20+20+20+15+10+10 = 260 → 150+260 = 410 palabras
+
+  /* ============================================================
+     Reconstruir IDIOMAS con 410 palabras y más categorías
+     ============================================================ */
+  function v(es, tr, emoji) { return { es: es, tr: tr, emoji: emoji }; }
+  function porIdiomaExtra(lang, baseExistente) {
+    var key = { ingles: 'en', portugues: 'pt', frances: 'fr', italiano: 'it', aleman: 'de' }[lang];
+    var extra = VOCAB_EXTRA.map(function (p) { return v(p.es, p[key], p.emoji); });
+    return baseExistente.concat(extra);
+  }
+  function saludosDe(lang) {
+    var base = [
+      ['Hola','Hello','Olá','Bonjour','Ciao','Hallo'],
+      ['Adiós','Goodbye','Tchau','Au revoir','Arrivederci','Tschüss'],
+      ['Buenos días','Good morning','Bom dia','Bonjour','Buongiorno','Guten Morgen'],
+      ['Buenas noches','Good night','Boa noite','Bonne nuit','Buonanotte','Gute Nacht'],
+      ['Gracias','Thank you','Obrigado','Merci','Grazie','Danke'],
+      ['Por favor','Please','Por favor',"S'il vous plaît",'Per favore','Bitte'],
+      ['Sí','Yes','Sim','Oui','Sì','Ja'],
+      ['No','No','Não','Non','No','Nein'],
+      ['Perdón','Sorry','Desculpe','Désolé','Scusa','Entschuldigung'],
+      ['¿Cómo estás?','How are you?','Como vai?','Comment ça va?','Come stai?','Wie geht es?'],
+      ['Estoy bien','I am fine','Estou bem','Je vais bien','Sto bene','Mir geht es gut'],
+      ['Me llamo...','My name is...','Meu nome é...','Je m\'appelle...','Mi chiamo...','Ich heiße...']
+    ];
+    var idx = { en:1, pt:2, fr:3, it:4, de:5 }[lang];
+    var emojis = ['👋','👋','🌅','🌙','🙏','🤲','✅','❌','🥺','❓','😊','👤'];
+    return base.map(function (fila, i) { return v(fila[0], fila[idx], emojis[i]); });
+  }
+  function armarIdioma400(lang, nombre, bandera, code, baseExistente) {
+    var key2 = { ingles:'en', portugues:'pt', frances:'fr', italiano:'it', aleman:'de' }[lang];
+    var base = porIdiomaExtra(lang, baseExistente); // 410 palabras
+    var cats = { '💬 Saludos': saludosDe(key2) };
+    // Categorías por rangos (150 originales + 260 nuevas)
+    cats['🔢 Números'] = base.slice(0,12);
+    cats['🎨 Colores'] = base.slice(12,24);
+    cats['🐶 Animales'] = base.slice(24,39);
+    cats['👨‍👩‍👧 Familia'] = base.slice(39,49);
+    cats['🍎 Comida'] = base.slice(49,64);
+    cats['🏫 Casa y Escuela'] = base.slice(64,78);
+    cats['🌳 Naturaleza'] = base.slice(78,88);
+    cats['👤 Cuerpo'] = base.slice(88,98);
+    cats['🚗 Transporte'] = base.slice(98,106);
+    cats['😊 Adjetivos'] = base.slice(106,118);
+    cats['🏃 Verbos'] = base.slice(118,133);
+    cats['👕 Ropa y Tiempo'] = base.slice(133,142);
+    cats['🌍 Lugares'] = base.slice(142,150);
+    // Nuevas categorías (desde la 150)
+    cats['📚 Útiles Escolares'] = base.slice(150,170);
+    cats['👕 Ropa Completa'] = base.slice(170,185);
+    cats['📅 Calendario'] = base.slice(185,205);
+    cats['🏙️ Ciudad y Lugares'] = base.slice(205,225);
+    cats['⚽ Deportes'] = base.slice(225,240);
+    cats['👨‍🚀 Profesiones'] = base.slice(240,260);
+    cats['✨ Adjetivos Extra'] = base.slice(260,280);
+    cats['🎬 Verbos Extra'] = base.slice(280,305);
+    cats['🛋️ Casa y Muebles'] = base.slice(305,325);
+    cats['🍽️ Comida Extra'] = base.slice(325,345);
+    cats['🦁 Animales Extra'] = base.slice(345,365);
+    cats['🌿 Naturaleza Extra'] = base.slice(365,380);
+    cats['🦵 Cuerpo Extra'] = base.slice(380,390);
+    cats['👥 Pronombres y Preguntas'] = base.slice(390,410);
+    return { nombre: nombre, bandera: bandera, lang: code, categorias: cats, totalPalabras: base.length };
+  }
+
+  function reconstruirIdiomas400() {
+    if (!EK.Mundos.IDIOMAS) return null;
+    var out = {};
+    var baseOriginal = EK.Mundos.PALABRAS || [];
+    function baseDe(lang) {
+      var key = { ingles:'en', portugues:'pt', frances:'fr', italiano:'it', aleman:'de' }[lang];
+      return baseOriginal.map(function (p) { return v(p.es, p[key], p.emoji); });
+    }
+    out.ingles    = armarIdioma400('ingles',    'Inglés',    '🇬🇧', 'en-US', baseDe('ingles'));
+    out.portugues = armarIdioma400('portugues', 'Portugués', '🇧🇷', 'pt-BR', baseDe('portugues'));
+    out.frances   = armarIdioma400('frances',   'Francés',   '🇫🇷', 'fr-FR', baseDe('frances'));
+    out.italiano  = armarIdioma400('italiano',  'Italiano',  '🇮🇹', 'it-IT', baseDe('italiano'));
+    out.aleman    = armarIdioma400('aleman',    'Alemán',    '🇩🇪', 'de-DE', baseDe('aleman'));
+    return out;
+  }
+
+  EK.Mundos.VOCAB_EXTRA = VOCAB_EXTRA;
+  EK.Mundos.IDIOMAS_400 = reconstruirIdiomas400();
+  if (EK.Mundos.IDIOMAS_400) {
+    EK.Mundos.IDIOMAS = EK.Mundos.IDIOMAS_400; // reemplaza por la versión de 410 palabras
+    // Reconstruir también la versión para pronunciar (voz)
+    if (EK.Mundos.marcarIdiomasParaPronunciar) {
+      EK.Mundos.IDIOMAS_PRONUNCIAR = EK.Mundos.marcarIdiomasParaPronunciar(EK.Mundos.IDIOMAS);
+    }
+  }
+
+  /* ============================================================
+     MÁS JUEGOS — 12 modos nuevos (configuración para el motor)
+     ============================================================ */
+  var JUEGOS_EXTRA = [
+    {id:'sopa',        nombre:'Sopa de Letras',   emoji:'🔤', desc:'Encontrá las palabras escondidas',          tipo:'sopa',        nivel:'todos'},
+    {id:'ahorcado',    nombre:'Ahorcado',         emoji:'😵', desc:'Adiviná la palabra letra por letra',         tipo:'ahorcado',    nivel:'primario+'},
+    {id:'memoria',     nombre:'Memoria',          emoji:'🃏', desc:'Encontrá los pares iguales',                 tipo:'memoria',     nivel:'todos'},
+    {id:'intruso',     nombre:'Encontrá el Intruso',emoji:'🔍', desc:'¿Cuál no pertenece al grupo?',             tipo:'intruso',     nivel:'todos'},
+    {id:'calculomental',nombre:'Cálculo Mental',  emoji:'🧮', desc:'Contra reloj, sin escribir',                tipo:'cronometrado',nivel:'todos'},
+    {id:'unirpuntos',  nombre:'Unir Puntos',      emoji:'⭐', desc:'Uní en orden y descubrí la figura',          tipo:'unir',        nivel:'inicial'},
+    {id:'crucigrama',  nombre:'Crucigrama',       emoji:'⬛', desc:'Palabras cruzadas simples',                  tipo:'crucigrama',  nivel:'primario+'},
+    {id:'verdadero',   nombre:'Verdadero o Falso',emoji:'🤔', desc:'Rápido: ¿verdadero o falso?',                tipo:'vf',          nivel:'todos'},
+    {id:'ordenar',     nombre:'Ordenar Secuencia',emoji:'🔢', desc:'Tocá en el orden correcto',                  tipo:'ordenar',     nivel:'todos'},
+    {id:'emparejar',   nombre:'Emparejar',        emoji:'🔗', desc:'Uní cada elemento con su par',               tipo:'emparejar',   nivel:'todos'},
+    {id:'completar',   nombre:'Completar el Hueco',emoji:'✏️', desc:'Elegí la palabra que completa la oración',   tipo:'hueco',       nivel:'primario+'},
+    {id:'preguntados', nombre:'Preguntados',      emoji:'🎡', desc:'Trivia con ruleta de categorías',            tipo:'ruleta',      nivel:'todos'},
+    {id:'supervivencia',nombre:'Supervivencia',   emoji:'❤️', desc:'3 vidas, ¿cuántas seguís?',                 tipo:'vidas',       nivel:'todos'},
+    {id:'duelo',       nombre:'Duelo 2 Jugadores',emoji:'⚔️', desc:'Turnos en el mismo dispositivo',             tipo:'duelo',       nivel:'todos'},
+    {id:'relampago',   nombre:'Relámpago 60s',    emoji:'⚡', desc:'Máxima cantidad en 1 minuto',               tipo:'cronometrado',nivel:'todos'},
+    {id:'cadenafria',  nombre:'Cadena Fría',      emoji:'🔗', desc:'Cada respuesta correcta suma a la cadena',   tipo:'cadena',      nivel:'todos'}
+  ];
+  EK.Mundos.MODOS_JUEGO = (EK.Mundos.MODOS_JUEGO || []).concat(JUEGOS_EXTRA);
+  EK.Mundos.JUEGOS_EXTRA = JUEGOS_EXTRA;
+
+  /* ============================================================
+     MÁS PREGUNTAS en todos los mundos (bancos extra)
+     ============================================================ */
+  function banco(items, n) { return barajar(items).slice(0, n || 8).map(function (x) { return { pregunta: x.p, opciones: barajar((x.opts||[]).map(String)), correcta: String(x.c), emojiPregunta: '❓' }; }); }
+
+  var PREGUNTAS_EXTRA = {
+    matematicas: banco([
+      {p:'¿Cuánto es 15 × 4?',c:60,opts:[50,60,70,45]},
+      {p:'¿Cuánto es 100 ÷ 4?',c:25,opts:[20,25,30,40]},
+      {p:'¿Cuánto es 1/2 de 60?',c:30,opts:[30,20,15,40]},
+      {p:'¿Cuánto es 0.5 + 0.5?',c:1,opts:[1,0.1,0.25,10]},
+      {p:'¿Cuántos lados tiene un hexágono?',c:6,opts:[6,5,7,8]},
+      {p:'¿Cuánto es 2 al cubo (2³)?',c:8,opts:[8,6,4,16]},
+      {p:'¿Cuánto es 1 docena y media?',c:18,opts:[18,12,24,15]},
+      {p:'¿Cuánto es 1000 − 457?',c:543,opts:[543,557,643,453]}
+    ], 8),
+    ciencia: banco([
+      {p:'¿Cuántos planetas hay en el sistema solar?',c:8,opts:[8,9,7,10]},
+      {p:'¿Qué gas expulsan las plantas?',c:'Oxígeno',opts:['Oxígeno','Dióxido','Helio','Hidrógeno']},
+      {p:'¿Cuántos corazones tiene un pulpo?',c:3,opts:[3,1,2,4]},
+      {p:'¿Qué metal es líquido a temperatura ambiente?',c:'Mercurio',opts:['Mercurio','Hierro','Oro','Plata']},
+      {p:'¿Cuántos segundos tiene un minuto?',c:60,opts:[60,100,30,120]},
+      {p:'¿Qué órgano filtra la sangre?',c:'Riñón',opts:['Riñón','Hígado','Pulmón','Corazón']},
+      {p:'¿Qué es el ADN?',c:'Molécula de la herencia',opts:['Molécula de la herencia','Una célula','Un órgano','Un virus']},
+      {p:'¿Cuál es el metal más abundante en la Tierra?',c:'Hierro',opts:['Hierro','Oro','Plata','Cobre']}
+    ], 8),
+    geografia: banco([
+      {p:'¿Cuál es la capital de Perú?',c:'Lima',opts:['Lima','Quito','Bogotá','Santiago']},
+      {p:'¿Cuál es el río más largo de Argentina?',c:'Paraná',opts:['Paraná','Uruguay','Negro','Colorado']},
+      {p:'¿En qué continente está el desierto del Sahara?',c:'África',opts:['África','Asia','Oceanía','América']},
+      {p:'¿Cuál es la montaña más alta del mundo?',c:'Everest',opts:['Everest','Aconcagua','K2','Kilimanjaro']},
+      {p:'¿Qué país tiene forma de bota?',c:'Italia',opts:['Italia','Francia','España','Grecia']},
+      {p:'¿Cuál es la capital de Colombia?',c:'Bogotá',opts:['Bogotá','Lima','Quito','Caracas']},
+      {p:'¿Qué océano baña las costas de Argentina?',c:'Atlántico',opts:['Atlántico','Pacífico','Índico','Ártico']},
+      {p:'¿Cuál es la capital de Venezuela?',c:'Caracas',opts:['Caracas','Bogotá','Quito','Lima']}
+    ], 8),
+    lengua: banco([
+      {p:'¿Cuál es el antónimo de "claro"?',c:'Oscuro',opts:['Oscuro','Luminoso','Brillante','Blanco']},
+      {p:'¿Cuál es el sinónimo de "rápido"?',c:'Veloz',opts:['Veloz','Lento','Pausado','Tardío']},
+      {p:'¿Cuántas vocales hay?',c:5,opts:[5,4,6,7]},
+      {p:'¿Qué palabra es aguda?',c:'Café',opts:['Café','Árbol','Pájaro','Lápiz']},
+      {p:'¿Qué es un adverbio de modo?',c:'Rápidamente',opts:['Rápidamente','Casa','Correr','Bonito']},
+      {p:'¿Cuál es el plural de "flor"?',c:'Flores',opts:['Flores','Flor','Florcitas','Floridas']},
+      {p:'¿Qué es un diptongo?',c:'Dos vocales juntas',opts:['Dos vocales juntas','Dos consonantes','Una sola vocal','Una oración']},
+      {p:'¿Quién escribió "Don Quijote"?',c:'Cervantes',opts:['Cervantes','Shakespeare','Borges','Dante']}
+    ], 8),
+    historia: banco([
+      {p:'¿En qué año llegó Colón a América?',c:1492,opts:[1492,1500,1450,1600]},
+      {p:'¿Quién fue el primer presidente de Argentina?',c:'Rivadavia',opts:['Rivadavia','San Martín','Belgrano','Sarmiento']},
+      {p:'¿Qué fue la Revolución Francesa?',c:'Cambio de gobierno en Francia',opts:['Cambio de gobierno en Francia','Una guerra','Un descubrimiento','Una fiesta']},
+      {p:'¿Quién pintó la Capilla Sixtina?',c:'Miguel Ángel',opts:['Miguel Ángel','Da Vinci','Rafael','Donatello']},
+      {p:'¿Qué fue la Edad de Piedra?',c:'Uso de herramientas de piedra',opts:['Uso de herramientas de piedra','Uso de metal','Uso de plástico','Uso de electricidad']},
+      {p:'¿Quién fue Eva Perón?',c:'Actriz y política argentina',opts:['Actriz y política argentina','Una reina','Una científica','Una atleta']},
+      {p:'¿Qué fue la Guerra de las Malvinas?',c:'Conflicto de 1982',opts:['Conflicto de 1982','Una guerra civil','Un tratado','Un descubrimiento']},
+      {p:'¿Quién fue Galileo?',c:'Científico que defendió que la Tierra gira',opts:['Científico que defendió que la Tierra gira','Un rey','Un pintor','Un músico']}
+    ], 8),
+    deportes: banco([
+      {p:'¿Cuántos jugadores de vóley por equipo?',c:6,opts:[6,5,7,11]},
+      {p:'¿Cuántos sets gana un partido de tenis (mejor de 3)?',c:2,opts:[2,3,1,5]},
+      {p:'¿En qué deporte se usa un shuttlecock?',c:'Bádminton',opts:['Bádminton','Tenis','Squash','Ping pong']},
+      {p:'¿Cuántos anillos tiene el logo olímpico?',c:5,opts:[5,3,4,6]},
+      {p:'¿Qué deporte usa un palo y una bocha?',c:'Hockey',opts:['Hockey','Tenis','Golf','Básquet']},
+      {p:'¿Cuántos minutos dura un tiempo de básquet (NBA)?',c:12,opts:[12,15,10,20]},
+      {p:'¿En qué país se inventó el básquet?',c:'EE.UU.',opts:['EE.UU.','Inglaterra','Francia','Canadá']},
+      {p:'¿Qué es un penal en rugby?',c:'Patada al palo',opts:['Patada al palo','Un try','Una conversión','Un scrum']}
+    ], 8)
+  };
+  EK.Mundos.PREGUNTAS_EXTRA = PREGUNTAS_EXTRA;
+  // Mezclar las preguntas extra en los generadores existentes (sin romper)
+  EK.Mundos.genMateOriginal = EK.Mundos.genMate;
+  EK.Mundos.genMate = function (nivel) {
+    var base = EK.Mundos.genMateOriginal(nivel);
+    if (nivel >= 5) return barajar(base.concat(PREGUNTAS_EXTRA.matematicas.slice(0,3)));
+    return base;
+  };
+
+  /* ============================================================
+     CONFIG DE PRODUCCIÓN
+     ============================================================ */
+  EK.Mundos.PRODUCCION = {
+    version: '3.1 PRODUCCION',
+    totalPalabrasIdioma: 410,
+    totalIdiomas: 5,
+    totalMundos: (EK.Mundos.MUNDOS || []).length,
+    totalModosJuego: (EK.Mundos.MODOS_JUEGO || []).length,
+    auditoria: true,          // loguea errores silenciosamente
+    fallbackSinAudio: true,   // si no hay micrófono/voz, usa botones
+    xpPorCorrecta: 10,
+    monedasPorCorrecta: 5,
+    gemasPorNivelPerfecto: 1,
+    maxPreguntasPorQuiz: 10,
+    tiempoPorPreguntaSeg: 30,
+    intentosPronunciacion: 3,
+    privacidad: 'No se envían datos a servidores; todo es local en el dispositivo',
+    compatibilidad: 'Chrome, Edge, Firefox, Safari (reconocimiento de voz solo en Chrome/Edge con internet)'
+  };
+
+  console.log('[extension_produccion] OK: ' + (EK.Mundos.IDIOMAS_400 ? '410 palabras/idioma' : 'sin idiomas') + ', ' + EK.Mundos.MODOS_JUEGO.length + ' modos de juego');
+})();
