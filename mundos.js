@@ -63,7 +63,101 @@
   // Sopa de letras (palabras a encontrar)
   function qsopa(titulo, palabras, tamano, emoji) { return { pregunta: titulo, palabras: palabras, tamano: tamano || 8, tipo: 'sopa', emojiPregunta: emoji || '🔤' }; }
   // Transformar banco {p,c,opts} en preguntas qf
-  function banco(items, n) { return barajar(items).slice(0, n || 8).map(function (x) { return qf(x.p, x.c, x.opts); }); }
+  function bancoSimple(items, n) { return barajar(items).slice(0, n || 8).map(function (x) { return qf(x.p, x.c, x.opts); }); }
+  // Banco VARIADO: mezcla opción múltiple, verdadero/falso y completar hueco (como el original)
+  function banco(items, n) {
+    var base = bancoSimple(items, n);
+    return base.map(function (preg, i) {
+      if (i % 4 === 1) { // 25% verdadero/falso
+        var esVerdad = Math.random() > 0.5;
+        var texto = esVerdad ? preg.pregunta.replace('¿', '').replace('?', '.') : preg.pregunta.replace('¿', '').replace('?', ' es incorrecto.');
+        return qv(texto, esVerdad);
+      }
+      if (i % 4 === 2) { // 25% completar hueco
+        var hueco = preg.pregunta.replace('¿Cuál es ', 'El/la ___ es ').replace('¿Qué es ', 'Es ___: ').replace('?', '.');
+        return qh(hueco + ' Completá: ___', preg.correcta, preg.opciones);
+      }
+      return preg; // 50% opción múltiple
+    });
+  }
+
+  /* ============================================================
+     GENERADORES DE JUEGOS REALES (cada uno devuelve preguntas del tipo correcto)
+     ============================================================ */
+  // Verdadero/Falso a partir de un banco
+  function genVF(items, n) {
+    return barajar(items).slice(0, n || 8).map(function (x, i) {
+      var esVerdad = i % 2 === 0;
+      var texto = esVerdad ? x.p.replace('¿', '').replace('?', '.') : x.p.replace('¿', '').replace('?', ' (afirmación falsa).');
+      return qv(texto, esVerdad);
+    });
+  }
+  // Completar el hueco
+  function genHueco(items, n) {
+    return barajar(items).slice(0, n || 8).map(function (x) {
+      return qh('Completá: ___ ' + x.p.replace('¿', '').replace('?', ''), x.c, x.opts);
+    });
+  }
+  // Ordenar secuencia
+  function genOrdenar(titulo, secuencias, n) {
+    var lista = secuencias || [['1','2','3','4'],['a','b','c','d'],['Lunes','Martes','Miércoles','Jueves']];
+    return barajar(lista).slice(0, n || 5).map(function (sec, i) {
+      return qo(titulo || 'Ordená la secuencia ' + (i+1), sec);
+    });
+  }
+  // Emparejar
+  function genEmparejar(titulo, pares) {
+    return [qemp(titulo || 'Emparejá cada elemento con su par', pares || [['Perro','Ladra'],['Gato','Maulla'],['Vaca','Muge'],['Pato','Cuac']])];
+  }
+  // Memoria (pares emoji-palabra)
+  function genMemoria(vocabList, titulo) {
+    var pares = barajar(vocabList || [{es:'Sol',emoji:'☀️'},{es:'Luna',emoji:'🌙'}]).slice(0,6).map(function(v){ return [v.emoji, v.es]; });
+    return [qmem(titulo || 'Memoria: encontrá los pares', pares)];
+  }
+  // Ahorcado
+  function genAhorcado(vocabList, pistas, n) {
+    return barajar(vocabList || []).slice(0, n || 5).map(function (v, i) {
+      return qah((pistas && pistas[i]) || 'Palabra de ' + v.es.length + ' letras', v.es || v.tr || v);
+    });
+  }
+  // Sopa de letras
+  function genSopa(vocabList, titulo, tamano) {
+    var palabras = barajar(vocabList || []).slice(0,6).map(function(v){ return v.es || v.tr || v; });
+    return [qsopa(titulo || 'Encontrá las palabras', palabras, tamano || 8)];
+  }
+  // Encontrar el intruso
+  function genIntruso(grupos, n) {
+    var gs = grupos || [['Manzana','Pera','Uva','Auto'],['Perro','Gato','Loro','Mesa'],['Rojo','Azul','Verde','Pelota']];
+    return barajar(gs).slice(0, n || 5).map(function (g) {
+      var intruso = g[g.length-1];
+      return qc('¿Cuál es el intruso? ' + g.join(', '), intruso, g);
+    });
+  }
+  // Cálculo mental cronometrado
+  function genCalculoMental(n, nivel) {
+    var preg = [];
+    for (var i = 0; i < (n || 10); i++) {
+      var a = Math.floor(Math.random() * (nivel > 5 ? 50 : 10)) + 1;
+      var b = Math.floor(Math.random() * (nivel > 5 ? 50 : 10)) + 1;
+      var op = nivel > 3 ? ['+','-','×'][Math.floor(Math.random()*3)] : '+';
+      var res = op === '+' ? a+b : op === '-' ? a-b : a*b;
+      preg.push(q('¿Cuánto es ' + a + ' ' + op + ' ' + b + '? ⏱️', res, opcionesNumericas(res)));
+    }
+    return barajar(preg);
+  }
+  // Crucigrama simple (definiciones)
+  function genCrucigrama(vocabList, n) {
+    return barajar(vocabList || []).slice(0, n || 5).map(function (v, i) {
+      return qh('Crucigrama ' + (i+1) + ': Empieza con "' + (v.es || v).charAt(0).toUpperCase() + '", ' + (v.es || v).length + ' letras', v.es || v, [v.es || v, 'Otra', 'Otra2', 'Otra3']);
+    });
+  }
+  // Unir puntos (secuencia numérica)
+  function genUnirPuntos(n) {
+    var num = [];
+    for (var i = 1; i <= (n || 10); i++) num.push(String(i));
+    return [qo('Uní los puntos en orden del 1 al ' + n, num, '⭐')];
+  }
+  var GENERADORES_JUEGOS = { genVF:genVF, genHueco:genHueco, genOrdenar:genOrdenar, genEmparejar:genEmparejar, genMemoria:genMemoria, genAhorcado:genAhorcado, genSopa:genSopa, genIntruso:genIntruso, genCalculoMental:genCalculoMental, genCrucigrama:genCrucigrama, genUnirPuntos:genUnirPuntos };
 
   /* ============================================================
      NIVELES EDUCATIVOS (INICIAL / PRIMARIO / SECUNDARIO)
@@ -1985,7 +2079,10 @@
     PRODUCCION: PRODUCCION,
     barajar: barajar, opcionesNumericas: opcionesNumericas,
     q: q, qf: qf, qc: qc, qv: qv, qh: qh, qo: qo, qemp: qemp, qa: qa, qah: qah, qmem: qmem, qsopa: qsopa,
-    banco: banco
+    banco: banco, bancoSimple: bancoSimple, GENERADORES_JUEGOS: GENERADORES_JUEGOS,
+    genVF: genVF, genHueco: genHueco, genOrdenar: genOrdenar, genEmparejar: genEmparejar,
+    genMemoria: genMemoria, genAhorcado: genAhorcado, genSopa: genSopa, genIntruso: genIntruso,
+    genCalculoMental: genCalculoMental, genCrucigrama: genCrucigrama, genUnirPuntos: genUnirPuntos
   };
   window.EK = window.EK || {};
   window.EK.Mundos = Mundos;
