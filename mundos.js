@@ -578,7 +578,7 @@
     {es:'Comer',en:'Eat',pt:'Comer',fr:'Manger',it:'Mangiare',de:'Essen',emoji:'🍽️'},
     {es:'Beber',en:'Drink',pt:'Beber',fr:'Boire',it:'Bere',de:'Trinken',emoji:'🥤'},
     {es:'Correr',en:'Run',pt:'Correr',fr:'Courir',it:'Correre',de:'Laufen',emoji:'🏃'},
-    {es:'Jugar',en:'Play',pt:'Brincar',fr:'Jouer',it:'Giocare',de:'Spielen',emoji:'🎮'},
+    {es:'Jugar',en:'Play',pt:'Jugar',fr:'Jouer',it:'Giocare',de:'Spielen',emoji:'🎮'},
     {es:'Leer',en:'Read',pt:'Leer',fr:'Lire',it:'Leggere',de:'Lesen',emoji:'📖'},
     {es:'Escribir',en:'Write',pt:'Escribir',fr:'Écrire',it:'Scrivere',de:'Schreiben',emoji:'✍️'},
     {es:'Dormir',en:'Sleep',pt:'Dormir',fr:'Dormir',it:'Dormire',de:'Schlafen',emoji:'😴'},
