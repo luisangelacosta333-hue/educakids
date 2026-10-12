@@ -3,62 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#FF6B6B" />
-  <meta name="description" content="EducaKids - Aprendé jugando. Mundos educativos para niños." />
-  <title>EducaKids · Aprendé jugando</title>
+  <meta name="theme-color" content="#1a1040" />
+  <meta name="description" content="BuggyIa Escuela · Aprendé jugando. Mundos educativos premium para niños." />
+  <title>BuggyIa Escuela · Aprendé jugando</title>
 
-  <!-- PWA (Rutas corregidas sin la carpeta "icons/") -->
+  <!-- PWA (mismas rutas, sin subcarpetas) -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/svg+xml" href="icon.svg" />
   <link rel="apple-touch-icon" href="icon-192.png" />
 
-  <!-- Fuente infantil (Fredoka, Education/Learning) -->
+  <!-- Fuentes premium infantiles -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- RUTA CORREGIDA: Sin la carpeta "css/" -->
+  <!-- CSS PREMIUM completo: vidrio esmerilado + botones 3D (reemplaza al viejo style.css) -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Fondo animado premium (orbes de color difuminados) -->
+  <div class="premium-bg" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+    <div class="premium-grid"></div>
+  </div>
+
   <!-- Barra superior: estrellas, medallas, perfil, sonido -->
-  <header id="topbar" class="topbar">
-    <button class="top-btn" id="btn-inicio" aria-label="Inicio" title="Inicio">🏠</button>
+  <header id="topbar" class="topbar premium-glass">
+    <button class="top-btn premium-btn-soft" id="btn-inicio" aria-label="Inicio" title="Inicio">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
+    </button>
     <div class="top-stats">
-      <span class="stat-pill" id="stat-estrellas" title="Estrellas">⭐ <b>0</b></span>
-      <span class="stat-pill" id="stat-medallas" title="Medallas">🏅 <b>0</b></span>
-      <span class="stat-pill" id="stat-racha" title="Días de racha">🔥 <b>1</b></span>
+      <span class="stat-pill premium-pill" id="stat-estrellas" title="Estrellas">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFD54A" stroke="#E8A317" stroke-width="1.2"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5L2.6 9.3l6.5-.9z"/></svg>
+        <b>0</b>
+      </span>
+      <span class="stat-pill premium-pill" id="stat-medallas" title="Medallas">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FFD54A" stroke-width="2"><circle cx="12" cy="14" r="5"/><path d="M8.5 9.5 7 3h10l-1.5 6.5"/><path d="M12 11.5v5M9.5 14h5"/></svg>
+        <b>0</b>
+      </span>
+      <span class="stat-pill premium-pill" id="stat-racha" title="Días de racha">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="#FF7A45" stroke="#E8541A" stroke-width="1.2"><path d="M12 2.5c1 3-1 4.5-1 7 0 1.5 1 2.5 1 2.5s-3 .5-3-3c0-2 1-3.5 1-5-2 2-3 4.5-3 7a6 6 0 0 0 12 0c0-4-3-6.5-6-8.5z"/></svg>
+        <b>1</b>
+      </span>
     </div>
     <div class="top-right">
-      <button class="top-btn" id="btn-sonido" aria-label="Sonido" title="Sonido">🔊</button>
-      <button class="top-btn avatar-btn" id="btn-perfil" aria-label="Perfil" title="Perfil">👤</button>
+      <button class="top-btn premium-btn-soft" id="btn-sonido" aria-label="Sonido" title="Sonido">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      </button>
+      <button class="top-btn avatar-btn premium-btn-soft" id="btn-perfil" aria-label="Perfil" title="Perfil">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+      </button>
     </div>
   </header>
 
   <!-- Contenedor único: TODO el contenido se renderiza aquí por JS -->
-  <main id="app" class="app"></main>
+  <main id="app" class="app premium-app"></main>
 
   <!-- Capa de confeti / celebraciones -->
   <div id="fx" class="fx-layer" aria-hidden="true"></div>
 
   <!-- Modal genérico (medallas, avisos) -->
   <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
-    <div class="modal-card" id="modal-card"></div>
+    <div class="modal-card premium-modal" id="modal-card"></div>
   </div>
 
-  <!-- RUTAS CORREGIDAS: Sin la carpeta "js/". Ahora encontrará tus 13 archivos -->
-  <script src="store.js"></script>     
-  <script src="audio.js"></script>     
-  <script src="voz.js"></script>       
-  <script src="engine.js"></script>    
-  <script src="mundos.js"></script>    
-  <script src="geografia.js"></script> 
+  <!-- Tus 13 archivos JS (sin carpeta js/) -->
+  <script src="store.js"></script>
+  <script src="audio.js"></script>
+  <script src="voz.js"></script>
+  <script src="engine.js"></script>
+  <script src="mundos.js"></script>
+  <script src="geografia.js"></script>
   <script src="lengua-sociales.js"></script>
   <script src="minijuegos.js"></script>
   <script src="juegos-nuevos.js"></script>
-  <script src="dibujo.js"></script>    
-  <script src="mascota.js"></script>   
-  <script src="escuelas.js"></script>  
-  <script src="app.js"></script>       
+  <script src="dibujo.js"></script>
+  <script src="mascota.js"></script>
+  <script src="escuelas.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
