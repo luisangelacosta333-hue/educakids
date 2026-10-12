@@ -90,25 +90,14 @@ input { font-family: inherit; }
 .hidden { display: none !important; }
 
 /* ============================================================
-   ZORRO + CORONA + MASCOTA — OCULTOS (no estorban botones)
+   ZORRO + CORONA — ELIMINADOS en mascota.js (ahora es robot 🤖)
+   Si quedara algún resto de zorro/corona en otro JS, se oculta:
    ============================================================ */
-.mascota, #mascota, .mascot, #mascot, .pet, #pet,
 .zorro, #zorro, .fox, #fox, .zorro-img, .img-zorro,
 .corona, #corona, .crown, #crown, .corona-img, .img-corona,
-.mascota-container, #mascota-container, .mascota-wrap,
-.mascota-flotante, .mascota-flotando, .personaje-flotante,
-.mascota-box, #mascota-box, .mascota-div,
 [class*="zorro"], [id*="zorro"], [class*="corona"], [id*="corona"],
-[class*="mascot"], [id*="mascot"], [class*="fox"], [id*="fox"],
-[class*="crown"], [id*="crown"] {
+[class*="fox"], [id*="fox"], [class*="crown"], [id*="crown"] {
   display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  width: 0 !important; height: 0 !important;
-  pointer-events: none !important;
-  position: absolute !important;
-  left: -9999px !important;
-  overflow: hidden !important;
 }
 
 /* ============================================================
