@@ -6,6 +6,7 @@
    Cargar DESPUÉS de mundos.js, engine.js y voz.js:
      <script src="storybooks.js"></script>
      <script src="storybooks-reader.js"></script>
+   FIX v3.4: compatibilidad con voz.js (hablar posicional + callar)
    ============================================================ */
 (function () {
   'use strict';
@@ -153,11 +154,18 @@
       .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); });
   }
 
-  /* ---------- Audio (reutiliza voz.js si existe) ---------- */
+  /* ---------- Audio (reutiliza voz.js si existe) ----------
+     FIX: voz.js.hablar usa firma posicional (texto, lang, rate, pitch)
+     y NO acepta objeto ni onend. voz.js.callar detiene el audio. */
   function hablar(texto, lang, onend) {
     try {
       if (EK.Voz && typeof EK.Voz.hablar === 'function') {
-        EK.Voz.hablar(texto, { lang: lang === 'en' ? 'en-US' : 'es-AR', rate: 0.9, onend: onend });
+        EK.Voz.hablar(texto, (lang === 'en' ? 'en-US' : 'es-AR'), 0.9, 1.1);
+        // voz.js no expone onend: ejecutamos el callback con tiempo estimado
+        if (onend) {
+          var ms = Math.min(15000, Math.max(2500, String(texto).length * 110));
+          setTimeout(onend, ms);
+        }
         return true;
       }
       if ('speechSynthesis' in window) {
@@ -173,7 +181,7 @@
     return false;
   }
   function detenerAudio() {
-    try { if (EK.Voz && EK.Voz.detener) EK.Voz.detener(); } catch (e) {}
+    try { if (EK.Voz && EK.Voz.callar) EK.Voz.callar(); } catch (e) {}
     try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {}
   }
 
