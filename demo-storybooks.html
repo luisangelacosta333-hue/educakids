@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Storybooks Bilingües · Demo · BuggyIA</title>
+<link rel="stylesheet" href="storybooks.css">
+<style>
+  body { margin:0; background:#FFF8EE; font-family:'Comic Sans MS','Segoe UI',sans-serif; }
+  #demo-top { text-align:center; padding:18px 12px 6px; }
+  #demo-top h1 { margin:0; color:#E8892C; font-size:22px; }
+  #demo-top p { margin:4px 0 0; color:#7A6A5A; font-size:13px; }
+  #app { min-height: 60vh; }
+</style>
+</head>
+<body>
+<div id="demo-top">
+  <h1>📚 Storybooks Bilingües — Demo</h1>
+  <p>Para probar antes de integrar en BuggyIA. Abrir por HTTP (no file://) para que carguen los JSON.</p>
+</div>
+<div id="app"></div>
+
+<!-- Simulacro mínimo de voz.js (el real de BuggyIA tiene más funciones) -->
+<script>
+window.EK = window.EK || {};
+window.EK.Voz = {
+  hablar: function(texto, opts){
+    opts = opts || {};
+    if(!('speechSynthesis' in window)) return {soportado:false};
+    try{ window.speechSynthesis.cancel(); }catch(e){}
+    var u = new SpeechSynthesisUtterance(String(texto||''));
+    u.lang = opts.lang || 'es-AR'; u.rate = opts.rate || 0.9; u.pitch = 1.1;
+    if(opts.onend) u.onend = opts.onend;
+    window.speechSynthesis.speak(u);
+    return {soportado:true};
+  },
+  detener: function(){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+};
+</script>
+
+<script src="storybooks.js"></script>
+<script src="storybooks-reader.js"></script>
+<script>
+  // Abrir la biblioteca automáticamente en el contenedor #app
+  EK.Storybooks.onVolver = function(cont){ EK.Storybooks.abrir(cont); };
+  EK.Storybooks.abrir(document.getElementById('app'));
+</script>
+</body>
+</html>
