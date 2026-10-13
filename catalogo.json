@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "rutaBase": "storybooks/",
+  "categorias": [
+    { "id": "animales",   "nombre": { "es": "Animales",   "en": "Animals" },   "icono": "🐾" },
+    { "id": "naturaleza", "nombre": { "es": "Naturaleza", "en": "Nature" },    "icono": "🌿" },
+    { "id": "aventura",   "nombre": { "es": "Aventura",   "en": "Adventure" }, "icono": "🗺️" },
+    { "id": "ciencia",    "nombre": { "es": "Ciencia",    "en": "Science" },   "icono": "🔬" },
+    { "id": "amigos",     "nombre": { "es": "Amistad",    "en": "Friendship" },"icono": "🤝" }
+  ],
+  "niveles": [
+    { "id": "inicial",    "nombre": { "es": "Inicial 3-5 años",    "en": "Early 3-5 yo" } },
+    { "id": "primario",   "nombre": { "es": "Primario 6-9 años",   "en": "Primary 6-9 yo" } }
+  ],
+  "cuentos": [
+    {
+      "id": "el-perrito-que-queria-jugar",
+      "archivo": "cuentos/el-perrito-que-queria-jugar.json",
+      "titulo": { "es": "El Perrito que Quería Jugar", "en": "The Puppy Who Wanted to Play" },
+      "categoria": "animales",
+      "nivel": "inicial",
+      "paginas": 6,
+      "portada": "🐶",
+      "color": "#FF9F43",
+      "destacado": true
+    },
+    {
+      "id": "la-luna-y-el-gatito",
+      "archivo": "cuentos/la-luna-y-el-gatito.json",
+      "titulo": { "es": "La Luna y el Gatito", "en": "The Moon and the Kitten" },
+      "categoria": "naturaleza",
+      "nivel": "inicial",
+      "paginas": 6,
+      "portada": "🌙",
+      "color": "#6C5CE7",
+      "destacado": true
+    },
+    {
+      "id": "el-dinosaurio-curioso",
+      "archivo": "cuentos/el-dinosaurio-curioso.json",
+      "titulo": { "es": "El Dinosaurio Curioso", "en": "The Curious Dinosaur" },
+      "categoria": "ciencia",
+      "nivel": "primario",
+      "paginas": 7,
+      "portada": "🦕",
+      "color": "#00B894",
+      "destacado": true
+    }
+  ]
+}
