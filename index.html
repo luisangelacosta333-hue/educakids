@@ -7,21 +7,23 @@
   <meta name="description" content="BuggyIa Escuela · Aprendé jugando. Mundos educativos premium para niños." />
   <title>BuggyIa Escuela · Aprendé jugando</title>
 
-  <!-- PWA (mismas rutas, sin subcarpetas) -->
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/svg+xml" href="icon.svg" />
   <link rel="apple-touch-icon" href="icon-192.png" />
 
-  <!-- Fuentes premium infantiles -->
+  <!-- Fuentes seguras -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- CSS PREMIUM completo: vidrio esmerilado + botones 3D (reemplaza al viejo style.css) -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
+  <!-- Storybooks Bilingües -->
+  <link rel="stylesheet" href="storybooks.css" />
 </head>
 <body>
-  <!-- Fondo animado premium (orbes de color difuminados) -->
+  <!-- Fondo animado -->
   <div class="premium-bg" aria-hidden="true">
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
@@ -30,7 +32,7 @@
     <div class="premium-grid"></div>
   </div>
 
-  <!-- Barra superior: estrellas, medallas, perfil, sonido -->
+  <!-- Barra superior -->
   <header id="topbar" class="topbar premium-glass">
     <button class="top-btn premium-btn-soft" id="btn-inicio" aria-label="Inicio" title="Inicio">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
@@ -59,21 +61,24 @@
     </div>
   </header>
 
-  <!-- Contenedor único: TODO el contenido se renderiza aquí por JS -->
+  <!-- Contenido -->
   <main id="app" class="app premium-app"></main>
 
-  <!-- Capa de confeti / celebraciones -->
+  <!-- Confeti -->
   <div id="fx" class="fx-layer" aria-hidden="true"></div>
 
-  <!-- Modal genérico (medallas, avisos) -->
+  <!-- Modal -->
   <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
     <div class="modal-card premium-modal" id="modal-card"></div>
   </div>
 
-  <!-- Tus 13 archivos JS (sin carpeta js/) -->
+  <!-- Scripts -->
   <script src="store.js"></script>
   <script src="audio.js"></script>
   <script src="voz.js"></script>
+  <!-- Storybooks Bilingües -->
+  <script src="storybooks.js"></script>
+  <script src="storybooks-reader.js"></script>
   <script src="engine.js"></script>
   <script src="mundos.js"></script>
   <script src="geografia.js"></script>
