@@ -1,0 +1,117 @@
+{
+  "id": "el-dinosaurio-curioso",
+  "titulo": { "es": "El Dinosaurio Curioso", "en": "The Curious Dinosaur" },
+  "categoria": "ciencia",
+  "nivel": "primario",
+  "color": "#00B894",
+  "portada": "🦕",
+  "paginas": [
+    {
+      "ilustracion": "🦕🌋🌿",
+      "fondo": "linear-gradient(160deg,#00B894 0%,#FFE066 100%)",
+      "oraciones": [
+        { "es": "Hace millones de años, vivía un dinosaurio llamado Dino.", "en": "Millions of years ago, a dinosaur named Dino lived." },
+        { "es": "Era un braquiosaurio de cuello largo y ojos curiosos.", "en": "He was a brachiosaurus with a long neck and curious eyes." },
+        { "es": "Siempre se preguntaba qué había más allá de las montañas.", "en": "He always wondered what lay beyond the mountains." }
+      ]
+    },
+    {
+      "ilustracion": "🦕🌿🦖",
+      "fondo": "linear-gradient(160deg,#94D82D 0%,#20C997 100%)",
+      "oraciones": [
+        { "es": "Un día, Dino decidió emprender un gran viaje.", "en": "One day, Dino decided to go on a great journey." },
+        { "es": "Sus amigos le advirtieron que había peligros afuera.", "en": "His friends warned him there were dangers outside." },
+        { "es": "Pero Dino quería descubrir el mundo por sí mismo.", "en": "But Dino wanted to discover the world for himself." }
+      ]
+    },
+    {
+      "ilustracion": "🌋🔥",
+      "fondo": "linear-gradient(160deg,#FA5252 0%,#FF922B 100%)",
+      "oraciones": [
+        { "es": "Caminó hasta llegar a un volcán que echaba humo.", "en": "He walked until he reached a volcano that smoked." },
+        { "es": "Aprendió que la tierra a veces se calienta mucho.", "en": "He learned that the earth sometimes gets very hot." },
+        { "es": "Dino observó desde lejos, sin acercarse demasiado.", "en": "Dino watched from afar, without getting too close." }
+      ]
+    },
+    {
+      "ilustracion": "🌊🐟🦕",
+      "fondo": "linear-gradient(160deg,#4D96FF 0%,#9BF6FF 100%)",
+      "oraciones": [
+        { "es": "Llegó a un mar enorme y de un azul profundo.", "en": "He reached an enormous sea of deep blue." },
+        { "es": "Vio peces de todos los colores y formas nadar.", "en": "He saw fish of every color and shape swimming." },
+        { "es": "—¡Cuántas cosas nuevas!— pensó Dino asombrado.", "en": "\"So many new things!\" thought Dino, amazed." }
+      ]
+    },
+    {
+      "ilustracion": "❄️🏔️🦕",
+      "fondo": "linear-gradient(160deg,#74C0FC 0%,#E7F5FF 100%)",
+      "oraciones": [
+        { "es": "Después subió a montañas cubiertas de nieve.", "en": "Then he climbed mountains covered in snow." },
+        { "es": "Hacía mucho frío, pero Dino estaba muy emocionado.", "en": "It was very cold, but Dino was very excited." },
+        { "es": "Desde arriba vio todo el mundo a sus pies.", "en": "From the top he saw the whole world at his feet." }
+      ]
+    },
+    {
+      "ilustracion": "🦕🌠",
+      "fondo": "linear-gradient(160deg,#2D1B69 0%,#845EC2 100%)",
+      "oraciones": [
+        { "es": "En el camino de regreso, vio estrellas fugaces cruzar el cielo.", "en": "On the way back, he saw shooting stars cross the sky." },
+        { "es": "Dino comprendió que el mundo era enorme y maravilloso.", "en": "Dino understood the world was enormous and wonderful." },
+        { "es": "Y que siempre habría algo nuevo por descubrir.", "en": "And that there would always be something new to discover." }
+      ]
+    },
+    {
+      "ilustracion": "🦕🦕🦕❤️",
+      "fondo": "linear-gradient(160deg,#00B894 0%,#FFE066 100%)",
+      "oraciones": [
+        { "es": "Cuando volvió, les contó todas sus aventuras a sus amigos.", "en": "When he returned, he told all his adventures to his friends." },
+        { "es": "Los dinosaurios escucharon asombrados sus historias.", "en": "The dinosaurs listened amazed to his stories." },
+        { "es": "Desde entonces, Dino enseñó que la curiosidad nos hace crecer.", "en": "Since then, Dino taught that curiosity makes us grow." }
+      ]
+    }
+  ],
+  "vocabulario": [
+    { "es": "dinosaurio",  "en": "dinosaur",     "img": "🦕" },
+    { "es": "curioso",     "en": "curious",      "img": "🤔" },
+    { "es": "volcán",      "en": "volcano",      "img": "🌋" },
+    { "es": "mar",         "en": "sea",          "img": "🌊" },
+    { "es": "montaña",     "en": "mountain",     "img": "🏔️" },
+    { "es": "nieve",       "en": "snow",         "img": "❄️" },
+    { "es": "descubrir",   "en": "to discover",  "img": "🔍" },
+    { "es": "viaje",       "en": "journey",      "img": "🧭" },
+    { "es": "estrella",    "en": "star",         "img": "⭐" },
+    { "es": "aventura",    "en": "adventure",    "img": "🗺️" }
+  ],
+  "preguntas": [
+    {
+      "es": "¿Qué tipo de dinosaurio era Dino?",
+      "en": "What kind of dinosaur was Dino?",
+      "opciones": { "es": ["Braquiosaurio", "Tiranosaurio", "Triceratops", "Pterodáctilo"], "en": ["Brachiosaurus", "Tyrannosaurus", "Triceratops", "Pterodactyl"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Qué vio Dino echar humo durante su viaje?",
+      "en": "What did Dino see smoking during his journey?",
+      "opciones": { "es": ["Un volcán", "Una fogata", "Un barco", "Una nube"], "en": ["A volcano", "A campfire", "A boat", "A cloud"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Qué había en la cima de las montañas?",
+      "en": "What was on top of the mountains?",
+      "opciones": { "es": ["Nieve", "Arena", "Flores", "Agua"], "en": ["Snow", "Sand", "Flowers", "Water"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Qué enseñó Dino a sus amigos al volver?",
+      "en": "What did Dino teach his friends when he returned?",
+      "opciones": { "es": ["Que la curiosidad nos hace crecer", "Que no hay que viajar", "Que los volcanes son seguros", "Que el mar es pequeño"], "en": ["That curiosity makes us grow", "That one should not travel", "That volcanoes are safe", "That the sea is small"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Qué vio cruzar el cielo de regreso?",
+      "en": "What did he see cross the sky on the way back?",
+      "opciones": { "es": ["Estrellas fugaces", "Pájaros", "Aviones", "Nubes grises"], "en": ["Shooting stars", "Birds", "Airplanes", "Gray clouds"] },
+      "correcta": 0
+    }
+  ]
+}
