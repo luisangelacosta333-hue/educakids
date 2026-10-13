@@ -65,8 +65,19 @@
     if (vozPreferida && /^es/i.test(u.lang)) u.voice = vozPreferida;
   }
 
-  /* ---------- Hablar (backward compatible) ---------- */
+  /* ---------- Hablar (backward compatible + objeto como 2do arg) ----------
+     Acepta:
+       hablar(texto, lang, rate, pitch)            -> firma clásica (engine.js)
+       hablar(texto, {lang, rate, pitch, onend})   -> firma objeto (storybooks.js)  */
   function hablar(texto, lang, rate, pitch) {
+    var onend = null;
+    if (lang && typeof lang === 'object') {
+      var opts = lang;
+      onend = opts.onend || null;
+      pitch = opts.pitch;
+      rate = opts.rate;
+      lang = opts.lang;
+    }
     if (!habilitado || (window.EK && EK.Audio && EK.Audio.muted)) return;
     ultimo = texto || ultimo;
     if (!('speechSynthesis' in window) || !texto) return;
@@ -75,6 +86,7 @@
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(texto);
       configU(u, lang, rate, pitch);
+      if (onend) u.onend = onend;
       window.speechSynthesis.speak(u);
     } catch (e) {}
   }
@@ -283,6 +295,7 @@
   var Voz = {
     hablar: hablar,
     callar: callar,
+    detener: callar,                       // alias v3.4 (compatibilidad storybooks.js)
     repetir: repetir,
     hablarSecuencia: hablarSecuencia,
     leerPregunta: leerPreguntaCompleta,          // antes leía solo la pregunta; ahora lee pregunta + opciones
