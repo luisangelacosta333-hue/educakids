@@ -1,0 +1,100 @@
+{
+  "id": "el-perrito-que-queria-jugar",
+  "titulo": { "es": "El Perrito que Quería Jugar", "en": "The Puppy Who Wanted to Play" },
+  "categoria": "animales",
+  "nivel": "inicial",
+  "color": "#FF9F43",
+  "portada": "🐶",
+  "paginas": [
+    {
+      "ilustracion": "🐶🏡☀️",
+      "fondo": "linear-gradient(160deg,#FFE8CC 0%,#FFD43B 100%)",
+      "oraciones": [
+        { "es": "Había una vez un perrito llamado Toby.", "en": "Once there was a puppy named Toby." },
+        { "es": "Vivía en una casa con un gran jardín.", "en": "He lived in a house with a big garden." },
+        { "es": "Toby tenía mucha energía y quería jugar.", "en": "Toby had lots of energy and wanted to play." }
+      ]
+    },
+    {
+      "ilustracion": "🐶🐱",
+      "fondo": "linear-gradient(160deg,#FFD6A5 0%,#FFADAD 100%)",
+      "oraciones": [
+        { "es": "Toby fue a buscar a su amigo el gato.", "en": "Toby went to find his friend the cat." },
+        { "es": "—¿Querés jugar conmigo?— le preguntó.", "en": "\"Do you want to play with me?\" he asked." },
+        { "es": "El gato dijo que no, que quería dormir.", "en": "The cat said no, he wanted to sleep." }
+      ]
+    },
+    {
+      "ilustracion": "🐦🌳",
+      "fondo": "linear-gradient(160deg,#CAFFBF 0%,#9BF6FF 100%)",
+      "oraciones": [
+        { "es": "Toby corrió hacia el árbol del jardín.", "en": "Toby ran to the tree in the garden." },
+        { "es": "Allí vio a un pájaro de colores hermosos.", "en": "There he saw a bird with beautiful colors." },
+        { "es": "El pájaro cantaba una canción muy alegre.", "en": "The bird sang a very happy song." }
+      ]
+    },
+    {
+      "ilustracion": "🐶🎾",
+      "fondo": "linear-gradient(160deg,#A0C4FF 0%,#BDB2FF 100%)",
+      "oraciones": [
+        { "es": "Toby encontró su pelota roja favorita.", "en": "Toby found his favorite red ball." },
+        { "es": "La olfateó y movió la cola con alegría.", "en": "He sniffed it and wagged his tail happily." },
+        { "es": "—¡Jugaré solo!— pensó Toby.", "en": "\"I will play alone!\" thought Toby." }
+      ]
+    },
+    {
+      "ilustracion": "🐶🧒🎾",
+      "fondo": "linear-gradient(160deg,#FFC6FF 0%,#FFADAD 100%)",
+      "oraciones": [
+        { "es": "De pronto, llegó el niño de la casa.", "en": "Suddenly, the boy from the house arrived." },
+        { "es": "—¡Toby, vení a jugar!— le gritó.", "en": "\"Toby, come play!\" he shouted." },
+        { "es": "Toby corrió muy feliz hacia su amigo.", "en": "Toby ran very happily toward his friend." }
+      ]
+    },
+    {
+      "ilustracion": "🧒🐶❤️",
+      "fondo": "linear-gradient(160deg,#FDFFB6 0%,#FFD6A5 100%)",
+      "oraciones": [
+        { "es": "Jugaron toda la tarde con la pelota.", "en": "They played all afternoon with the ball." },
+        { "es": "Toby comprendió que compartir es más divertido.", "en": "Toby learned that sharing is more fun." },
+        { "es": "Y desde ese día, siempre jugaron juntos.", "en": "And from that day, they always played together." }
+      ]
+    }
+  ],
+  "vocabulario": [
+    { "es": "perrito",   "en": "puppy",    "img": "🐶" },
+    { "es": "jugar",     "en": "to play",  "img": "🎾" },
+    { "es": "gato",      "en": "cat",      "img": "🐱" },
+    { "es": "pájaro",    "en": "bird",     "img": "🐦" },
+    { "es": "pelota",    "en": "ball",     "img": "⚽" },
+    { "es": "jardín",    "en": "garden",   "img": "🌳" },
+    { "es": "amigo",     "en": "friend",   "img": "🧒" },
+    { "es": "feliz",     "en": "happy",    "img": "😊" }
+  ],
+  "preguntas": [
+    {
+      "es": "¿Cómo se llamaba el perrito?",
+      "en": "What was the puppy's name?",
+      "opciones": { "es": ["Toby", "Max", "Luna", "Rocky"], "en": ["Toby", "Max", "Luna", "Rocky"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Qué quería hacer el gato cuando Toby lo buscó?",
+      "en": "What did the cat want to do when Toby found him?",
+      "opciones": { "es": ["Dormir", "Jugar", "Comer", "Correr"], "en": ["Sleep", "Play", "Eat", "Run"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿De qué color era la pelota de Toby?",
+      "en": "What color was Toby's ball?",
+      "opciones": { "es": ["Roja", "Azul", "Verde", "Amarilla"], "en": ["Red", "Blue", "Green", "Yellow"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Qué aprendió Toby al final del cuento?",
+      "en": "What did Toby learn at the end of the story?",
+      "opciones": { "es": ["Compartir es más divertido", "Los gatos son malos", "Jugar solo es mejor", "Las pelotas son aburridas"], "en": ["Sharing is more fun", "Cats are mean", "Playing alone is better", "Balls are boring"] },
+      "correcta": 0
+    }
+  ]
+}
