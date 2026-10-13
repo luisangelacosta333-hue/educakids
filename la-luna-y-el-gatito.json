@@ -1,0 +1,100 @@
+{
+  "id": "la-luna-y-el-gatito",
+  "titulo": { "es": "La Luna y el Gatito", "en": "The Moon and the Kitten" },
+  "categoria": "naturaleza",
+  "nivel": "inicial",
+  "color": "#6C5CE7",
+  "portada": "🌙",
+  "paginas": [
+    {
+      "ilustracion": "🐱🏠🌙",
+      "fondo": "linear-gradient(160deg,#2D1B69 0%,#6C5CE7 100%)",
+      "oraciones": [
+        { "es": "Era una noche tranquila y estrellada.", "en": "It was a quiet, starry night." },
+        { "es": "Una gatita llamada Mimi miraba por la ventana.", "en": "A kitten named Mimi looked out the window." },
+        { "es": "La luna brillaba grande y redonda en el cielo.", "en": "The moon shone big and round in the sky." }
+      ]
+    },
+    {
+      "ilustracion": "🐱⭐",
+      "fondo": "linear-gradient(160deg,#1A1A40 0%,#494D8E 100%)",
+      "oraciones": [
+        { "es": "—¿Será la luna un plato de leche?— pensó Mimi.", "en": "\"Is the moon a bowl of milk?\" thought Mimi." },
+        { "es": "Tenía muchísima curiosidad por tocarla.", "en": "She was very curious to touch it." },
+        { "es": "Las estrellas parpadeaban como luciérnagas.", "en": "The stars twinkled like fireflies." }
+      ]
+    },
+    {
+      "ilustracion": "🐱🌳",
+      "fondo": "linear-gradient(160deg,#2D3561 0%,#5C7CFA 100%)",
+      "oraciones": [
+        { "es": "Mimi salió al jardín y trepó un árbol alto.", "en": "Mimi went to the garden and climbed a tall tree." },
+        { "es": "Quería estar más cerca de la luna brillante.", "en": "She wanted to be closer to the bright moon." },
+        { "es": "Pero la luna seguía muy, muy lejos.", "en": "But the moon was still very, very far away." }
+      ]
+    },
+    {
+      "ilustracion": "🦉🐱",
+      "fondo": "linear-gradient(160deg,#3E2C6B 0%,#845EC2 100%)",
+      "oraciones": [
+        { "es": "Un búho sabio la vio desde su rama.", "en": "A wise owl saw her from his branch." },
+        { "es": "—La luna está lejos, pequeña gatita— le dijo.", "en": "\"The moon is far away, little kitten,\" he told her." },
+        { "es": "—Pero su luz siempre te acompañará—.", "en": "\"But its light will always be with you.\"" }
+      ]
+    },
+    {
+      "ilustracion": "🐱💧🌙",
+      "fondo": "linear-gradient(160deg,#1F3A5F 0%,#45B7D1 100%)",
+      "oraciones": [
+        { "es": "Mimi bajó del árbol y encontró un charquito.", "en": "Mimi climbed down and found a small puddle." },
+        { "es": "¡La luna se reflejaba en el agua clara!", "en": "The moon was reflected in the clear water!" },
+        { "es": "Tocó el agua y la luna se rió en ondas.", "en": "She touched the water and the moon laughed in ripples." }
+      ]
+    },
+    {
+      "ilustracion": "🐱😴🌙",
+      "fondo": "linear-gradient(160deg,#2D1B69 0%,#FF8FA3 100%)",
+      "oraciones": [
+        { "es": "Mimi volvió a casa contenta y cansada.", "en": "Mimi returned home happy and tired." },
+        { "es": "Soñó que volaba entre las estrellas con la luna.", "en": "She dreamed she flew among the stars with the moon." },
+        { "es": "Y la luna la cuidó durante toda la noche.", "en": "And the moon watched over her all night long." }
+      ]
+    }
+  ],
+  "vocabulario": [
+    { "es": "luna",      "en": "moon",      "img": "🌙" },
+    { "es": "gatito",    "en": "kitten",    "img": "🐱" },
+    { "es": "estrellas", "en": "stars",     "img": "⭐" },
+    { "es": "noche",     "en": "night",     "img": "🌃" },
+    { "es": "búho",      "en": "owl",       "img": "🦉" },
+    { "es": "árbol",     "en": "tree",      "img": "🌳" },
+    { "es": "charco",    "en": "puddle",    "img": "💧" },
+    { "es": "brillar",   "en": "to shine",  "img": "✨" }
+  ],
+  "preguntas": [
+    {
+      "es": "¿Cómo se llamaba la gatita?",
+      "en": "What was the kitten's name?",
+      "opciones": { "es": ["Mimi", "Luna", "Nube", "Sol"], "en": ["Mimi", "Luna", "Nube", "Sol"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Qué pensó Mimi que era la luna?",
+      "en": "What did Mimi think the moon was?",
+      "opciones": { "es": ["Un plato de leche", "Un queso", "Una pelota", "Un ojo"], "en": ["A bowl of milk", "A cheese", "A ball", "An eye"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Quién le habló a Mimi en el árbol?",
+      "en": "Who spoke to Mimi in the tree?",
+      "opciones": { "es": ["Un búho", "Un pájaro", "Un perro", "Una mariposa"], "en": ["An owl", "A bird", "A dog", "A butterfly"] },
+      "correcta": 0
+    },
+    {
+      "es": "¿Dónde vio Mimi la luna reflejada?",
+      "en": "Where did Mimi see the moon reflected?",
+      "opciones": { "es": ["En un charco de agua", "En un espejo", "En la ventana", "En el río"], "en": ["In a puddle of water", "In a mirror", "In the window", "In the river"] },
+      "correcta": 0
+    }
+  ]
+}
