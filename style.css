@@ -411,7 +411,9 @@ input { font-family: inherit; }
   box-shadow: var(--shadow-3d);
   transition: all 0.25s var(--bounce);
   min-height: 78px;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -436,8 +438,17 @@ input { font-family: inherit; }
 }
 .opcion-btn:disabled { cursor: default; }
 
-/* Icono de altavoz pequeño dentro de cada opción — burbuja de cristal */
-.opcion-btn span, .opcion-btn i, .opcion-btn small, .opcion-btn .tts-icon, .opcion-btn .audio-btn {
+/* Icono de altavoz: solo el último elemento (o clases conocidas).
+   Los <span> de texto quedan en ancho automático para NO romper palabras. */
+.opcion-btn > span:not(:last-child) {
+  flex: 1 1 auto; min-width: 0; width: auto; height: auto;
+  background: none; border: none; box-shadow: none;
+  text-align: center; line-height: 1.35; border-radius: 0;
+  display: inline;
+}
+.opcion-btn > span:last-child,
+.opcion-btn i, .opcion-btn small,
+.opcion-btn .tts-icon, .opcion-btn .audio-btn {
   background: linear-gradient(135deg, #F5F3FF, #E0E7FF);
   border: 2px solid #ffffff;
   border-radius: 50%;
@@ -451,7 +462,9 @@ input { font-family: inherit; }
   transition: transform 0.2s var(--bounce);
   position: relative; z-index: 1;
 }
-.opcion-btn:hover span { transform: scale(1.15) rotate(8deg); background: #EEF2FF; }
+.opcion-btn:hover > span:last-child,
+.opcion-btn:hover .tts-icon, .opcion-btn:hover .audio-btn,
+.opcion-btn:hover i, .opcion-btn:hover small { transform: scale(1.15) rotate(8deg); background: #EEF2FF; }
 
 .opcion-btn.ok {
   background: linear-gradient(135deg, #34D399, #059669) !important;
