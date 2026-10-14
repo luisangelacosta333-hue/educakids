@@ -1,0 +1,51 @@
+{
+  "id": "zorro-cuervo",
+  "titulo": {
+    "es": "El Zorro y el Cuervo",
+    "en": "The Fox and the Crow",
+    "pt": "A Raposa e o Corvo",
+    "it": "La Volpe e il Corvo",
+    "fr": "Le Renard et le Corbeau",
+    "de": "Der Fuchs und der Rabe"
+  },
+  "paginas": [
+    {
+      "es": "Un cuervo tenía un queso en el pico y estaba parado en una rama.",
+      "en": "A crow had a piece of cheese in its beak and stood on a branch.",
+      "imagen": "🐦‍⬛",
+      "vocabulario": [
+        { "es": "cuervo", "en": "crow" },
+        { "es": "queso", "en": "cheese" },
+        { "es": "rama", "en": "branch" }
+      ]
+    },
+    {
+      "es": "El zorro, que tenía hambre, quiso robarle el queso con halagos.",
+      "en": "The fox, who was hungry, wanted to steal the cheese with flattery.",
+      "imagen": "🦊",
+      "vocabulario": [
+        { "es": "zorro", "en": "fox" },
+        { "es": "hambre", "en": "hungry" },
+        { "es": "halagos", "en": "flattery" }
+      ]
+    },
+    {
+      "es": "— ¡Qué canto más lindo tenés! Cantame una canción — dijo el zorro.",
+      "en": "“What a beautiful voice you have! Sing me a song,” said the fox.",
+      "imagen": "🎵",
+      "vocabulario": [
+        { "es": "canto", "en": "singing voice" },
+        { "es": "canción", "en": "song" }
+      ]
+    },
+    {
+      "es": "Al cantar, el cuervo soltó el queso. El zorro lo agarró y se fue. No te dejes engañar por los halagos.",
+      "en": "When he sang, the crow dropped the cheese. The fox grabbed it and left. Don't be fooled by flattery.",
+      "imagen": "🧀",
+      "vocabulario": [
+        { "es": "soltó", "en": "dropped" },
+        { "es": "engañar", "en": "fool" }
+      ]
+    }
+  ]
+}
