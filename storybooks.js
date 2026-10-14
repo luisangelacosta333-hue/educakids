@@ -1,7 +1,8 @@
 /* ============================================================
-   storybooks-premium.css — EducaKids · MUNDO STORYBOOKS
-   Súper Premium Vidrio Esmerilado Glamour · Joyas & Oro
-   Reemplaza a storybooks.css. Cargar después del style principal.
+   storybooks-premium.css v2 · FINAL (todo-incluido, pisa el JS)
+   EducaKids · Storybooks Bilingües · Súper Premium Vidrio Esmerilado
+   Reemplaza a storybooks.css. NO hace falta tocar el .js:
+   las reglas con !important anulan el CSS que inyecta injectarCSSExtra.
    ============================================================ */
 :root {
   --sb-accent: #FF3D7F;
@@ -30,14 +31,10 @@
 }
 
 /* ---------- Raíz y animaciones ---------- */
-.sb-root {
-  position: relative;
-  animation: sb-fade-up 0.45s var(--sb-bounce) both;
-  padding-bottom: 8px;
-}
-.sb-page-enter { animation: sb-fade-up 0.4s var(--sb-bounce) both; }
-@keyframes sb-fade-up {
-  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+.sb-root { position: relative; animation: sb-page-turn 0.5s var(--sb-bounce) both; padding-bottom: 8px; }
+.sb-page-enter { animation: sb-page-turn 0.45s var(--sb-bounce) both; }
+@keyframes sb-page-turn {
+  from { opacity: 0; transform: translateX(34px) scale(0.98); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes sb-pop { 0% { transform: scale(1); } 50% { transform: scale(1.07); } 100% { transform: scale(1); } }
@@ -45,6 +42,7 @@
 @keyframes sb-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes sb-spin { to { transform: rotate(360deg); } }
 @keyframes sb-shine { to { background-position: 200% center; } }
+@keyframes sb-sparkle { 0%,100% { opacity: 0; transform: scale(0.4) rotate(0deg); } 50% { opacity: 1; transform: scale(1.1) rotate(180deg); } }
 
 /* ---------- Header (cápsula de cristal) ---------- */
 .sb-header {
@@ -79,7 +77,7 @@
 .sb-btn-back:hover { transform: translateY(-3px) scale(1.07); box-shadow: 0 7px 0 rgba(190,198,225,0.6), var(--sb-shadow-hover); }
 .sb-btn-back:active { transform: translateY(3px) scale(0.94); box-shadow: 0 2px 0 rgba(190,198,225,0.6); }
 
-/* Toggle general (idioma / traducción / karaoke / noche / sílabas / velocidad) */
+/* Toggle general */
 .sb-toggle {
   flex: 0 0 auto;
   background: var(--sb-glass-solid);
@@ -94,9 +92,9 @@
 .sb-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(190,198,225,0.55), var(--sb-shadow-hover); }
 .sb-toggle:active { transform: translateY(2px) scale(0.96); }
 .sb-toggle.on {
-  background: linear-gradient(135deg, #FF5C95, #FF3D7F 50%, #C026D3);
-  color: #fff; border-color: rgba(255,255,255,0.85);
-  box-shadow: 0 5px 0 #B0256B, 0 12px 26px rgba(255, 61, 127, 0.45), inset 0 2px 6px rgba(255,255,255,0.4);
+  background: linear-gradient(135deg, #FF5C95, #FF3D7F 50%, #C026D3) !important;
+  color: #fff !important; border-color: rgba(255,255,255,0.85) !important;
+  box-shadow: 0 5px 0 #B0256B, 0 12px 26px rgba(255, 61, 127, 0.45), inset 0 2px 6px rgba(255,255,255,0.4) !important;
   text-shadow: 0 1px 3px rgba(120,10,60,0.35);
 }
 
@@ -114,8 +112,7 @@
   flex: 1; padding: 11px 8px; border-radius: var(--sb-pill);
   font-size: 14px; font-weight: 800; color: var(--sb-muted);
   background: transparent; cursor: pointer; border: none;
-  transition: all 0.3s var(--sb-bounce);
-  white-space: nowrap;
+  transition: all 0.3s var(--sb-bounce); white-space: nowrap;
 }
 .sb-tab.active {
   background: linear-gradient(135deg, #FF3D7F, #A855F7);
@@ -125,14 +122,8 @@
 }
 
 /* ---------- Buscador ---------- */
-.sb-search-wrap {
-  position: relative; margin-bottom: 14px;
-  display: flex; align-items: center;
-}
-.sb-search-icon {
-  position: absolute; left: 18px; font-size: 16px; opacity: 0.6; z-index: 1;
-  pointer-events: none;
-}
+.sb-search-wrap { position: relative; margin-bottom: 14px; display: flex; align-items: center; }
+.sb-search-icon { position: absolute; left: 18px; font-size: 16px; opacity: 0.6; z-index: 1; pointer-events: none; }
 .sb-search {
   width: 100% !important; max-width: none !important; margin: 0 !important;
   padding: 13px 20px 13px 46px !important;
@@ -150,11 +141,8 @@
   box-shadow: 0 0 0 5px rgba(255, 61, 127, 0.22), var(--sb-shadow-hover) !important;
 }
 
-/* ---------- Chips de categoría ---------- */
-.sb-chips {
-  display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 10px;
-  scrollbar-width: none;
-}
+/* ---------- Chips ---------- */
+.sb-chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 10px; scrollbar-width: none; }
 .sb-chips::-webkit-scrollbar { display: none; }
 .sb-chip {
   flex: 0 0 auto; padding: 9px 16px; border-radius: var(--sb-pill);
@@ -173,10 +161,7 @@
 }
 
 /* ---------- Grid de libros ---------- */
-.sb-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
-  gap: 14px;
-}
+.sb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
 .sb-book-card {
   position: relative;
   background: linear-gradient(155deg, rgba(255,255,255,0.94), rgba(255,255,255,0.6));
@@ -225,31 +210,23 @@
   animation: sb-float 4s ease-in-out infinite;
 }
 .sb-book-cover::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent 55%);
+  content: ''; position: absolute; top: 0; left: -60%; width: 45%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.75), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s var(--sb-smooth);
   pointer-events: none;
 }
+.sb-book-card:hover .sb-book-cover::after { left: 130%; }
 .sb-book-info { position: relative; z-index: 1; }
-.sb-book-title {
-  font-size: 15px; font-weight: 900; color: var(--sb-text);
-  margin: 0 0 8px; line-height: 1.25; min-height: 38px;
-  display: flex; align-items: center; justify-content: center;
-}
-.sb-book-meta {
-  display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;
-  font-size: 11.5px; font-weight: 700; color: var(--sb-muted); margin-bottom: 10px;
-}
+.sb-book-title { font-size: 15px; font-weight: 900; color: var(--sb-text); margin: 0 0 8px; line-height: 1.25; min-height: 38px; display: flex; align-items: center; justify-content: center; }
+.sb-book-meta { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; font-size: 11.5px; font-weight: 700; color: var(--sb-muted); margin-bottom: 10px; }
 .sb-badge {
   color: #fff; padding: 3px 10px; border-radius: var(--sb-pill);
   font-size: 11px; font-weight: 800;
   box-shadow: 0 3px 8px rgba(76,29,149,0.2), inset 0 1px 2px rgba(255,255,255,0.4);
   text-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
-.sb-progress-bar {
-  height: 8px; background: rgba(76,29,149,0.08);
-  border-radius: var(--sb-pill); overflow: hidden;
-  box-shadow: inset 0 2px 4px rgba(76,29,149,0.12);
-}
+.sb-progress-bar { height: 8px; background: rgba(76,29,149,0.08); border-radius: var(--sb-pill); overflow: hidden; box-shadow: inset 0 2px 4px rgba(76,29,149,0.12); }
 .sb-progress-fill {
   height: 100%; border-radius: var(--sb-pill);
   background: linear-gradient(90deg, #FF3D7F, #A855F7, #4F6DFE, #FF3D7F);
@@ -258,7 +235,7 @@
   transition: width 0.5s var(--sb-bounce);
 }
 
-/* ---------- Vacío / cargando / error ---------- */
+/* ---------- Vacío / cargando ---------- */
 .sb-empty {
   text-align: center; padding: 40px 20px;
   background: var(--sb-glass); backdrop-filter: blur(18px) saturate(180%);
@@ -267,10 +244,7 @@
   box-shadow: var(--sb-shadow);
 }
 .sb-empty .big { display: block; font-size: 52px; margin-bottom: 10px; filter: drop-shadow(0 8px 14px rgba(76,29,149,0.2)); }
-.sb-loader {
-  text-align: center; padding: 50px 20px; color: var(--sb-muted); font-weight: 800;
-  display: flex; flex-direction: column; align-items: center; gap: 16px;
-}
+.sb-loader { text-align: center; padding: 50px 20px; color: var(--sb-muted); font-weight: 800; display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .sb-spinner {
   width: 52px; height: 52px; border-radius: 50%;
   border: 4px solid rgba(168, 85, 247, 0.18);
@@ -296,17 +270,13 @@
 }
 .sb-action-btn:hover::after { left: 120%; }
 .sb-action-btn.primary {
-  background: linear-gradient(135deg, #FF5C95, #FF3D7F 50%, #D92E8E);
-  color: #fff;
+  background: linear-gradient(135deg, #FF5C95, #FF3D7F 50%, #D92E8E); color: #fff;
   box-shadow: 0 6px 0 #B0256B, 0 14px 30px rgba(255, 61, 127, 0.42), inset 0 2px 6px rgba(255,255,255,0.4);
   text-shadow: 0 1px 3px rgba(120,10,60,0.35);
 }
 .sb-action-btn.primary:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #B0256B, 0 20px 40px rgba(255,61,127,0.5), inset 0 2px 6px rgba(255,255,255,0.45); }
 .sb-action-btn.primary:active { transform: translateY(4px) scale(0.97); box-shadow: 0 2px 0 #B0256B; }
-.sb-action-btn.secondary {
-  background: var(--sb-glass-solid); color: var(--sb-text);
-  box-shadow: 0 5px 0 rgba(190,198,225,0.6), var(--sb-shadow);
-}
+.sb-action-btn.secondary { background: var(--sb-glass-solid); color: var(--sb-text); box-shadow: 0 5px 0 rgba(190,198,225,0.6), var(--sb-shadow); }
 .sb-action-btn.secondary:hover { transform: translateY(-3px); background: #fff; box-shadow: 0 7px 0 rgba(190,198,225,0.6), var(--sb-shadow-hover); }
 .sb-action-btn.accent {
   background: linear-gradient(135deg, #4F6DFE, #A855F7); color: #fff;
@@ -314,11 +284,7 @@
   text-shadow: 0 1px 3px rgba(30,20,90,0.35);
 }
 .sb-action-btn.accent:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #3B4FD1, 0 20px 40px rgba(99,102,241,0.55); }
-.sb-action-btn.ghost {
-  background: rgba(255,255,255,0.5); color: var(--sb-text);
-  border: 2px dashed rgba(168, 85, 247, 0.5);
-  box-shadow: var(--sb-shadow);
-}
+.sb-action-btn.ghost { background: rgba(255,255,255,0.5); color: var(--sb-text); border: 2px dashed rgba(168, 85, 247, 0.5); box-shadow: var(--sb-shadow); }
 .sb-action-btn.ghost:hover { transform: translateY(-3px); background: #fff; border-color: #A855F7; }
 
 /* ---------- Toast ---------- */
@@ -334,9 +300,7 @@
   pointer-events: none; white-space: nowrap;
 }
 
-/* ============================================================
-   LECTOR
-   ============================================================ */
+/* ============================================================ LECTOR ============================================================ */
 .sb-reader {
   background: linear-gradient(165deg, rgba(255,255,255,0.95), rgba(255,255,255,0.72));
   backdrop-filter: blur(24px) saturate(180%);
@@ -354,7 +318,6 @@
   pointer-events: none;
 }
 
-/* Ilustración de página */
 .sb-page-illustration {
   position: relative;
   min-height: 150px; border-radius: 26px;
@@ -373,14 +336,14 @@
   pointer-events: none;
 }
 
-/* Texto y oraciones */
 .sb-page-text { display: flex; flex-direction: column; gap: 10px; position: relative; }
 .sb-sentence {
   display: flex; align-items: center; gap: 8px;
   background: linear-gradient(145deg, #ffffff, #F6F4FF);
   border: 2px solid #ffffff;
+  border-left: 5px solid rgba(168, 85, 247, 0.35);
   border-radius: 20px;
-  padding: 12px 12px;
+  padding: 12px;
   box-shadow: 0 5px 0 rgba(190,198,225,0.55), 0 10px 22px rgba(76,29,149,0.08), var(--sb-edge);
   cursor: pointer;
   transition: all 0.25s var(--sb-bounce);
@@ -388,21 +351,15 @@
 }
 .sb-sentence:hover { transform: translateY(-2px); box-shadow: 0 7px 0 rgba(190,198,225,0.55), 0 16px 30px rgba(99,102,241,0.18), var(--sb-edge); }
 .sb-sentence.playing {
-  border-color: #FF3D7F;
-  background: linear-gradient(145deg, #FFF0F6, #FFE4F0);
-  box-shadow: 0 5px 0 rgba(255, 61, 127, 0.4), 0 0 24px rgba(255, 61, 127, 0.35), var(--sb-edge);
+  border-color: #FF3D7F !important;
+  border-left-color: #FF3D7F !important;
+  background: linear-gradient(145deg, #FFF0F6, #FFE4F0) !important;
+  box-shadow: 0 5px 0 rgba(255, 61, 127, 0.4), 0 0 24px rgba(255, 61, 127, 0.35), var(--sb-edge) !important;
   transform: scale(1.015);
 }
-.sb-sentence-text {
-  flex: 1; font-size: clamp(16px, 4.2vw, 19px); font-weight: 800;
-  color: var(--sb-text); line-height: 1.5;
-}
-.sb-sentence-translation {
-  display: block; margin-top: 4px;
-  font-size: 0.82em; font-weight: 600; color: var(--sb-muted); font-style: italic;
-}
+.sb-sentence-text { flex: 1; font-size: clamp(16px, 4.2vw, 19px); font-weight: 800; color: var(--sb-text); line-height: 1.5; min-width: 0; }
+.sb-sentence-translation { display: block; margin-top: 4px; font-size: 0.82em; font-weight: 600; color: var(--sb-muted); font-style: italic; }
 
-/* Botones de audio por oración */
 .sb-speak-btn {
   flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%;
   background: linear-gradient(135deg, #ffffff, #EDF3FF);
@@ -416,66 +373,56 @@
 .sb-speak-btn:active { transform: scale(0.9); }
 .sb-speak-btn.secondary { background: linear-gradient(135deg, #F5F3FF, #EDE9FE); color: #A855F7; box-shadow: 0 4px 10px rgba(168, 85, 247, 0.3), inset 0 1px 3px #fff; }
 
-/* Botón micrófono (practicar pronunciación) */
+/* Botón micrófono — pisa el inline del JS (!important) */
 .sb-mic-btn {
-  flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%;
-  background: linear-gradient(135deg, #FF5C95, #FF3D7F 55%, #D92E8E);
-  color: #fff; border: 2px solid rgba(255,255,255,0.85);
-  font-size: 18px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 5px 0 #B0256B, 0 10px 22px rgba(255, 61, 127, 0.45), inset 0 2px 5px rgba(255,255,255,0.4);
-  margin-left: 4px;
-  transition: all 0.2s var(--sb-bounce);
+  flex: 0 0 auto !important; width: 44px !important; height: 44px !important;
+  border-radius: 50% !important; border: 2px solid rgba(255,255,255,0.85) !important;
+  background: linear-gradient(135deg, #FF5C95, #FF3D7F 55%, #D92E8E) !important;
+  color: #fff !important; font-size: 18px !important; cursor: pointer !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  box-shadow: 0 5px 0 #B0256B, 0 10px 22px rgba(255, 61, 127, 0.45), inset 0 2px 5px rgba(255,255,255,0.4) !important;
+  margin-left: 4px !important;
+  transition: all 0.2s var(--sb-bounce) !important;
 }
-.sb-mic-btn:hover { transform: scale(1.12) rotate(-8deg); box-shadow: 0 7px 0 #B0256B, 0 14px 28px rgba(255,61,127,0.55); }
-.sb-mic-btn:active { transform: scale(0.88); box-shadow: 0 2px 0 #B0256B; }
+.sb-mic-btn:hover { transform: scale(1.12) rotate(-8deg); box-shadow: 0 7px 0 #B0256B, 0 14px 28px rgba(255,61,127,0.55) !important; }
+.sb-mic-btn:active { transform: scale(0.88) !important; box-shadow: 0 2px 0 #B0256B !important; }
 
-/* Palabras clickeables + karaoke + sílabas */
-.sb-word {
-  cursor: pointer; border-radius: 8px; padding: 0 3px;
-  transition: all 0.2s var(--sb-smooth);
-  display: inline-block;
-}
-.sb-word:hover { background: rgba(255, 227, 158, 0.55); }
+/* Palabras clickeables + karaoke — pisan el inline del JS (!important) */
+.sb-word { cursor: pointer; border-radius: 8px; padding: 0 3px; transition: all 0.2s var(--sb-smooth); display: inline-block; }
+.sb-word:hover { background: rgba(255, 227, 158, 0.55) !important; }
 .sb-word.hl {
-  background: linear-gradient(135deg, #FFE39E, #F5B942);
-  color: #7C2D12 !important; border-radius: 8px;
-  box-shadow: 0 0 16px rgba(245, 185, 66, 0.65);
+  background: linear-gradient(135deg, #FFE39E, #F5B942) !important;
+  color: #7C2D12 !important; border-radius: 8px !important;
+  box-shadow: 0 0 16px rgba(245, 185, 66, 0.65) !important;
   transform: scale(1.08);
 }
+
+/* Sílabas: chips de color con sombra (para que los niños las distingan) — pisa inline (!important) */
 .sb-sil {
-  font-weight: 900; display: inline-block;
-  padding: 1px 5px; margin: 0 1px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.65);
-  box-shadow: 0 2px 6px rgba(76,29,149,0.12);
+  font-weight: 900 !important;
+  display: inline-block !important;
+  padding: 1px 6px !important; margin: 0 1px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 2px 6px rgba(76, 29, 149, 0.15) !important;
   transition: transform 0.2s var(--sb-bounce);
 }
-.sb-sil:hover { transform: scale(1.15); }
+.sb-sil:hover { transform: scale(1.18); }
 
-/* Pista de palabra oculta */
+/* Pista de palabra oculta — pisa inline (!important) */
 .sb-hint {
-  background: linear-gradient(135deg, #FFF8E7, #FFE9B8);
-  border: 2.5px dashed #F0A93B;
-  border-radius: 18px; padding: 12px 16px;
-  margin-bottom: 12px; font-size: 15px; font-weight: 800;
-  text-align: center; color: #B45309;
-  box-shadow: 0 8px 22px rgba(240, 169, 59, 0.3), inset 0 2px 6px rgba(255,255,255,0.7);
+  background: linear-gradient(135deg, #FFF8E7, #FFE9B8) !important;
+  border: 2.5px dashed #F0A93B !important;
+  border-radius: 18px !important; padding: 12px 16px !important;
+  margin-bottom: 12px !important; font-size: 15px !important; font-weight: 800 !important;
+  text-align: center !important; color: #B45309 !important;
+  box-shadow: 0 8px 22px rgba(240, 169, 59, 0.3), inset 0 2px 6px rgba(255,255,255,0.7) !important;
   animation: sb-pop 0.4s var(--sb-bounce);
 }
 
-/* Fila de toggles del lector */
-.sb-toggle-row {
-  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-  margin-top: 14px; padding-top: 14px;
-  border-top: 1.5px dashed rgba(168, 85, 247, 0.25);
-}
+.sb-toggle-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 14px; padding-top: 14px; border-top: 1.5px dashed rgba(168, 85, 247, 0.25); }
 
-/* Controles de navegación */
-.sb-reader-controls {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  margin-top: 16px;
-}
+.sb-reader-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 16px; }
 .sb-nav-btn {
   padding: 12px 20px; border-radius: var(--sb-pill);
   font-size: 14.5px; font-weight: 900; cursor: pointer;
@@ -488,8 +435,8 @@
 .sb-nav-btn:active:not(:disabled) { transform: translateY(3px) scale(0.96); box-shadow: 0 2px 0 rgba(190,198,225,0.6); }
 .sb-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .sb-nav-btn.next {
-  background: linear-gradient(135deg, #FF5C95, #FF3D7F 50%, #D92E8E);
-  color: #fff; border-color: rgba(255,255,255,0.85);
+  background: linear-gradient(135deg, #FF5C95, #FF3D7F 50%, #D92E8E); color: #fff;
+  border-color: rgba(255,255,255,0.85);
   box-shadow: 0 6px 0 #B0256B, 0 14px 30px rgba(255, 61, 127, 0.42), inset 0 2px 6px rgba(255,255,255,0.4);
   text-shadow: 0 1px 3px rgba(120,10,60,0.35);
 }
@@ -497,14 +444,11 @@
 .sb-page-indicator {
   font-weight: 900; font-size: 15px; color: var(--sb-secondary);
   background: linear-gradient(135deg, #ffffff, #EEF2FF);
-  border: 2px solid #fff; border-radius: var(--sb-pill);
-  padding: 8px 18px;
+  border: 2px solid #fff; border-radius: var(--sb-pill); padding: 8px 18px;
   box-shadow: 0 4px 12px rgba(79, 109, 254, 0.25), inset 0 1px 3px #fff;
 }
 
-/* ============================================================
-   VOCABULARIO
-   ============================================================ */
+/* ============================================================ VOCABULARIO ============================================================ */
 .sb-vocab-grid { display: flex; flex-direction: column; gap: 10px; }
 .sb-vocab-card {
   display: flex; align-items: center; gap: 12px;
@@ -536,9 +480,7 @@
 .sb-vocab-speak:hover { transform: scale(1.12) rotate(8deg); }
 .sb-vocab-speak:active { transform: scale(0.9); }
 
-/* ============================================================
-   PREGUNTAS / QUIZ
-   ============================================================ */
+/* ============================================================ PREGUNTAS ============================================================ */
 .sb-quiz { display: flex; flex-direction: column; gap: 14px; padding: 6px 2px; }
 .sb-quiz-q {
   font-size: clamp(18px, 4.5vw, 22px); font-weight: 900; color: var(--sb-text);
@@ -547,15 +489,25 @@
   border: 2px solid #fff; border-radius: 22px; padding: 18px 16px;
   box-shadow: var(--sb-shadow);
 }
-.sb-quiz-options { display: grid; gap: 10px; }
+.sb-quiz-options { display: grid; gap: 10px; counter-reset: sbopt; }
 .sb-quiz-opt {
+  counter-increment: sbopt;
+  position: relative; overflow: hidden;
   background: linear-gradient(145deg, #ffffff, #F6F4FF);
   border: 2.5px solid #ffffff; border-radius: 20px;
-  padding: 16px 18px; font-size: 16px; font-weight: 800; color: var(--sb-text);
+  padding: 16px 18px 16px 52px; font-size: 16px; font-weight: 800; color: var(--sb-text);
   box-shadow: 0 6px 0 rgba(190,198,225,0.6), 0 12px 26px rgba(76,29,149,0.1), var(--sb-edge);
   cursor: pointer; text-align: left;
   transition: all 0.25s var(--sb-bounce);
-  position: relative; overflow: hidden;
+}
+.sb-quiz-opt::before {
+  content: counter(sbopt, upper-alpha);
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, #4F6DFE, #A855F7); color: #fff;
+  font-weight: 900; font-size: 14px;
+  display: grid; place-items: center;
+  box-shadow: 0 3px 8px rgba(99, 102, 241, 0.4), inset 0 1px 2px rgba(255,255,255,0.4);
 }
 .sb-quiz-opt:hover:not(:disabled) {
   transform: translateY(-4px) scale(1.01);
@@ -570,20 +522,16 @@
   box-shadow: 0 7px 0 #047857, 0 16px 36px rgba(14, 196, 138, 0.5), inset 0 2px 6px rgba(255,255,255,0.4) !important;
   animation: sb-pop 0.45s var(--sb-bounce);
 }
+.sb-quiz-opt.correct::before { background: linear-gradient(135deg, #A7F3D0, #34D399); color: #065F46; }
 .sb-quiz-opt.wrong {
   background: linear-gradient(135deg, #FB7185, #E11D48) !important;
   color: #fff !important; border-color: #FECACA !important;
   box-shadow: 0 7px 0 #BE123C, 0 16px 36px rgba(244, 63, 94, 0.5), inset 0 2px 6px rgba(255,255,255,0.35) !important;
   animation: sb-shake 0.45s;
 }
-.sb-quiz-feedback {
-  min-height: 28px; text-align: center; font-weight: 900; font-size: 16px;
-  animation: sb-pop 0.35s var(--sb-bounce);
-}
+.sb-quiz-feedback { min-height: 28px; text-align: center; font-weight: 900; font-size: 16px; animation: sb-pop 0.35s var(--sb-bounce); }
 
-/* ============================================================
-   FIN / CELEBRACIÓN
-   ============================================================ */
+/* ============================================================ FIN / CELEBRACIÓN ============================================================ */
 .sb-finish {
   text-align: center; padding: 34px 20px;
   background: linear-gradient(160deg, rgba(255,255,255,0.96), rgba(255,255,255,0.8));
@@ -598,21 +546,25 @@
   background-size: 200% 100%; animation: sb-shine 3s linear infinite;
 }
 .sb-finish .trophy {
-  display: block; font-size: 76px; margin-bottom: 12px;
+  position: relative; display: block; font-size: 76px; margin-bottom: 12px;
   animation: sb-float 1.8s ease-in-out infinite;
   filter: drop-shadow(0 14px 24px rgba(240, 169, 59, 0.5));
 }
+.sb-finish .trophy::before,
+.sb-finish .trophy::after {
+  content: '✨'; position: absolute; font-size: 26px;
+  animation: sb-sparkle 1.6s ease-in-out infinite;
+}
+.sb-finish .trophy::before { top: -6px; left: -18px; }
+.sb-finish .trophy::after { top: 10px; right: -18px; animation-delay: 0.8s; }
 .sb-finish h3 {
   font-size: 24px; font-weight: 900; margin: 6px 0 10px;
   background: linear-gradient(90deg, #FF3D7F, #A855F7, #4F6DFE);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .sb-finish p { color: var(--sb-muted); font-weight: 700; margin-bottom: 18px; }
-.sb-finish .sb-action-row { margin-top: 6px; }
 
-/* ============================================================
-   JUEGO DE EMPAREJAR (memoria)
-   ============================================================ */
+/* ============================================================ JUEGO EMPAREJAR ============================================================ */
 .sb-match-hud {
   text-align: center; font-weight: 900; font-size: 15px; color: var(--sb-secondary);
   background: linear-gradient(135deg, #ffffff, #EEF2FF);
@@ -620,9 +572,7 @@
   padding: 10px 18px; margin-bottom: 14px;
   box-shadow: 0 4px 12px rgba(79, 109, 254, 0.25), inset 0 1px 3px #fff;
 }
-.sb-match-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-}
+.sb-match-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .sb-match-card {
   aspect-ratio: 3/4; border-radius: 18px;
   border: 2.5px solid #fff;
@@ -650,53 +600,46 @@
   cursor: default;
 }
 
-/* ============================================================
-   ORDENAR HISTORIA
-   ============================================================ */
+/* ============================================================ ORDENAR ============================================================ */
 .sb-order-card {
-  min-height: 56px; padding: 14px 16px;
-  border: 3px solid rgba(168, 85, 247, 0.25);
-  border-radius: 18px;
-  background: linear-gradient(145deg, #ffffff, #F6F4FF);
-  font-size: 14.5px; font-weight: 800; color: var(--sb-text);
-  margin-bottom: 10px; cursor: pointer; text-align: left; width: 100%;
-  box-shadow: 0 5px 0 rgba(190,198,225,0.55), 0 10px 22px rgba(76,29,149,0.08), var(--sb-edge);
-  transition: all 0.25s var(--sb-bounce);
+  min-height: 56px !important; padding: 14px 16px !important;
+  border: 3px solid rgba(168, 85, 247, 0.25) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, #ffffff, #F6F4FF) !important;
+  font-size: 14.5px !important; font-weight: 800 !important; color: var(--sb-text) !important;
+  margin-bottom: 10px !important; cursor: pointer !important; text-align: left !important; width: 100% !important;
+  box-shadow: 0 5px 0 rgba(190,198,225,0.55), 0 10px 22px rgba(76,29,149,0.08), var(--sb-edge) !important;
+  transition: all 0.25s var(--sb-bounce) !important;
 }
-.sb-order-card:hover:not(:disabled) { transform: translateY(-3px); border-color: #A855F7; }
+.sb-order-card:hover:not(:disabled) { transform: translateY(-3px); border-color: #A855F7 !important; }
 .sb-order-card.done {
   background: linear-gradient(135deg, #D1FAE5, #A7F3D0) !important;
   border-color: #10B981 !important; color: #065F46 !important;
   box-shadow: 0 0 18px rgba(14, 196, 138, 0.4) !important;
-  opacity: 0.85;
+  opacity: 0.85 !important;
 }
 
-/* ============================================================
-   CERTIFICADO
-   ============================================================ */
+/* ============================================================ CERTIFICADO — pisa inline (!important) ============================================================ */
 .sb-cert {
-  background: linear-gradient(160deg, #FFFBEB, #ffffff);
-  border: 4px dashed #F0A93B;
-  border-radius: 26px; padding: 28px 22px;
-  text-align: center; margin: 10px;
-  box-shadow: 0 20px 50px rgba(240, 169, 59, 0.3), inset 0 0 0 6px rgba(255, 255, 255, 0.7);
-  position: relative;
+  background: linear-gradient(160deg, #FFFBEB, #ffffff) !important;
+  border: 4px dashed #F0A93B !important;
+  border-radius: 26px !important; padding: 28px 22px !important;
+  text-align: center !important; margin: 10px !important;
+  box-shadow: 0 20px 50px rgba(240, 169, 59, 0.3), inset 0 0 0 6px rgba(255, 255, 255, 0.7) !important;
+  position: relative !important;
 }
 .sb-cert::before {
   content: '🏆'; position: absolute; top: -24px; left: 50%; transform: translateX(-50%);
   font-size: 44px; filter: drop-shadow(0 8px 14px rgba(240,169,59,0.55));
 }
-.sb-cert .big-emoji { font-size: 58px; display: block; margin-bottom: 8px; margin-top: 8px; }
+.sb-cert .big-emoji { font-size: 58px !important; display: block !important; margin-bottom: 8px !important; margin-top: 8px !important; }
 .sb-cert h3 {
-  color: #B45309; font-size: 22px; font-weight: 900; margin: 0 0 8px;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #B45309, #F0A93B, #B45309);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-size: 22px !important; margin: 0 0 8px !important; font-weight: 900 !important; letter-spacing: 1px !important;
+  background: linear-gradient(90deg, #B45309, #F0A93B, #B45309) !important;
+  -webkit-background-clip: text !important; background-clip: text !important; color: transparent !important;
 }
 
-/* ============================================================
-   MODO NOCHE (bedtime) — cristal oscuro premium
-   ============================================================ */
+/* ============================================================ MODO NOCHE — pisa inline (!important) ============================================================ */
 .sb-bedtime { background: transparent !important; color: #EDE9FE !important; }
 .sb-bedtime .sb-header,
 .sb-bedtime .sb-reader,
@@ -720,15 +663,14 @@
 .sb-bedtime .sb-quiz-q,
 .sb-bedtime .sb-sentence-text { color: #F5F3FF !important; }
 .sb-bedtime .sb-subtitle,
-.sb-bedtime .sb-muted,
 .sb-bedtime .sb-book-meta,
 .sb-bedtime .sb-vocab-en,
 .sb-bedtime .sb-sentence-translation { color: #B8AEE0 !important; }
-.sb-bedtime .sb-sentence { background: linear-gradient(145deg, #3A2D6B, #2A1F55) !important; border-color: rgba(168,130,255,0.3) !important; }
+.sb-bedtime .sb-sentence { background: linear-gradient(145deg, #3A2D6B, #2A1F55) !important; border-color: rgba(168,130,255,0.3) !important; color: #EDE9FE !important; }
 .sb-bedtime .sb-sentence.playing { border-color: #FF6B9D !important; box-shadow: 0 0 24px rgba(255, 107, 157, 0.4) !important; }
 .sb-bedtime .sb-page-illustration { filter: brightness(0.72) saturate(0.9); border-color: rgba(168,130,255,0.3) !important; }
-.sb-bedtime .sb-word.hl { background: linear-gradient(135deg, #FFE39E, #F5B942); color: #7C2D12 !important; }
-.sb-bedtime .sb-sil { background: rgba(168, 130, 255, 0.25); }
+.sb-bedtime .sb-word.hl { background: linear-gradient(135deg, #FFE39E, #F5B942) !important; color: #7C2D12 !important; }
+.sb-bedtime .sb-sil { background: rgba(168, 130, 255, 0.25) !important; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 420px) {
@@ -739,4 +681,5 @@
   .sb-toggle { font-size: 12px; padding: 7px 12px; }
   .sb-action-btn { padding: 11px 16px; font-size: 13px; }
   .sb-nav-btn { padding: 10px 14px; font-size: 13px; }
+  .sb-quiz-opt { padding: 14px 16px 14px 48px; }
 }
