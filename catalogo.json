@@ -1,50 +1,37 @@
 {
-  "version": 1,
-  "rutaBase": "storybooks/",
+  "idiomas": ["es", "en", "pt", "it", "fr", "de"],
   "categorias": [
-    { "id": "animales",   "nombre": { "es": "Animales",   "en": "Animals" },   "icono": "🐾" },
-    { "id": "naturaleza", "nombre": { "es": "Naturaleza", "en": "Nature" },    "icono": "🌿" },
-    { "id": "aventura",   "nombre": { "es": "Aventura",   "en": "Adventure" }, "icono": "🗺️" },
-    { "id": "ciencia",    "nombre": { "es": "Ciencia",    "en": "Science" },   "icono": "🔬" },
-    { "id": "amigos",     "nombre": { "es": "Amistad",    "en": "Friendship" },"icono": "🤝" }
-  ],
-  "niveles": [
-    { "id": "inicial",    "nombre": { "es": "Inicial 3-5 años",    "en": "Early 3-5 yo" } },
-    { "id": "primario",   "nombre": { "es": "Primario 6-9 años",   "en": "Primary 6-9 yo" } }
+    { "id": "clasicos", "nombre": { "es": "Clásicos", "en": "Classics", "pt": "Clássicos", "it": "Classici", "fr": "Classiques", "de": "Klassiker" }, "icono": "🏆" },
+    { "id": "animales", "nombre": { "es": "Animales", "en": "Animals", "pt": "Animais", "it": "Animali", "fr": "Animaux", "de": "Tiere" }, "icono": "🐾" },
+    { "id": "aprender", "nombre": { "es": "Valores", "en": "Values", "pt": "Valores", "it": "Valori", "fr": "Valeurs", "de": "Werte" }, "icono": "🌟" }
   ],
   "cuentos": [
     {
-      "id": "el-perrito-que-queria-jugar",
-      "archivo": "cuentos/el-perrito-que-queria-jugar.json",
-      "titulo": { "es": "El Perrito que Quería Jugar", "en": "The Puppy Who Wanted to Play" },
+      "id": "tortuga-liebre",
+      "titulo": { "es": "La Tortuga y la Liebre", "en": "The Tortoise and the Hare", "pt": "A Tartaruga e a Lebre", "it": "La Tartaruga e la Lepre", "fr": "La Tortue et le Lièvre", "de": "Die Schildkröte und der Hase" },
+      "categoria": "clasicos",
+      "paginas": 4,
+      "color": "#4ECDC4",
+      "portada": "🐢",
+      "archivo": "tortuga.json"
+    },
+    {
+      "id": "zorro-cuervo",
+      "titulo": { "es": "El Zorro y el Cuervo", "en": "The Fox and the Crow", "pt": "A Raposa e o Corvo", "it": "La Volpe e il Corvo", "fr": "Le Renard et le Corbeau", "de": "Der Fuchs und der Rabe" },
       "categoria": "animales",
-      "nivel": "inicial",
-      "paginas": 6,
-      "portada": "🐶",
+      "paginas": 4,
       "color": "#FF9F43",
-      "destacado": true
+      "portada": "🦊",
+      "archivo": "zorro.json"
     },
     {
-      "id": "la-luna-y-el-gatito",
-      "archivo": "cuentos/la-luna-y-el-gatito.json",
-      "titulo": { "es": "La Luna y el Gatito", "en": "The Moon and the Kitten" },
-      "categoria": "naturaleza",
-      "nivel": "inicial",
-      "paginas": 6,
-      "portada": "🌙",
-      "color": "#6C5CE7",
-      "destacado": true
-    },
-    {
-      "id": "el-dinosaurio-curioso",
-      "archivo": "cuentos/el-dinosaurio-curioso.json",
-      "titulo": { "es": "El Dinosaurio Curioso", "en": "The Curious Dinosaur" },
-      "categoria": "ciencia",
-      "nivel": "primario",
-      "paginas": 7,
-      "portada": "🦕",
-      "color": "#00B894",
-      "destacado": true
+      "id": "leon-raton",
+      "titulo": { "es": "El León y el Ratón", "en": "The Lion and the Mouse", "pt": "O Leão e o Rato", "it": "Il Leone e il Topo", "fr": "Le Lion et la Souris", "de": "Der Löwe und die Maus" },
+      "categoria": "aprender",
+      "paginas": 4,
+      "color": "#A55EEA",
+      "portada": "🦁",
+      "archivo": "leon.json"
     }
   ]
 }
