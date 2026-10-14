@@ -1,12 +1,13 @@
 /* ============================================================
-   voz.js — Motor de voz PREMIUM / profesor virtual
+   voz.js — Motor de voz PREMIUM / profesor virtual  (v2.0 MULTILENGUAJE)
    - Lee en voz alta: preguntas, opciones (A/B/C) y explicaciones.
    - Repetir última frase con la mascota.
    - Reconocimiento por micrófono 🎤: el niño repite una palabra
      en otro idioma y se valida con comparación difusa (tolera
-     errores chicos de pronunciación). Si está bien → celebra y
-     avanza.
+     errores chicos de pronunciación). Si está bien → celebra y avanza.
    - Celebración visual: confeti + destellos + audio.
+   v2.0: selección de voz preferida POR IDIOMA (es, en, pt, it, fr, de)
+         y textos del overlay de micrófono traducidos.
    API conservada: EK.Voz.hablar / callar / ultimoTexto /
    habilitado / leerPregunta. Nuevos métodos abajo.
    ============================================================ */
@@ -16,7 +17,38 @@
   var ultimo = '';
   var habilitado = true;
   var colaActiva = false;
-  var vozPreferida = null;
+
+  /* ---------- Idiomas con voz preferida (fácil de extender) ---------- */
+  var PREFIJOS_VOZ = ['es', 'en', 'pt', 'it', 'fr', 'de'];
+  var vocesPreferidas = {};   // { es: Voice, en: Voice, ... }
+
+  /* ---------- Textos del overlay de micrófono (todos los idiomas) ---------- */
+  var TXT_UI = {
+    es: { escuchando: 'Estoy escuchando…',          decí: 'Decí la palabra en voz alta',      excelente: '¡Excelente! Lo dijiste perfecto.', casi: 'Casi… intentemos de nuevo.', otravez: 'Otra vez… escuchando', usaChrome: 'Usá Chrome o Edge para usar el micrófono.' },
+    en: { escuchando: 'I am listening…',            decí: 'Say the word out loud',            excelente: 'Excellent! You said it perfectly.', casi: 'Almost… let\'s try again.',   otravez: 'Again… listening',        usaChrome: 'Use Chrome or Edge to use the microphone.' },
+    pt: { escuchando: 'Estou ouvindo…',             decí: 'Diga a palavra em voz alta',       excelente: 'Excelente! Você disse perfeitamente.', casi: 'Quase… vamos tentar de novo.', outravez: 'De novo… ouvindo',       usaChrome: 'Use Chrome ou Edge para usar o microfone.' },
+    it: { escuchando: 'Sto ascoltando…',            decí: 'Di la parola ad alta voce',        excelente: 'Eccellente! L\'hai detta perfettamente.', casi: 'Quasi… riproviamo.',          otravez: 'Ancora… ascolto',          usaChrome: 'Usa Chrome o Edge per usare il microfono.' },
+    fr: { escuchando: 'J\'écoute…',                  decí: 'Dis le mot à voix haute',          excelente: 'Excellent ! Tu l\'as dit parfaitement.', casi: 'Presque… réessayons.',        otravez: 'Encore… j\'écoute',         usaChrome: 'Utilise Chrome ou Edge pour le microphone.' },
+    de: { escuchando: 'Ich höre zu…',               decí: 'Sag das Wort laut',                excelente: 'Ausgezeichnet! Perfekt gesagt.', casi: 'Fast… versuchen wir es nochmal.', otravez: 'Nochmal… ich höre zu',     usaChrome: 'Verwende Chrome oder Edge für das Mikrofon.' }
+  };
+  function txtUI(idioma, clave) {
+    var lang = (idioma || 'es').slice(0, 2).toLowerCase();
+    return (TXT_UI[lang] || TXT_UI.es)[clave] || TXT_UI.es[clave];
+  }
+
+  /* ---------- Frases para leerPregunta / explicar / leerOpcion ---------- */
+  var FRASES = {
+    es: { opcionesSon: 'Las opciones son:', opcion: 'Opción', casi: 'Casi. ', bien: '¡Muy bien! ' },
+    en: { opcionesSon: 'The options are:',  opcion: 'Option', casi: 'Almost. ', bien: 'Great! ' },
+    pt: { opcionesSon: 'As opções são:',    opcion: 'Opção',  casi: 'Quase. ', bien: 'Muito bem! ' },
+    it: { opcionesSon: 'Le opzioni sono:',  opcion: 'Opzione', casi: 'Quasi. ', bien: 'Molto bene! ' },
+    fr: { opcionesSon: 'Les options sont :', opcion: 'Option', casi: 'Presque. ', bien: 'Très bien ! ' },
+    de: { opcionesSon: 'Die Optionen sind:', opcion: 'Option', casi: 'Fast. ', bien: 'Sehr gut! ' }
+  };
+  function frases(idioma) {
+    var lang = (idioma || 'es-AR').slice(0, 2).toLowerCase();
+    return FRASES[lang] || FRASES.es;
+  }
 
   /* ---------- CSS inyectado (micrófono + confeti) ---------- */
   function inyectarCSS() {
@@ -40,21 +72,35 @@
     document.head.appendChild(st);
   }
 
-  /* ---------- Voz preferida (tono infantil) ---------- */
-  function elegirVoz() {
+  /* ---------- Selección de voz preferida POR IDIOMA (tono infantil) ---------- */
+  function elegirVoces() {
     if (!('speechSynthesis' in window)) return;
     var voces = window.speechSynthesis.getVoices();
     if (!voces.length) return;
-    var preferidas = voces.filter(function (v) { return /^es/i.test(v.lang); });
-    vozPreferida =
-      preferidas.find(function (v) { return /female|mujer|sabina|elena|paulina|google.*español/i.test(v.name); }) ||
-      preferidas[0] ||
-      voces.find(function (v) { return /female|samantha|google/i.test(v.name); }) ||
-      null;
+    PREFIJOS_VOZ.forEach(function (pref) {
+      var match = voces.filter(function (v) {
+        return (v.lang || '').slice(0, 2).toLowerCase() === pref;
+      });
+      if (!match.length) {
+        match = voces.filter(function (v) {
+          return (v.lang || '').toLowerCase().indexOf(pref) === 0;
+        });
+      }
+      vocesPreferidas[pref] =
+        match.find(function (v) { return /female|mujer|samantha|victoria|karen|moira|tessa|sabina|elena|paulina|google.*español/i.test(v.name); }) ||
+        match.find(function (v) { return /google|natural|premium|neural|wavenet/i.test(v.name); }) ||
+        match[0] ||
+        null;
+    });
   }
   if ('speechSynthesis' in window) {
-    elegirVoz();
-    window.speechSynthesis.onvoiceschanged = elegirVoz;
+    elegirVoces();
+    window.speechSynthesis.onvoiceschanged = elegirVoces;
+  }
+  /* Devuelve la mejor voz para un código de idioma (ej 'pt-BR' → voz pt). */
+  function vozPara(lang) {
+    var pref = (lang || 'es').slice(0, 2).toLowerCase();
+    return vocesPreferidas[pref] || null;
   }
 
   function configU(u, lang, rate, pitch) {
@@ -62,7 +108,8 @@
     u.rate = rate != null ? rate : 0.88;
     u.pitch = pitch != null ? pitch : 1.25;
     u.volume = 1;
-    if (vozPreferida && /^es/i.test(u.lang)) u.voice = vozPreferida;
+    var v = vozPara(u.lang);
+    if (v) u.voice = v;
   }
 
   /* ---------- Hablar (backward compatible + objeto como 2do arg) ----------
@@ -121,30 +168,37 @@
   /* ---------- Leer pregunta + opciones ---------- */
   function letras(i) { return ['A', 'B', 'C', 'D', 'E'][i] || String(i + 1); }
 
-  /* Lee la pregunta y luego cada opción en voz alta. (mejora de leerPregunta) */
-  function leerPreguntaCompleta(p, cb) {
+  /* Lee la pregunta y luego cada opción en voz alta.
+     (p, cb) -> compatibilidad atrás (es-AR). (p, cb, lang) -> multilenguaje. */
+  function leerPreguntaCompleta(p, cb, lang) {
+    lang = lang || 'es-AR';
+    var fr = frases(lang);
     var textos = [];
     if (p && p.pregunta) textos.push(p.pregunta);
     if (p && p.opciones && p.opciones.length) {
-      textos.push('Las opciones son:');
+      textos.push(fr.opcionesSon);
       p.opciones.forEach(function (op, i) {
-        textos.push('Opción ' + letras(i) + ': ' + (typeof op === 'string' ? op : (op.texto || op.opcion || '')));
+        textos.push(fr.opcion + ' ' + letras(i) + ': ' + (typeof op === 'string' ? op : (op.texto || op.opcion || '')));
       });
     }
     if (!textos.length) { if (cb) cb(); return; }
-    hablarSecuencia(textos, 'es-AR', cb);
+    hablarSecuencia(textos, lang, cb);
   }
 
-  /* Lee solo una opción (botón 🔊 al lado de cada alternativa) */
-  function leerOpcion(op, i) {
+  /* Lee solo una opción (botón 🔊 al lado de cada alternativa). (op, i, lang?) */
+  function leerOpcion(op, i, lang) {
+    lang = lang || 'es-AR';
+    var fr = frases(lang);
     var texto = typeof op === 'string' ? op : (op.texto || op.opcion || '');
-    hablar('Opción ' + letras(i != null ? i : 0) + ': ' + texto);
+    hablar(fr.opcion + ' ' + letras(i != null ? i : 0) + ': ' + texto, lang);
   }
 
-  /* Explica por qué la respuesta es correcta (más lento y claro) */
-  function explicar(texto, esCorrecta) {
-    var prefijo = esCorrecta === false ? 'Casi. ' : '¡Muy bien! ';
-    hablar(prefijo + (texto || ''), 'es-AR', 0.82, 1.15);
+  /* Explica por qué la respuesta es correcta (más lento y claro). (texto, esCorrecta, lang?) */
+  function explicar(texto, esCorrecta, lang) {
+    lang = lang || 'es-AR';
+    var fr = frases(lang);
+    var prefijo = esCorrecta === false ? fr.casi : fr.bien;
+    hablar(prefijo + (texto || ''), lang, 0.82, 1.15);
   }
 
   function repetir() { if (ultimo) hablar(ultimo); }
@@ -212,51 +266,55 @@
     });
   }
 
-  /* ---------- Micrófono con UI (overlay animado) ---------- */
-  function overlayMic() {
+  /* ---------- Micrófono con UI (overlay animado) ----------
+     uiLang: idioma de los textos del overlay (default es).
+     El idioma de reconocimiento se pasa por separado (idioma). */
+  function overlayMic(uiLang) {
     var ov = document.createElement('div');
     ov.id = 'vozMicOverlay';
     ov.innerHTML =
       '<div class="voz-mic-circ">🎤</div>' +
-      '<div class="voz-mic-texto">Estoy escuchando…<br><small>Decí la palabra en voz alta</small></div>' +
+      '<div class="voz-mic-texto">' + txtUI(uiLang, 'escuchando') + '<br><small>' + txtUI(uiLang, 'decí') + '</small></div>' +
       '<div class="voz-mic-barras"><span></span><span></span><span></span><span></span><span></span></div>';
     document.body.appendChild(ov);
     return ov;
   }
-  function resultadoOverlay(ov, ok) {
+  function resultadoOverlay(ov, ok, uiLang) {
     ov.innerHTML = '<div class="voz-resultado">' + (ok ? '✅' : '🔁') + '</div>' +
-      '<div class="voz-mic-texto">' + (ok ? '¡Excelente! Lo dijiste perfecto.' : 'Casi… intentemos de nuevo.') + '</div>';
+      '<div class="voz-mic-texto">' + (ok ? txtUI(uiLang, 'excelente') : txtUI(uiLang, 'casi')) + '</div>';
   }
 
   /* Flujo guiado: muestra el mic, escucha, compara, celebra si está bien.
-     target: string o array. idioma: 'en-US', 'pt-BR', etc.
+     target: string o array. idioma: 'en-US', 'pt-BR', etc. (idioma a reconocer).
+     opts.uiLang: idioma de los textos del overlay (default 'es').
      Devuelve Promise<{ok, dicho, intentos}>. */
   function repeticionGuiada(target, idioma, opts) {
     opts = opts || {};
+    var uiLang = opts.uiLang || 'es';
     var maxIntentos = opts.intentos || 3;
-    var ov = overlayMic();
+    var ov = overlayMic(uiLang);
     var intento = 0;
     function intentar() {
       intento++;
       return reconocer(idioma, opts.tiempoMs || 6000).then(function (r) {
         if (!r.soportado) {
-          ov.innerHTML = '<div class="voz-resultado">🎤</div><div class="voz-mic-texto">Usá Chrome o Edge para usar el micrófono.</div>';
+          ov.innerHTML = '<div class="voz-resultado">🎤</div><div class="voz-mic-texto">' + txtUI(uiLang, 'usaChrome') + '</div>';
           setTimeout(function () { document.body.removeChild(ov); }, 2200);
           return { ok: false, dicho: '', intentos: intento, soportado: false };
         }
         var cmp = compararDicho(r.transcript, target, opts.tolerancia);
         if (cmp.ok) {
-          resultadoOverlay(ov, true);
+          resultadoOverlay(ov, true, uiLang);
           celebrar();
           if (window.EK && EK.Audio) { try { EK.Audio.medalla ? EK.Audio.medalla() : EK.Audio.click(); } catch (e) {} }
           setTimeout(function () { document.body.removeChild(ov); }, 1600);
           return { ok: true, dicho: r.transcript, intentos: intento };
         }
-        resultadoOverlay(ov, false);
+        resultadoOverlay(ov, false, uiLang);
         if (intento < maxIntentos) {
           return new Promise(function (res) {
             setTimeout(function () {
-              ov.innerHTML = '<div class="voz-mic-circ">🎤</div><div class="voz-mic-texto">Otra vez… escuchando</div><div class="voz-mic-barras"><span></span><span></span><span></span><span></span><span></span></div>';
+              ov.innerHTML = '<div class="voz-mic-circ">🎤</div><div class="voz-mic-texto">' + txtUI(uiLang, 'otravez') + '</div><div class="voz-mic-barras"><span></span><span></span><span></span><span></span><span></span></div>';
               intentar().then(res);
             }, 1600);
           });
@@ -306,6 +364,8 @@
     repeticionGuiada: repeticionGuiada,
     compararDicho: compararDicho,
     celebrar: celebrar,
+    vozPara: vozPara,                              // nuevo: mejor voz para un idioma
+    getIdiomasVoces: function () { return Object.keys(vocesPreferidas); },
     get ultimoTexto() { return ultimo; },
     set habilitado(v) { habilitado = v; if (!v) callar(); },
     get habilitado() { return habilitado; },
