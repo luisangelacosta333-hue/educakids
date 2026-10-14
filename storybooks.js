@@ -373,7 +373,14 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
           detenerAudio: detenerAudio,
           toast: toast,
           onCerrar: function () { renderBiblioteca(); },
-          onTerminado: function () { setProgreso(cuento.id, (cuento.paginas || []).length, true); }
+          onTerminado: function () {
+            setProgreso(cuento.id, (cuento.paginas || []).length, true);
+            try {
+              var el = document.getElementById('stat-estrellas');
+              if (el) { var b = el.querySelector('b'); if (b) b.textContent = parseInt(b.textContent||'0',10) + 5; }
+            } catch(e){}
+            try { localStorage.setItem('buggyia.storybooks.estrellas', String(parseInt(localStorage.getItem('buggyia.storybooks.estrellas')||'0',10)+5)); } catch(e){}
+          }
         });
       } else {
         estado.contenedor.innerHTML = '<div class="sb-root"><div class="sb-empty"><span class="big">⚠️</span>Falta cargar storybooks-reader.js</div></div>';
@@ -432,6 +439,24 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
   window.EK = window.EK || {};
 
   var st = null; // estado interno del lector actual
+  var _cssInyectado = false;
+  function injectarCSSExtra() {
+    if (_cssInyectado) return; _cssInyectado = true;
+    var css = '.sb-word{cursor:pointer;border-radius:6px;padding:0 2px;transition:background .2s;}' +
+      '.sb-word.hl{background:#FFD54A;color:#7c2d12;border-radius:6px;}' +
+      '.sb-word:hover{background:#FFF1DE;}' +
+      '.sb-mic-btn{flex:0 0 auto;width:44px;height:44px;border:none;border-radius:50%;background:#FF6B9D;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(255,107,157,.4);margin-left:4px;}' +
+      '.sb-mic-btn:active{transform:scale(.9);}' +
+      '.sb-hint{background:#FFF1DE;border:2px dashed #FF9F43;border-radius:14px;padding:10px 14px;margin-bottom:10px;font-size:15px;font-weight:700;text-align:center;color:#E8892C;}' +
+      '.sb-bedtime{background:#1a1040 !important;color:#eee !important;}' +
+      '.sb-bedtime .sb-reader{background:#2a1f55 !important;}' +
+      '.sb-bedtime .sb-sentence{background:#352a66 !important;color:#eee;}' +
+      '.sb-bedtime .sb-sentence-translation{color:#bbb !important;}' +
+      '.sb-bedtime .sb-page-illustration{filter:brightness(.7);}';
+    var s = document.createElement('style');
+    s.textContent = css;
+    document.head.appendChild(s);
+  }
 
   function escapar(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -496,6 +521,11 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
     var primario = st.lang;                    // idioma principal
     var secundario = primario === 'es' ? 'en' : 'es';
 
+    var palabrasTexto = (pag.oraciones || []).map(function(o){return (o[primario]||o.es).toLowerCase();}).join(' ');
+    var vocabDisp = (c.vocabulario||[]).filter(function(v){ return palabrasTexto.indexOf((v[primario]||v.es||'').toLowerCase())>=0; });
+    st.palabraOculta = vocabDisp.length ? (vocabDisp[Math.floor(Math.random()*vocabDisp.length)][primario]||vocabDisp[0].es) : null;
+    var txtToca = st.lang==='en'?'Touch the word':'Tocá la palabra';
+    var pistaOculta = st.palabraOculta ? ('<div class="sb-hint" id="sb-hint">🔍 '+txtToca+': <b>'+escapar(st.palabraOculta)+'</b></div>') : '';
     var oracionesHtml = '';
     (pag.oraciones || []).forEach(function (o, i) {
       var textoP = o[primario] || o.es;
@@ -503,12 +533,14 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
       oracionesHtml +=
         '<div class="sb-sentence" data-sent="' + i + '">' +
           '<button class="sb-speak-btn" data-speak="' + i + '" data-lang="' + primario + '" title="ES">🔊</button>' +
-          '<div class="sb-sentence-text">' + escapar(textoP) +
+          '<div class="sb-sentence-text">' + palabrasHTML(textoP, i, primario) +
             (st.mostrarTrad ? '<span class="sb-sentence-translation">' + escapar(textoS) + '</span>' : '') +
           '</div>' +
           '<button class="sb-speak-btn secondary" data-speak="' + i + '" data-lang="' + secundario + '" title="EN">🌐</button>' +
+          '<button class="sb-mic-btn" data-mic="' + i + '" title="Practicar">🎤</button>' +
         '</div>';
     });
+    oracionesHtml = pistaOculta + oracionesHtml;
 
     cont.innerHTML =
       '<div class="sb-root sb-page-enter">' +
@@ -524,6 +556,8 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
           '<div class="sb-page-text">' + oracionesHtml + '</div>' +
           '<div class="sb-toggle-row">' +
             '<button class="sb-toggle' + (st.mostrarTrad ? ' on' : '') + '" data-rdr-trad>' + (st.mostrarTrad ? '👁️ ' : '🙈 ') + escapar(t('mostrarTrad')) + '</button>' +
+            '<button class="sb-toggle' + (st.karaoke ? ' on' : '') + '" data-rdr-karaoke>🎤 ' + (st.lang==='en'?'Read along':'Leer conmigo') + '</button>' +
+            '<button class="sb-toggle' + (st.bedtime ? ' on' : '') + '" data-rdr-bedtime>🌙 ' + (st.lang==='en'?'Bedtime':'Noche') + '</button>' +
             '<button class="sb-toggle" data-rdr-readpage>▶️ ' + escapar(t('leerPagina')) + '</button>' +
             '<button class="sb-toggle" data-rdr-stop>⏹️ ' + escapar(t('detener')) + '</button>' +
           '</div>' +
@@ -554,6 +588,38 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
       renderLectura();
     });
     cont.querySelector('[data-rdr-stop]').addEventListener('click', function () { st.opts.detenerAudio(); });
+    var btnK = cont.querySelector('[data-rdr-karaoke]');
+    if (btnK) btnK.addEventListener('click', function () { st.karaoke = !st.karaoke; renderLectura(); });
+    var btnB = cont.querySelector('[data-rdr-bedtime]');
+    if (btnB) btnB.addEventListener('click', function () {
+      st.bedtime = !st.bedtime;
+      renderLectura();
+      var root = cont.querySelector('.sb-root');
+      if (root && st.bedtime) root.classList.add('sb-bedtime');
+    });
+    cont.querySelectorAll('.sb-word').forEach(function (w) {
+      w.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var palabra = w.textContent;
+        var lang = w.getAttribute('data-lang');
+        st.opts.hablar(palabra.replace(/[.,!?;:]/g,''), lang);
+        w.classList.add('hl');
+        setTimeout(function(){ w.classList.remove('hl'); }, 600);
+        if (st.palabraOculta && palabra.toLowerCase().indexOf(st.palabraOculta.toLowerCase().slice(0,4)) >= 0) {
+          var hint = cont.querySelector('#sb-hint');
+          if (hint) { hint.innerHTML = '✅ ¡'+escapar(palabra)+'! +1 ⭐'; hint.style.color = 'var(--sb-accent)'; }
+          sumarEstrellas(1);
+          st.palabraOculta = null;
+          setTimeout(function(){ var h2 = cont.querySelector('#sb-hint'); if (h2) h2.style.display='none'; }, 1500);
+        }
+      });
+    });
+    cont.querySelectorAll('.sb-mic-btn').forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        practicarPronunciacion(parseInt(b.getAttribute('data-mic'),10));
+      });
+    });
     cont.querySelector('[data-rdr-readpage]').addEventListener('click', function () { leerPaginaCompleta(); });
     var prev = cont.querySelector('[data-rdr-prev]');
     if (!prev.disabled) prev.addEventListener('click', function () {
@@ -604,6 +670,26 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
     });
   }
 
+  function palabrasHTML(texto, sentIdx, lang) {
+    var palabras = String(texto||'').split(/(\s+)/);
+    var html = '', wi = 0;
+    palabras.forEach(function (p) {
+      if (/^\s+$/.test(p)) { html += p; return; }
+      html += '<span class="sb-word" data-word="'+wi+'" data-sent="'+sentIdx+'" data-lang="'+lang+'">'+escapar(p)+'</span>';
+      wi++;
+    });
+    return html;
+  }
+  function sumarEstrellas(n) {
+    try {
+      var el = document.getElementById('stat-estrellas');
+      if (el) { var b = el.querySelector('b'); if (b) b.textContent = parseInt(b.textContent||'0',10) + n; }
+    } catch(e){}
+    try {
+      var clave = 'buggyia.storybooks.estrellas';
+      localStorage.setItem(clave, String(parseInt(localStorage.getItem(clave)||'0',10) + n));
+    } catch(e){}
+  }
   function leerPaginaCompleta() {
     var pag = st.cuento.paginas[st.pagina];
     var oraciones = pag.oraciones || [];
@@ -617,12 +703,59 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
         st.contenedor.querySelectorAll('.sb-sentence.playing').forEach(function (r) { r.classList.remove('playing'); });
         row.classList.add('playing');
       }
-      st.opts.hablar(texto, st.lang, function () {
-        if (row) row.classList.remove('playing');
-        setTimeout(siguiente, 350);
-      });
+      var rate = st.bedtime ? 0.7 : 0.9;
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch(e){}
+        var u = new SpeechSynthesisUtterance(texto);
+        u.lang = st.lang === 'en' ? 'en-US' : 'es-AR';
+        u.rate = rate; u.pitch = 1.1;
+        var palabrasRow = row ? row.querySelectorAll('.sb-word') : [];
+        u.onboundary = function(ev) {
+          if (!row) return;
+          var ci = ev.charIndex || 0, acum = 0, target = 0;
+          for (var k = 0; k < palabrasRow.length; k++) {
+            acum += palabrasRow[k].textContent.length + 1;
+            target = k; if (acum > ci) break;
+          }
+          row.querySelectorAll('.sb-word.hl').forEach(function(w){w.classList.remove('hl');});
+          if (palabrasRow[target]) palabrasRow[target].classList.add('hl');
+        };
+        u.onend = function () {
+          if (row) { row.classList.remove('playing'); row.querySelectorAll('.sb-word.hl').forEach(function(w){w.classList.remove('hl');}); }
+          setTimeout(siguiente, st.karaoke ? 600 : 350);
+        };
+        window.speechSynthesis.speak(u);
+      } else {
+        st.opts.hablar(texto, st.lang, function () {
+          if (row) row.classList.remove('playing');
+          setTimeout(siguiente, 350);
+        });
+      }
     }
     siguiente();
+  }
+  function practicarPronunciacion(sentIdx) {
+    var pag = st.cuento.paginas[st.pagina];
+    var o = (pag.oraciones||[])[sentIdx]; if (!o) return;
+    var texto = o[st.lang] || o.es;
+    var langCode = st.lang === 'en' ? 'en-US' : 'es-AR';
+    if (EK.Voz && typeof EK.Voz.escucharYComparar === 'function') {
+      var row = st.contenedor.querySelector('.sb-sentence[data-sent="'+sentIdx+'"]');
+      if (row) row.classList.add('playing');
+      EK.Voz.escucharYComparar(texto, langCode, function(res) {
+        if (row) row.classList.remove('playing');
+        if (res && res.exito) {
+          sumarEstrellas(1);
+          if (st.opts.toast) st.opts.toast('⭐ ¡Perfecto! +1 estrella');
+        } else if (res && res.soportado === false) {
+          if (st.opts.toast) st.opts.toast('🎤 Micrófono no disponible');
+        } else {
+          if (st.opts.toast) st.opts.toast('💪 Casi, escuchá de nuevo');
+        }
+      });
+    } else {
+      if (st.opts.toast) st.opts.toast('🎤 Función micrófono no disponible en voz.js');
+    }
   }
 
   /* ================= VOCABULARIO ================= */
@@ -876,8 +1009,12 @@ var SB_CUENTOS = {"el-perrito-que-queria-jugar": {"id": "el-perrito-que-queria-j
       vista: 'lectura',
       quizIdx: 0,
       quizScore: 0,
-      match: null
+      match: null,
+      karaoke: false,
+      bedtime: false,
+      palabraOculta: null
     };
+    injectarCSSExtra();
     // Continuar desde donde quedó
     var prog = opts && opts.getProgreso ? opts.getProgreso(cuento.id) : null;
     var totalPag = (cuento.paginas || []).length;
