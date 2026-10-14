@@ -1,0 +1,55 @@
+{
+  "idiomas": ["es", "en", "pt", "it", "fr", "de"],
+  "categorias": [
+    { "id": "clasicos", "nombre": { "es": "Clásicos", "en": "Classics", "pt": "Clássicos", "it": "Classici", "fr": "Classiques", "de": "Klassiker" }, "icono": "🏆" },
+    { "id": "animales", "nombre": { "es": "Animales", "en": "Animals", "pt": "Animais", "it": "Animali", "fr": "Animaux", "de": "Tiere" }, "icono": "🐾" },
+    { "id": "aprender", "nombre": { "es": "Valores", "en": "Values", "pt": "Valores", "it": "Valori", "fr": "Valeurs", "de": "Werte" }, "icono": "🌟" }
+  ],
+  "cuentos": [
+    {
+      "id": "dinosaurio-curioso",
+      "titulo": { "es": "El Dinosaurio Curioso", "en": "The Curious Dinosaur", "pt": "O Dinossauro Curioso", "it": "Il Dinosauro Curioso", "fr": "Le Dinosaure Curieux", "de": "Der neugierige Dinosaurier" },
+      "categoria": "animales",
+      "paginas": 4,
+      "color": "#6BCB77",
+      "portada": "🦕",
+      "archivo": "el-dinosaurio-curioso.json"
+    },
+    {
+      "id": "perrito-jugar",
+      "titulo": { "es": "El Perrito que Quería Jugar", "en": "The Puppy Who Wanted to Play", "pt": "O Cachorrinho que Queria Brincar", "it": "Il Cucciolo che Voleva Giocare", "fr": "Le Chiot qui Voulait Jouer", "de": "Der Welpe, der Spielen wollte" },
+      "categoria": "animales",
+      "paginas": 4,
+      "color": "#4D96FF",
+      "portada": "🐶",
+      "archivo": "el-perrito-que-queria-jugar.json"
+    },
+    {
+      "id": "tortuga-liebre",
+      "titulo": { "es": "La Tortuga y la Liebre", "en": "The Tortoise and the Hare", "pt": "A Tartaruga e a Lebre", "it": "La Tartaruga e la Lepre", "fr": "La Tortue et le Lièvre", "de": "Die Schildkröte und der Hase" },
+      "categoria": "clasicos",
+      "paginas": 4,
+      "color": "#4ECDC4",
+      "portada": "🐢",
+      "archivo": "tortuga.json"
+    },
+    {
+      "id": "zorro-cuervo",
+      "titulo": { "es": "El Zorro y el Cuervo", "en": "The Fox and the Crow", "pt": "A Raposa e o Corvo", "it": "La Volpe e il Corvo", "fr": "Le Renard et le Corbeau", "de": "Der Fuchs und der Rabe" },
+      "categoria": "animales",
+      "paginas": 4,
+      "color": "#FF9F43",
+      "portada": "🦊",
+      "archivo": "zorro.json"
+    },
+    {
+      "id": "leon-raton",
+      "titulo": { "es": "El León y el Ratón", "en": "The Lion and the Mouse", "pt": "O Leão e o Rato", "it": "Il Leone e il Topo", "fr": "Le Lion et la Souris", "de": "Der Löwe und die Maus" },
+      "categoria": "aprender",
+      "paginas": 4,
+      "color": "#A55EEA",
+      "portada": "🦁",
+      "archivo": "leon.json"
+    }
+  ]
+}
