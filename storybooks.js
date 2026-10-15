@@ -862,15 +862,42 @@ SB_registrar(
     var n = 0; for(var k in store.progreso) if(store.progreso[k]&&store.progreso[k].terminado) n++; return n;
   }
 
+  /* ---------- VOZ DE NARRADOR (motor nativo, tono grave de locutor) ---------- */
+  var vocesDisponibles = [];
+  function cargarVoces(){ try{ vocesDisponibles = window.speechSynthesis.getVoices() || []; }catch(e){} }
+  if('speechSynthesis' in window){
+    window.speechSynthesis.onvoiceschanged = cargarVoces;
+    cargarVoces();
+    setTimeout(cargarVoces, 500); setTimeout(cargarVoces, 1500);
+  }
+  function elegirVoz(codigoIdioma){
+    if(!vocesDisponibles.length) cargarVoces();
+    var vocesDelIdioma = vocesDisponibles.filter(function(v){
+      return (v.lang||'').toLowerCase().startsWith(codigoIdioma.toLowerCase());
+    });
+    if(!vocesDelIdioma.length) return null;
+    var preferida = vocesDelIdioma.find(function(v){
+      var n = (v.name||'').toLowerCase();
+      return n.indexOf('natural')>=0 || n.indexOf('male')>=0 || n.indexOf('hombre')>=0 ||
+             n.indexOf('jorge')>=0 || n.indexOf('alvaro')>=0 || n.indexOf('google')>=0 ||
+             n.indexOf('microsoft')>=0 || n.indexOf('samantha')>=0;
+    });
+    return preferida || vocesDelIdioma[0];
+  }
   function hablar(texto, lang, onend){
     try{
       if(EK.Voz && typeof EK.Voz.hablar==='function'){
-        EK.Voz.hablar(texto, { lang:lang==='en'?'en-US':'es-AR', rate:0.9, onend:onend }); return true;
+        EK.Voz.hablar(texto, { lang:lang==='en'?'en-US':'es-ES', rate:0.92, pitch:0.85, onend:onend }); return true;
       }
       if('speechSynthesis' in window){
         window.speechSynthesis.cancel();
         var u = new SpeechSynthesisUtterance(texto);
-        u.lang = lang==='en'?'en-US':'es-AR'; u.rate=0.9; u.pitch=1.1;
+        u.lang = lang==='en'?'en-US':'es-ES';
+        u.rate = 0.92;   // pausado, estilo narrador
+        u.pitch = 0.85;  // tono grave y cálido (no infantil)
+        u.volume = 1;
+        var voz = elegirVoz(lang==='en'?'en':'es');
+        if(voz) u.voice = voz;
         if(onend) u.onend = onend;
         window.speechSynthesis.speak(u); return true;
       }
@@ -1346,7 +1373,13 @@ SB_registrar(
       if('speechSynthesis' in window){
         try{ window.speechSynthesis.cancel(); }catch(e){}
         var u = new SpeechSynthesisUtterance(texto);
-        u.lang = st.lang==='en'?'en-US':'es-AR'; u.rate=rate; u.pitch=1.1;
+        u.lang = st.lang==='en'?'en-US':'es-ES'; u.rate=rate; u.pitch=0.85; u.volume=1;
+        try{
+          var vs = window.speechSynthesis.getVoices()||[];
+          var vi = vs.filter(function(v){ return (v.lang||'').toLowerCase().startsWith(st.lang); })
+                     .find(function(v){ var n=(v.name||'').toLowerCase(); return n.indexOf('natural')>=0||n.indexOf('male')>=0||n.indexOf('hombre')>=0||n.indexOf('google')>=0||n.indexOf('microsoft')>=0; });
+          if(vi) u.voice = vi;
+        }catch(e){}
         var palabrasRow = row ? row.querySelectorAll('.sb-word') : [];
         u.onboundary = function(ev){
           if(!row) return;
