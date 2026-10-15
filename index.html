@@ -78,8 +78,7 @@
   <script src="voz.js"></script>
 
   <!-- ============================================================
-       VOZ DE NARRADOR — ESPAÑOL LATINO (no España) — TODA LA APP
-       Se carga DESPUÉS de voz.js para sobrescribir la voz anterior.
+       🎙️ VOZ DE NARRADOR — LATINOAMERICANO VARÓN
        ============================================================ -->
   <script>
   (function () {
@@ -95,47 +94,58 @@
     if ('speechSynthesis' in window) {
       window.speechSynthesis.onvoiceschanged = cargarVoces;
       cargarVoces();
-      setTimeout(cargarVoces, 500);
-      setTimeout(cargarVoces, 1500);
-      setTimeout(cargarVoces, 3000);
+      setTimeout(cargarVoces, 600);
+      setTimeout(cargarVoces, 1800);
     }
 
-    function elegirVoz(codigoIdioma) {
+    function elegirVozLatinoVaron() {
       if (!vocesDisponibles.length) cargarVoces();
-      var vocesDelIdioma = vocesDisponibles.filter(function (v) {
-        return (v.lang || '').toLowerCase().startsWith(codigoIdioma.toLowerCase());
-      });
-      if (!vocesDelIdioma.length) return null;
-      // PRIORIDAD: voces LATINOAMERICANAS (419, MX, AR, US, CL, CO, PE) + naturales/Google
-      var latino = vocesDelIdioma.filter(function (v) {
+
+      // Filtrar voces en español latino
+      var vocesLatino = vocesDisponibles.filter(function (v) {
         var l = (v.lang || '').toLowerCase();
-        return l.indexOf('419') >= 0 || l.indexOf('mx') >= 0 || l.indexOf('ar') >= 0 ||
-               l.indexOf('us') >= 0 || l.indexOf('cl') >= 0 || l.indexOf('co') >= 0 || l.indexOf('pe') >= 0;
+        return l.indexOf('es-419') >= 0 || l.indexOf('es-mx') >= 0 || 
+               l.indexOf('es-ar') >= 0 || l.indexOf('es-cl') >= 0 ||
+               l.indexOf('es-co') >= 0 || l.indexOf('es-pe') >= 0 ||
+               (l.startsWith('es') && l.indexOf('es-es') === -1);
       });
-      var lista = latino.length ? latino : vocesDelIdioma;
-      var preferida = lista.find(function (v) {
+
+      if (!vocesLatino.length) {
+        vocesLatino = vocesDisponibles.filter(function (v) {
+          return (v.lang || '').toLowerCase().startsWith('es');
+        });
+      }
+
+      // Buscar VOCES MASCULINAS LATINAS por nombre
+      var varon = vocesLatino.find(function (v) {
         var n = (v.name || '').toLowerCase();
-        return n.indexOf('natural') >= 0 || n.indexOf('google') >= 0 || n.indexOf('microsoft') >= 0 ||
-               n.indexOf('male') >= 0 || n.indexOf('hombre') >= 0 || n.indexOf('jorge') >= 0 ||
-               n.indexOf('andres') >= 0 || n.indexOf('andrés') >= 0 || n.indexOf('latino') >= 0 || n.indexOf('mexico') >= 0;
+        return n.indexOf('jorge') >= 0 || n.indexOf('andrés') >= 0 || n.indexOf('andres') >= 0 ||
+               n.indexOf('pablo') >= 0 || n.indexOf('carlos') >= 0 || n.indexOf('juan') >= 0 ||
+               n.indexOf('male') >= 0 || n.indexOf('hombre') >= 0 || n.indexOf('latino') >= 0 ||
+               n.indexOf('mexico') >= 0 || n.indexOf('argentina') >= 0 ||
+               n.indexOf('google') >= 0 || n.indexOf('natural') >= 0;
       });
-      return preferida || lista[0];
+
+      return varon || vocesLatino[0] || null;
     }
 
-    function hablarConVozNarrador(texto, opts) {
+    function hablarNarrador(texto, opts) {
       opts = opts || {};
       if (!('speechSynthesis' in window)) return false;
+      
       try { window.speechSynthesis.cancel(); } catch (e) {}
-      var idioma = opts.lang || 'es-419'; // ESPAÑOL LATINOAMERICANO
+      
       var u = new SpeechSynthesisUtterance(texto);
-      u.lang = idioma;
-      u.pitch = opts.pitch || 0.85;  // grave, tono narrador (no infantil)
-      u.rate = opts.rate || 0.92;    // pausado
-      u.volume = opts.volume != null ? opts.volume : 1;
-      var voz = elegirVoz((idioma || 'es').slice(0, 2));
+      u.lang = 'es-419';
+      
+      // 🎙️ Tono mejorado: varón, cálido, claro y pausado
+      u.pitch = 0.78;   // Más grave y natural, no muy bajo
+      u.rate = 0.88;    // Más pausado, se entiende perfectamente
+      u.volume = 1;
+      
+      var voz = elegirVozLatinoVaron();
       if (voz) u.voice = voz;
-      if (typeof opts.onend === 'function') u.onend = opts.onend;
-      if (typeof opts.onboundary === 'function') u.onboundary = opts.onboundary;
+      
       window.speechSynthesis.speak(u);
       return true;
     }
@@ -144,18 +154,20 @@
       try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {}
     }
 
-    window.hablarNarrador = function (texto, idioma) {
-      return hablarConVozNarrador(texto, { lang: idioma || 'es-419' });
+    // Exponer funciones
+    window.hablarNarrador = function (texto) {
+      return hablarNarrador(texto);
     };
     window.detenerNarrador = detenerVoz;
 
-    // Sobrescribe el motor de voz de la app para que TODO use esta voz
-    EK.Voz.hablar = function (texto, opts) { return hablarConVozNarrador(texto, opts); };
+    // Reemplazar el sistema de voz de la app completa
+    EK.Voz.hablar = function (texto, opciones) {
+      return hablarNarrador(texto, opciones);
+    };
     EK.Voz.detener = detenerVoz;
-    EK.Voz.elegirVoz = elegirVoz;
-    EK.Voz.recargarVoces = cargarVoces;
   })();
   </script>
+  <!-- FIN VOZ DE NARRADOR -->
 
   <!-- Storybooks Bilingües -->
   <script src="storybooks.js"></script>
