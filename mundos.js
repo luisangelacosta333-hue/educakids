@@ -47,7 +47,7 @@
   function qf(p, c, opts) { return { pregunta: p, opciones: barajar(opts.map(String)), correcta: String(c), emojiPregunta: '❓' }; }
   function qc(p, c, opts) { return { pregunta: p, opciones: barajar(opts.map(String)), correcta: String(c), emojiPregunta: '❓' }; }
   // Verdadero / Falso
-  function qv(p, esVerdadero, emoji) { return { pregunta: p, opciones: ['Verdadero', 'Falso'], correcta: esVerdadero ? 'Verdadero' : 'Falso', tipo: 'vf', emojiPregunta: emoji || '🤔' }; }
+  function qv(p, esVerdadero, emoji, explicacion) { return { pregunta: p, opciones: ['Verdadero', 'Falso'], correcta: esVerdadero ? 'Verdadero' : 'Falso', tipo: 'vf', emojiPregunta: emoji || '🤔', explicacion: explicacion || (esVerdadero ? '¡Correcto! Esta afirmación es verdadera. ¡Fíjate bien en los detalles para aprenderla! ' : '¡Casi! Esta afirmación es falsa. Ahora ya sabés la respuesta correcta para la próxima. ') }; }
   // Completar hueco
   function qh(p, c, opts, emoji) { return { pregunta: p, opciones: barajar(opts.map(String)), correcta: String(c), tipo: 'hueco', emojiPregunta: emoji || '✏️' }; }
   // Ordenar secuencia
@@ -188,7 +188,6 @@
     // ---- MUNDOS NUEVOS (SUPER PREMIUM) ----
     { id: 'musica',       nombre: 'Música',         emoji: '🎵', color: '#FF6B6B', tipo: 'categorias',   nivel: 'todos',      desc: 'Notas, instrumentos, ritmos y composición' },
     { id: 'historia',     nombre: 'Historia',       emoji: '📜', color: '#D4A574', tipo: 'categorias',   nivel: 'primario',   desc: 'Prehistoria, Egipto, Edad Media, Argentina' },
-    { id: 'logica',       nombre: 'Lógica',         emoji: '🧩', color: '#45B7D1', tipo: 'niveles',      nivel: 'todos',      desc: 'Acertijos, patrones, razonamiento y puzzles' },
     { id: 'emociones',    nombre: 'Emociones',      emoji: '❤️', color: '#FF8FA3', tipo: 'categorias',   nivel: 'inicial',    desc: 'Sentimientos, valores y convivencia' },
     { id: 'deportes',     nombre: 'Deportes',       emoji: '⚽', color: '#51CF66', tipo: 'categorias',   nivel: 'todos',      desc: 'Fútbol, olimpiadas, reglas y salud deportiva' },
     { id: 'salud',        nombre: 'Salud',          emoji: '🩺', color: '#FF8787', tipo: 'categorias',   nivel: 'todos',      desc: 'Cuerpo, alimentación, higiene y primeros auxilios' },
@@ -1275,12 +1274,6 @@
     ], 8)
   };
 
-  var LOGICA_BANCO = {
-    1: [qc('¿Qué sigue? 🔴🔵🔴🔵?','🔴',['🔴','🔵','🟢','🟡']), qc('¿Qué sigue? 🍎🍎🍌🍎🍎?','🍌',['🍌','🍎','🍇','🍊']), qc('¿Cuál es diferente? 🐶🐶🐱🐶','🐱',['🐱','🐶','🐶','🐶']), qc('2,4,6,? ¿qué sigue?','8',['8','7','9','10']), qc('Si tengo 3 manzanas y como 1, ¿cuántas quedan?','2',['2','3','1','4']), qc('¿Cuál pesa más? 1 kg de plumas o 1 kg de piedras','Igual',['Igual','Plumas','Piedras','No sé'])],
-    2: [qc('¿Qué se moja al secar?','Una toalla',['Una toalla','El sol','El fuego','Una piedra']), qc('¿Qué tiene cuello pero no cabeza?','Una botella',['Una botella','Un perro','Un árbol','Una mesa']), qc('¿Cuántos meses tienen 28 días?','Todos',['Todos','1','2','Ninguno']), qc('¿Qué sube pero no baja?','La edad',['La edad','Un ascensor','Una pelota','Un pájaro']), qc('Si 5 máquinas hacen 5 artículos en 5 min, 100 máquinas hacen 100 en?','5 min',['5 min','100 min','20 min','50 min']), qc('¿Cuánto es la mitad de 2 más 2?','3',['3','2','4','5'])],
-    3: [qc('Tres gatos en 3 min atrapan 3 ratones. ¿Cuántos para 100 ratones en 100 min?','3',['3','100','33','10']), qc('¿Qué número multiplicado por sí mismo da 49?','7',['7','6','8','9']), qc('¿Cuál es el próximo? 1,1,2,3,5,8,?','13',['13','10','11','12']), qc('¿Qué es lógicamente imposible?','Un cuadrado redondo',['Un cuadrado redondo','Un perro negro','Un día lluvioso','Un gato blanco']), qc('Si todos los gatos son animales y algunos animales vuelan, ¿algunos gatos vuelan?','No se puede saber',['No se puede saber','Sí','No','Ninguno']), qc('¿Qué es un silogismo?','Razonamiento de dos premisas',['Razonamiento de dos premisas','Un error','Un premio','Un juego'])]
-  };
-  function genLogica(nivel) { return barajar(LOGICA_BANCO[Math.min(nivel, 3)]).slice(0, 8); }
 
   var EMOCIONES = {
     '😊 Sentimientos': banco([
@@ -1990,7 +1983,13 @@
       qc('¿Cuánto es 2 al cubo (2³)?','8',['8','6','4','16']),
       qc('¿Cuánto es 1 docena y media?','18',['18','12','24','15']),
       qc('¿Cuánto es 1000 − 457?','543',['543','557','643','453']),
-      qc('¿Cuánto es 0.5 + 0.5?','1',['1','0.1','0.25','10'])
+      qc('¿Cuánto es 0.5 + 0.5?','1',['1','0.1','0.25','10']),
+      qc('¿Cuántos minutos tiene una hora y media?','90',['90','60','120','30']),
+      qc('¿Cuánto es el doble de 25 más 10?','60',['60','50','45','70']),
+      qc('¿Qué figura tiene 3 lados?','Triángulo',['Triángulo','Cuadrado','Círculo','Pentágono']),
+      qc('¿Cuánto es 7 × 8?','56',['56','54','64','48']),
+      qv('Un cuadrado tiene 5 lados.', false, '⬜', 'Un cuadrado tiene SIEMPRE 4 lados iguales y 4 ángulos rectos. El de 5 lados se llama pentágono.'),
+      qv('La mitad de 100 es 50.', true, '🔢', '¡Exacto! 100 dividido 2 = 50. La mitad es partir en dos partes iguales.')
     ],
     ciencia: [
       qc('¿Cuántos planetas hay en el sistema solar?','8',['8','9','7','10']),
@@ -2000,7 +1999,39 @@
       qc('¿Qué órgano filtra la sangre?','Riñón',['Riñón','Hígado','Pulmón','Corazón']),
       qc('¿Qué es el ADN?','Molécula de la herencia',['Molécula de la herencia','Una célula','Un órgano','Un virus']),
       qc('¿Cuál es el metal más abundante en la Tierra?','Hierro',['Hierro','Oro','Plata','Cobre']),
-      qc('¿Cuántos segundos tiene un minuto?','60',['60','100','30','120'])
+      qc('¿Cuántos segundos tiene un minuto?','60',['60','100','30','120']),
+      qc('¿Qué planeta es el más cercano al Sol?','Mercurio',['Mercurio','Venus','Tierra','Marte']),
+      qc('¿Qué animal hace la metamorfosis de oruga a mariposa?','Mariposa',['Mariposa','Abeja','Hormiga','Mosca']),
+      qc('¿Cuántos huesos tiene el cuerpo humano adulto?','206',['206','100','300','150']),
+      qc('¿Qué parte de la planta hace la fotosíntesis?','La hoja',['La hoja','La raíz','El tallo','La flor']),
+      qv('El Sol es un planeta.', false, '☀️', 'El Sol NO es un planeta: es una ESTRELLA, una bola de gas que produce luz y calor. Los planetas giran alrededor de él.'),
+      qv('Los peces respiran por branquias.', true, '🐟', '¡Correcto! Los peces toman oxígeno del agua por las branquias, no por pulmones como nosotros.')
+    ],
+    dinero: [
+      qc('¿Qué es un emprendimiento?','Crear tu propio negocio',['Crear tu propio negocio','Un trabajo fijo','Una multa','Un juego']),
+      qc('¿Qué es la ganancia?','Lo que queda después de pagar costos',['Lo que queda después de pagar costos','Todo el dinero que entra','Lo que gastás','Un impuesto']),
+      qc('Vendés galletitas a $100 y te costó $40 hacerlas. ¿Ganancia?','$60',['$60','$100','$40','$140']),
+      qc('¿Qué es un cliente?','Quien compra tu producto',['Quien compra tu producto','Quien lo fabrica','Quien lo regala','Quien limpia']),
+      qc('¿Qué es ahorrar?','Guardar dinero para después',['Guardar dinero para después','Gastar todo hoy','Tirar monedas','Regalar tu sueldo']),
+      qc('¿Qué es un presupuesto?','Un plan para tu dinero',['Un plan para tu dinero','Una moneda','Un juguete','Un billete']),
+      qc('¿Qué es el interés del banco?','Dinero que te pagan por ahorrar',['Dinero que te pagan por ahorrar','Una multa','Un impuesto','Un regalo']),
+      qc('¿Qué conviene más: $10 hoy o $15 mañana?','$15 mañana (si esperás)',['$15 mañana (si esperás)','$10 hoy','Igual','Tirar una moneda']),
+      qc('¿Qué es un costo?','Lo que gastás para hacer el producto',['Lo que gastás para hacer el producto','Lo que ganás','Lo que regalan','El premio']),
+      qc('Si tu emprendimiento gasta más de lo que gana...','Tiene pérdidas',['Tiene pérdidas','Es un éxito','No paga impuestos','Gana más']),
+      qv('Si ganás más de lo que gastás, tenés ganancia.', true, '💰', '¡Exacto! Ganancia = dinero que entra − dinero que gastás. Si entra más que sale, ganás.'),
+      qv('Un emprendimiento siempre gana dinero sin trabajar.', false, '💼', 'No es así: un emprendimiento necesita esfuerzo, plan y clientes. Muchos emprendedores trabajan mucho antes de ganar.')
+    ],
+    verde: [
+      qc('¿Dónde ponés una botella de plástico?','♻️ Reciclaje',['♻️ Reciclaje','🗑️ Basura','🚽 Inodoro','🌊 Mar']),
+      qc('¿De qué color es el contenedor de papel?','Azul',['Azul','Rojo','Negro','Verde']),
+      qc('¿Qué hacemos con el papel usado?','Lo reciclamos',['Lo reciclamos','Lo tiramos','Lo quemamos','Lo enterramos']),
+      qc('Cáscara de banana →','Orgánico / compost',['Orgánico / compost','Plástico','Vidrio','Metal']),
+      qc('¿Apagamos la luz al salir?','Sí, ahorramos energía',['Sí, ahorramos energía','No, da igual','Solo de noche','Solo si llueve']),
+      qc('¿Qué energía viene del sol?','Solar',['Solar','Eólica','Hidráulica','Carbón']),
+      qc('¿Qué es el compost?','Restos de comida que viran abono',['Restos de comida que viran abono','Plástico','Metal','Vidrio']),
+      qc('¿Qué es un recurso renovable?','Se repone solo (sol, viento)',['Se repone solo (sol, viento)','Se acaba','Es de plástico','No existe']),
+      qv('Tirar basura en la calle cuida el planeta.', false, '🌍', 'Al revés: tirar basura CONTAMINA el suelo, el agua y los animales. Siempre tirala en su tacho.'),
+      qv('Las plantas dan oxígeno y limpian el aire.', true, '🌱', '¡Correcto! Por eso cuidar árboles y plantas es fundamental para respirar aire limpio.')
     ],
     geografia: [
       qc('¿Cuál es la capital de Perú?','Lima',['Lima','Quito','Bogotá','Santiago']),
@@ -2008,47 +2039,154 @@
       qc('¿En qué continente está el Sahara?','África',['África','Asia','Oceanía','América']),
       qc('¿Cuál es la montaña más alta del mundo?','Everest',['Everest','Aconcagua','K2','Kilimanjaro']),
       qc('¿Qué país tiene forma de bota?','Italia',['Italia','Francia','España','Grecia']),
-      qc('¿Cuál es la capital de Colombia?','Bogotá',['Bogotá','Lima','Quito','Caracas']),
-      qc('¿Qué océano baña Argentina?','Atlántico',['Atlántico','Pacífico','Índico','Ártico']),
-      qc('¿Cuál es la capital de Venezuela?','Caracas',['Caracas','Bogotá','Quito','Lima'])
+      qc('¿Cuál es la capital de Argentina?','Buenos Aires',['Buenos Aires','Córdoba','Rosario','Mendoza']),
+      qc('¿Cuál es el océano más grande?','Pacífico',['Pacífico','Atlántico','Índico','Ártico']),
+      qc('¿Cuántos continentes hay?','5 (o 7 según criterio)',['5 (o 7 según criterio)','3','10','12']),
+      qc('¿En qué país está la Torre Eiffel?','Francia',['Francia','Italia','España','Inglaterra']),
+      qv('La Antártida es un desierto de hielo.', true, '🧊', '¡Sí! Aunque parezca raro, la Antártida es un desierto porque casi no llueve, solo tiene hielo y nieve.')
     ],
     lengua: [
-      qc('¿Cuál es el antónimo de "claro"?','Oscuro',['Oscuro','Luminoso','Brillante','Blanco']),
-      qc('¿Cuál es el sinónimo de "rápido"?','Veloz',['Veloz','Lento','Pausado','Tardío']),
-      qc('¿Cuántas vocales hay?','5',['5','4','6','7']),
-      qc('¿Qué palabra es aguda?','Café',['Café','Árbol','Pájaro','Lápiz']),
-      qc('¿Qué es un adverbio de modo?','Rápidamente',['Rápidamente','Casa','Correr','Bonito']),
-      qc('¿Cuál es el plural de "flor"?','Flores',['Flores','Flor','Florcitas','Floridas']),
-      qc('¿Qué es un diptongo?','Dos vocales juntas',['Dos vocales juntas','Dos consonantes','Una sola vocal','Una oración']),
-      qc('¿Quién escribió Don Quijote?','Cervantes',['Cervantes','Shakespeare','Borges','Dante'])
+      qc('¿Cuántas letras tiene el abecedario español (sin contar ch/ll)?','27',['27','24','30','20']),
+      qc('¿Qué es un sustantivo?','Nombre de personas, cosas o animales',['Nombre de personas, cosas o animales','Una acción','Una descripción','Una pregunta']),
+      qc('¿Qué es un verbo?','Una acción (correr, comer)',['Una acción (correr, comer)','Un nombre','Un color','Un número']),
+      qc('¿Qué palabra es un adjetivo?','Grande',['Grande','Perro','Correr','Rápidamente']),
+      qc('¿Cómo se llama la pregunta que termina con ?','Interrogativa',['Interrogativa','Afirmativa','Exclamativa','Orden']),
+      qc('¿Qué signo usa una oración de exclamación?','¡ !',['¡ !','¿ ?','. .',', ,']),
+      qc('¿Qué es una sílaba?','Pedazo de una palabra',['Pedazo de una palabra','Una letra','Un número','Un signo']),
+      qv('Las oraciones empiezan con mayúscula.', true, '🔤', '¡Exacto! Toda oración empieza con mayúscula y termina con punto, signo de pregunta o exclamación.'),
+      qv('Los verbos indican acciones.', true, '🏃', '¡Correcto! Correr, saltar, comer y jugar son verbos: nos dicen qué hace alguien.')
     ],
     historia: [
-      qc('¿En qué año llegó Colón a América?','1492',['1492','1500','1450','1600']),
-      qc('¿Quién fue el primer presidente argentino?','Rivadavia',['Rivadavia','San Martín','Belgrano','Sarmiento']),
-      qc('¿Qué fue la Revolución Francesa?','Cambio de gobierno en Francia',['Cambio de gobierno en Francia','Una guerra','Un descubrimiento','Una fiesta']),
-      qc('¿Quién pintó la Capilla Sixtina?','Miguel Ángel',['Miguel Ángel','Da Vinci','Rafael','Donatello']),
-      qc('¿Qué fue la Edad de Piedra?','Uso de herramientas de piedra',['Uso de herramientas de piedra','Uso de metal','Uso de plástico','Uso de electricidad']),
-      qc('¿Quién fue Eva Perón?','Actriz y política argentina',['Actriz y política argentina','Una reina','Una científica','Una atleta']),
-      qc('¿Qué fue la Guerra de Malvinas?','Conflicto de 1982',['Conflicto de 1982','Una guerra civil','Un tratado','Un descubrimiento']),
-      qc('¿Quién fue Galileo?','Científico que dijo que la Tierra gira',['Científico que dijo que la Tierra gira','Un rey','Un pintor','Un músico'])
+      qc('¿En qué año llegó Colón a América?','1492',['1492','1500','1400','1600']),
+      qc('¿Quién fue el primer presidente de Argentina?','Rivadavia',['Rivadavia','San Martín','Belgrano','Sarmiento']),
+      qc('¿Qué construyeron los egipcios?','Pirámides',['Pirámides','Torres','Castillos','Puentes']),
+      qc('¿En qué país nació la democracia?','Grecia',['Grecia','Roma','Egipto','China']),
+      qc('¿Qué animal se usaba en el antiguo Egipto como símbolo?','Gato',['Gato','Perro','Caballo','Vaca']),
+      qc('¿Qué revolución fue en 1789?','Francesa',['Francesa','Industrial','Rusa','Argentina']),
+      qv('Los dinosaurios existieron al mismo tiempo que los humanos.', false, '🦖', '¡No! Los dinosaurios se extinguieron hace 65 millones de años, mucho antes de que aparecieran los humanos.')
     ],
     deportes: [
-      qc('¿Cuántos jugadores de vóley por equipo?','6',['6','5','7','11']),
-      qc('¿Cuántos sets gana un partido de tenis (mejor de 3)?','2',['2','3','1','5']),
-      qc('¿En qué deporte se usa un shuttlecock?','Bádminton',['Bádminton','Tenis','Squash','Ping pong']),
-      qc('¿Cuántos anillos tiene el logo olímpico?','5',['5','3','4','6']),
-      qc('¿Qué deporte usa un palo y una bocha?','Hockey',['Hockey','Tenis','Golf','Básquet']),
-      qc('¿Cuántos minutos dura un cuarto de básquet (NBA)?','12',['12','15','10','20']),
-      qc('¿En qué país se inventó el básquet?','EE.UU.',['EE.UU.','Inglaterra','Francia','Canadá']),
-      qc('¿Qué es un penal en rugby?','Patada al palo',['Patada al palo','Un try','Una conversión','Un scrum'])
+      qc('¿Cuántos jugadores tiene un equipo de fútbol (cancha)?','11',['11','9','7','5']),
+      qc('¿Cada cuántos años son los Juegos Olímpicos?','4',['4','2','6','8']),
+      qc('¿En qué deporte se usa una raqueta y pelota amarilla?','Tenis',['Tenis','Fútbol','Natación','Boxeo']),
+      qc('¿Cuántos puntos vale un triple en básquet?','3',['3','2','1','5']),
+      qc('¿En qué deporte se mete la pelota en un aro?','Básquet',['Básquet','Vóley','Tenis','Golf']),
+      qc('¿Qué deporte se practica en el agua con tabla?','Surf',['Surf','Tenis','Ajedrez','Fútbol']),
+      qv('En vóley se puede tocar la pelota con el pie.', false, '🏐', 'En vóley se toca la pelota con las manos y brazos (en algunas reglas sí se puede con el pie, pero lo normal es con manos). ¡Preguntá a tu profe!')
+    ],
+    sociales: [
+      qc('¿Qué es una comunidad?','Grupo de personas que comparten lugar',['Grupo de personas que comparten lugar','Un solo niño','Un animal','Una máquina']),
+      qc('¿Qué es un derecho?','Algo que te corresponde por ser persona',['Algo que te corresponde por ser persona','Un castigo','Un juguete','Una multa']),
+      qc('¿Qué es un deber?','Algo que debes cumplir',['Algo que debes cumplir','Un regalo','Un juego','Un permiso']),
+      qc('¿Quién hace las leyes en Argentina?','El Congreso',['El Congreso','El médico','El maestro','El policía']),
+      qv('Todas las personas tenemos los mismos derechos.', true, '⚖️', '¡Exacto! Sin importar cómo somos, de dónde venimos o qué creemos, todos tenemos los mismos derechos humanos.')
+    ],
+    ia: [
+      qc('¿Qué es la Inteligencia Artificial?','Máquinas que aprenden como humanos',['Máquinas que aprenden como humanos','Un robot de juguete','Un tipo de planta','Un idioma']),
+      qc('¿Qué es un algoritmo?','Pasos para resolver algo',['Pasos para resolver algo','Un número','Un animal','Una canción']),
+      qc('¿Qué es un robot?','Máquina que hace tareas automáticas',['Máquina que hace tareas automáticas','Un humano','Una planta','Un libro']),
+      qv('La IA siempre tiene razón y nunca se equivoca.', false, '🤖', '¡No! La IA aprende de datos y puede equivocarse. Por eso siempre hay que verificar lo que dice con un adulto o un libro.')
+    ],
+    programacion: [
+      qc('¿Qué es un programa?','Instrucciones para la computadora',['Instrucciones para la computadora','Un juego de mesa','Un libro','Una película']),
+      qc('¿Qué es un bug?','Un error en el programa',['Un error en el programa','Un insecto de verdad','Un premio','Un sonido']),
+      qc('¿Qué significa "if" en programación?','Si (condición)',['Si (condición)','No','Siempre','Nunca']),
+      qc('¿Qué es un bucle (loop)?','Repetir instrucciones',['Repetir instrucciones','Una sola acción','Un error','Un tipo de dato']),
+      qv('Un programa se escribe con instrucciones claras.', true, '💻', '¡Correcto! La computadora hace exactamente lo que le decís, por eso las instrucciones deben ser claras y ordenadas.')
+    ],
+    robotica: [
+      qc('¿Qué mide un sensor?','Algo del entorno (luz, distancia)',['Algo del entorno (luz, distancia)','El tiempo','El color del pelo','Nada']),
+      qc('¿Qué es un motor?','Hace que se mueva el robot',['Hace que se mueva el robot','Un sensor','Una luz','Un sonido']),
+      qc('¿Qué es un servomotor?','Gira un ángulo exacto',['Gira un ángulo exacto','Solo gira rápido','No se mueve','Es un sensor']),
+      qv('Los robots siempre son malos como en las películas.', false, '🤖', '¡No! Los robots son herramientas que programan las personas. Pueden ayudar en hospitales, escuelas y la casa.')
+    ],
+    musica: [
+      qc('¿Cuántas notas musicales hay?','7',['7','5','10','12']),
+      qc('¿Cuál es la primera nota musical?','Do',['Do','Re','Mi','Sol']),
+      qc('¿Qué instrumento tiene teclas blancas y negras?','Piano',['Piano','Guitarra','Violín','Flauta']),
+      qc('¿Qué instrumento se toca frotando un arco?','Violín',['Violín','Piano','Batería','Flauta']),
+      qv('La nota Do es más grave que la nota Sol.', true, '🎵', '¡Exacto! En la escala, Do-Re-Mi-Fa-Sol va subiendo: Do es la más grave y Sol es más aguda.')
+    ],
+    emociones: [
+      qc('¿Qué sentís cuando ganas un juego?','Alegría',['Alegría','Tristeza','Miedo','Enfado']),
+      qc('¿Qué es la empatía?','Ponerte en el lugar del otro',['Ponerte en el lugar del otro','Gritar','Correr','Dormir']),
+      qc('Si estás enojado, ¿qué conviene hacer?','Respirar hondo y hablar',['Respirar hondo y hablar','Gritar','Pegar','Irse sin decir nada']),
+      qv('Está bien sentir todas las emociones.', true, '❤️', '¡Exacto! Todas las emociones son válidas: alegría, enojo, miedo, tristeza. Lo que importa es cómo las expresamos sin lastimar a nadie.')
+    ],
+    salud: [
+      qc('¿Cuántas veces al día hay que lavarse los dientes (ideal)?','2 o 3',['2 o 3','1 cada semana','Nunca','Solo cuando duele']),
+      qc('¿Qué vitamina da el sol?','Vitamina D',['Vitamina D','Vitamina C','Vitamina A','Vitamina B']),
+      qc('¿Cuántas horas debe dormir un niño?','8 a 10',['8 a 10','2','20','4']),
+      qc('¿Qué alimento tiene mucha vitamina C?','Naranja',['Naranja','Carne','Arroz','Pan']),
+      qv('Ver mucha pantalla es bueno para los ojos.', false, '👀', 'Al revés: mucha pantalla cansa la vista. Hay que descansar los ojos cada 20 minutos y jugar afuera.')
+    ],
+    arte: [
+      qc('¿Quién pintó la Mona Lisa?','Leonardo da Vinci',['Leonardo da Vinci','Picasso','Van Gogh','Dalí']),
+      qc('¿Qué colores son primarios?','Rojo, amarillo, azul',['Rojo, amarillo, azul','Verde, rosa, negro','Blanco, gris, marrón','Naranja, violeta, verde']),
+      qc('¿Qué es una escultura?','Arte en 3D (se toca)',['Arte en 3D (se toca)','Un dibujo en papel','Una canción','Un poema']),
+      qv('Mezclando rojo y amarillo sale verde.', false, '🎨', '¡No! Rojo + amarillo = NARANJA. El verde sale de azul + amarillo. ¡A probar con pinturas!')
+    ],
+    mitologia: [
+      qc('¿Quién era el dios del rayo en la mitología griega?','Zeus',['Zeus','Apolo','Ares','Hermes']),
+      qc('¿Qué animal era el Minotauro?','Hombre con cabeza de toro',['Hombre con cabeza de toro','Caballo alado','Serpiente','Dragón']),
+      qc('¿Qué caballo tenía alas en la mitología?','Pegaso',['Pegaso','Centauro','Quimera','Medusa']),
+      qv('Los mitos son historias reales que pasaron.', false, '🐉', 'Los mitos son historias fantásticas que los pueblos antiguos contaban para explicar el mundo. No son reales, pero ¡son muy divertidos!')
+    ],
+    profesiones: [
+      qc('¿Quién cura a los enfermos?','Médico',['Médico','Carpintero','Policía','Panadero']),
+      qc('¿Quién construye casas?','Carpintero/albañil',['Carpintero/albañil','Profesor','Médico','Pintor']),
+      qc('¿Quién enseña en la escuela?','Maestro/a',['Maestro/a','Bombero','Pescador','Astrónomo']),
+      qc('¿Quién apaga los incendios?','Bombero',['Bombero','Policía','Médico','Cocinero']),
+      qv('Un astronauta va al espacio.', true, '👨‍🚀', '¡Exacto! Los astronautas viajan en cohetes a las naves espaciales y a la Estación Espacial Internacional.')
+    ],
+    cocina: [
+      qc('¿De dónde viene el pan?','Harina de trigo',['Harina de trigo','Leche','Carne','Pescado']),
+      qc('¿Qué es una receta?','Instrucciones para cocinar',['Instrucciones para cocinar','Un juego','Un cuento','Un número']),
+      qc('¿Qué utensilio se usa para cortar?','Cuchillo',['Cuchillo','Cuchara','Tenedor','Plato']),
+      qv('Hay que lavarse las manos antes de cocinar.', true, '🍳', '¡Exacto! Lavarse las manos evita que los microbios pasen a la comida y nos enfermemos.')
+    ],
+    astronomia: [
+      qc('¿Qué es una estrella fugaz?','Roca que se quema al entrar a la atmósfera',['Roca que se quema al entrar a la atmósfera','Una estrella que se mueve','Un avión','Un planeta']),
+      qc('¿Qué luna es cuando se ve toda redonda?','Luna llena',['Luna llena','Luna nueva','Cuarto creciente','Cuarto menguante']),
+      qc('¿Qué planeta es el rojo?','Marte',['Marte','Venus','Júpiter','Saturno']),
+      qv('La Luna tiene luz propia.', false, '🌙', '¡No! La Luna brilla porque refleja la luz del Sol, como un espejo gigante. Ella no produce luz.')
+    ],
+    ajedrez: [
+      qc('¿Qué pieza se mueve en forma de L?','Caballo',['Caballo','Torre','Alfil','Rey']),
+      qc('¿Qué pieza es la más poderosa?','Reina',['Reina','Rey','Peón','Torre']),
+      qc('¿Cómo se llama cuando el rey está atrapado?','Jaque mate',['Jaque mate','Empate','Tablas','Enroque']),
+      qv('El peón puede avanzar 2 casillas en su primer movimiento.', true, '♟️', '¡Correcto! En su primer movimiento el peón puede avanzar 1 o 2 casillas; después solo 1.')
+    ],
+    seguridad: [
+      qc('¿Qué número de emergencia se usa en Argentina?','911',['911','100','123','999']),
+      qc('Si un desconocido te ofrece dulces, ¿qué hacés?','No aceptar y contarle a un adulto',['No aceptar y contarle a un adulto','Aceptar y comerlo','Ir con él','Quedarte callado']),
+      qc('¿En qué lado del auto va el niño chico?','Atrás con sillita',['Atrás con sillita','Adelante en las piernas','En el baúl','En el techo']),
+      qv('Está bien cruzar la calle sin mirar.', false, '🚦', '¡Nunca! Para cruzar hay que parar, mirar a ambos lados, escuchar y cruzar por la senda peatonal cuando los autos están parados.')
+    ],
+    primerosauxilios: [
+      qc('Si te quemás, ¿qué hacés?','Agua fría (no hielo)',['Agua fría (no hielo)','Untar manteca','Reventar la ampolla','Nada']),
+      qc('Si alguien se desmaya, ¿qué hacés?','Llamar a un adulto y al 911',['Llamar a un adulto y al 911','Darle de comer','Tirarle agua','Moverlo mucho']),
+      qc('¿Qué número es emergencias médicas en Argentina?','107 (o 911)',['107 (o 911)','911 solo policía','100','123']),
+      qv('Ante una herida que sangra mucho, hay que presionar con un paño limpio.', true, '🩹', '¡Exacto! Presionar con paño limpio y levantar la herida ayuda a parar la sangre mientras llega ayuda.')
+    ],
+    ods: [
+      qc('¿Qué son los ODS?','Objetivos para cuidar el mundo',['Objetivos para cuidar el mundo','Un juego','Una materia','Un país']),
+      qc('¿Cuántos ODS hay?','17',['17','10','5','30']),
+      qc('¿Qué ODS dice "hambre cero"?','El 2',['El 2','El 1','El 17','El 10']),
+      qv('Los ODS solo los cumplen los países ricos.', false, '🌍', '¡No! Los ODS son para TODOS los países y también para cada uno de nosotros: reciclar, ahorrar agua y ayudar ya es cumplirlos.')
+    ],
+    filosofia: [
+      qc('¿Qué es la filosofía?','Pensar preguntas grandes',['Pensar preguntas grandes','Un deporte','Una receta','Un idioma']),
+      qc('¿Quién dijo "solo sé que nada sé"?','Sócrates',['Sócrates','Platón','Aristóteles','Descartes']),
+      qc('¿Qué es la ética?','Pensar qué está bien o mal',['Pensar qué está bien o mal','Un cuento','Un juego','Una ley física']),
+      qv('Preguntarse "por qué" es propio de la filosofía.', true, '🤔', '¡Exacto! La filosofía empieza con la pregunta: ¿por qué? ¿qué es? ¿qué sentido tiene?')
+    ],
+    danza: [
+      qc('¿Qué danza es típica de Argentina?','Tango',['Tango','Salsa','Flamenco','Breakdance']),
+      qc('¿Qué danza usa zapatillas de punta?','Ballet',['Ballet','Tango','Hip hop','Salsa']),
+      qc('¿Qué ritmo es brasileño?','Samba',['Samba','Tango','Flamenco','Polca']),
+      qv('Bailar hace bien al cuerpo y al ánimo.', true, '💃', '¡Exacto! Bailar mueve el cuerpo, suelta endorfinas (la hormona de la alegría) y se hace con amigos.')
     ]
-  };
-  // Extender genMate con preguntas extra a partir de nivel 5 (sin romper)
-  var genMateOriginal = genMate;
-  genMate = function (nivel) {
-    var base = genMateOriginal(nivel);
-    if (nivel >= 5) return barajar(base.concat(PREGUNTAS_EXTRA.matematicas.slice(0, 3)));
-    return base;
   };
 
   var PRODUCCION = {
@@ -2073,7 +2211,7 @@
     MUNDOS: MUNDOS,
     NIVELES_EDAD: NIVELES_EDAD,
     genMate: genMate, genDinero: genDinero, genVerde: genVerde,
-    genLogica: genLogica, genProgramacion: genProgramacion, genIA: genIA, genRobotica: genRobotica,
+    genProgramacion: genProgramacion, genIA: genIA, genRobotica: genRobotica,
     CIENCIA: CIENCIA, GEOGRAFIA: GEOGRAFIA, LENGUA: LENGUA, SOCIALES: SOCIALES,
     MUSICA: MUSICA, HISTORIA: HISTORIA, EMOCIONES: EMOCIONES, DEPORTES: DEPORTES,
     SALUD: SALUD, ARTE: ARTE, MITOLOGIA: MITOLOGIA, PROFESIONES: PROFESIONES,
