@@ -1,9 +1,9 @@
 /* ============================================================
-   STORYBOOKS BILINGÜES — VERSIÓN PREMIUM (todo incluido)
+   STORYBOOKS BILINGÜES — VERSIÓN SUPER PREMIUM (30 cuentos) (todo incluido)
    Reemplaza a storybooks-final.js / storybooks.js + reader.
    Subir SOLO este archivo. Incluye CSS premium inyectado.
    Cargar: <script src="storybooks-premium.js"></script>
-   Novedades: +4 cuentos largos y divertidos · Juego de Sílabas ·
+   Novedades: +20 cuentos nuevos (30 total) · Voz narrador latino (es-MX) · Micrófono con SpeechRecognition (repetir inglés + aprobación) · Sección Super Premium: Abecedario · Verbos · Oraciones · Narración · Confeti · Estrellas · Juego de Sílabas ·
    Formar Palabras · Confeti · Efectos de sonido · Logros ·
    Modo sílabas mejorado · Animaciones premium · Progreso/racha.
    ============================================================ */
@@ -436,6 +436,350 @@ SB_registrar(
    {es:"¿De dónde venía realmente el brillo?",en:"Where did the sparkle really come from?",opciones:{es:["Del amor de sus amigos","De una poción","Del sol","De la luna"],en:["Her friends' love","A potion","The sun","The moon"],},correcta:0}]}
 );
 
+
+/* ============================================================
+   +20 CUENTOS NUEVOS (Super Premium) — catálogo ampliado a 30
+   ============================================================ */
+
+SB_registrar(
+ {id:"el-elefante-miedo-al-agua",archivo:"",titulo:{es:"El Elefante que Tenía Miedo al Agua",en:"The Elephant Who Was Afraid of Water"},categoria:"animales",nivel:"inicial",paginas:5,portada:"🐘",color:"#74B9FF",destacado:true},
+ {id:"el-elefante-miedo-al-agua",titulo:{es:"El Elefante que Tenía Miedo al Agua",en:"The Elephant Who Was Afraid of Water"},categoria:"animales",nivel:"inicial",color:"#74B9FF",portada:"🐘",
+  paginas:[
+   {ilustracion:"🐘🌴",fondo:"linear-gradient(160deg,#74B9FF,#A8E6CF)",oraciones:[{es:"Había una vez un elefante llamado Tito.",en:"Once there was an elephant named Tito."},{es:"Era grande y gris, con orejas enormes.",en:"He was big and gray, with huge ears."},{es:"Pero le tenía mucho miedo al agua.",en:"But he was very afraid of water."}]},
+   {ilustracion:"🐘💦😱",fondo:"linear-gradient(160deg,#81ECEC,#74B9FF)",oraciones:[{es:"Sus amigos querían bañarse en el río.",en:"His friends wanted to bathe in the river."},{es:"Tito se escondía detrás de un árbol.",en:"Tito hid behind a tree."},{es:"¿No querés venir? le gritaban.",en:"Don't you want to come? they shouted."}]},
+   {ilustracion:"🐒🐘",fondo:"linear-gradient(160deg,#FFEAA7,#FAB1A0)",oraciones:[{es:"Un mono sabio se acercó a Tito.",en:"A wise monkey approached Tito."},{es:"El agua es amiga, no te hará daño, le dijo.",en:"Water is a friend, it won't hurt you, he said."},{es:"Poné solo la trompa primero.",en:"Just put your trunk in first."}]},
+   {ilustracion:"🐘💦😊",fondo:"linear-gradient(160deg,#A8E6CF,#81ECEC)",oraciones:[{es:"Tito metió la trompa y salpicó un poco.",en:"Tito put his trunk in and splashed a little."},{es:"¡Está tibia y divertida! gritó feliz.",en:"It's warm and fun! he shouted happily."},{es:"Pronto se bañaba con todos sus amigos.",en:"Soon he was bathing with all his friends."}]},
+   {ilustracion:"🐘❤️🌴",fondo:"linear-gradient(160deg,#74B9FF,#DFE6E9)",oraciones:[{es:"Tito comprendió que el miedo se va probando.",en:"Tito learned that fear goes away by trying."},{es:"Ahora es el primero en entrar al río.",en:"Now he is the first to jump into the river."},{es:"Y salpica a todos con su trompa grande.",en:"And he splashes everyone with his big trunk."}]}
+],
+  vocabulario:[{es:"elefante",en:"elephant",img:"🐘"},{es:"agua",en:"water",img:"💧"},{es:"río",en:"river",img:"🏞️"},{es:"miedo",en:"fear",img:"😱"},{es:"trompa",en:"trunk",img:"🐘"},{es:"bañarse",en:"to bathe",img:"🛁"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba el elefante?",en:"What was the elephant's name?",opciones:{es:["Tito","Max","Luna","Pablo"],en:["Tito","Max","Luna","Pablo"]},correcta:0},
+   {es:"¿De qué tenía miedo?",en:"What was he afraid of?",opciones:{es:["Del agua","Del fuego","De los monos","De las alturas"],en:["Water","Fire","Monkeys","Heights"]},correcta:0},
+   {es:"¿Quién lo ayudó?",en:"Who helped him?",opciones:{es:["Un mono","Un león","Un pez","Un pájaro"],en:["A monkey","A lion","A fish","A bird"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-abeja-no-queria-trabajar",archivo:"",titulo:{es:"La Abeja que No Quería Trabajar",en:"The Bee Who Didn't Want to Work"},categoria:"naturaleza",nivel:"inicial",paginas:5,portada:"🐝",color:"#FDCB6E",destacado:true},
+ {id:"la-abeja-no-queria-trabajar",titulo:{es:"La Abeja que No Quería Trabajar",en:"The Bee Who Didn't Want to Work"},categoria:"naturaleza",nivel:"inicial",color:"#FDCB6E",portada:"🐝",
+  paginas:[
+   {ilustracion:"🐝🌸☀️",fondo:"linear-gradient(160deg,#FDCB6E,#FFEAA7)",oraciones:[{es:"En un panal vivía una abeja llamada Maya.",en:"In a hive lived a bee named Maya."},{es:"Todas las abejas trabajaban todo el día.",en:"All the bees worked all day long."},{es:"Pero Maya prefería oler las flores.",en:"But Maya preferred to smell the flowers."}]},
+   {ilustracion:"🐝😴🌸",fondo:"linear-gradient(160deg,#FFEAA7,#FAB1A0)",oraciones:[{es:"¿Por qué no juntás néctar? le preguntaron.",en:"Why don't you gather nectar? they asked."},{es:"Mañana lo hago, respondía Maya dormida.",en:"I'll do it tomorrow, sleepy Maya answered."},{es:"Las flores la miraban sorprendidas.",en:"The flowers looked at her in surprise."}]},
+   {ilustracion:"🍯❄️",fondo:"linear-gradient(160deg,#DFE6E9,#A29BFE)",oraciones:[{es:"Llegó el invierno y hacía mucho frío.",en:"Winter came and it was very cold."},{es:"No había flores ni néctar que juntar.",en:"There were no flowers or nectar to gather."},{es:"El panal tenía poca miel guardada.",en:"The hive had little honey stored."}]},
+   {ilustracion:"🐝🍯❤️",fondo:"linear-gradient(160deg,#FDCB6E,#FF7675)",oraciones:[{es:"Maya se sintió muy triste y avergonzada.",en:"Maya felt very sad and ashamed."},{es:"Desde mañana trabajo con todas, dijo.",en:"From tomorrow I work with everyone, she said."},{es:"Y ayudó a repartir la poca miel.",en:"And helped share the little honey they had."}]},
+   {ilustracion:"🐝🌸🍯",fondo:"linear-gradient(160deg,#A8E6CF,#FDCB6E)",oraciones:[{es:"Cuando llegó la primavera, Maya fue la primera.",en:"When spring came, Maya was the first."},{es:"Juntaba más néctar que ninguna otra abeja.",en:"She gathered more nectar than any other bee."},{es:"Comprendió que el trabajo nos hace felices.",en:"She learned that work makes us happy."}]}
+],
+  vocabulario:[{es:"abeja",en:"bee",img:"🐝"},{es:"miel",en:"honey",img:"🍯"},{es:"flor",en:"flower",img:"🌸"},{es:"trabajar",en:"to work",img:"💪"},{es:"panal",en:"hive",img:"🏠"},{es:"invierno",en:"winter",img:"❄️"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba la abeja?",en:"What was the bee's name?",opciones:{es:["Maya","Lola","Nube","Sol"],en:["Maya","Lola","Cloud","Sun"]},correcta:0},
+   {es:"¿Qué prefería hacer?",en:"What did she prefer to do?",opciones:{es:["Oler flores","Trabajar","Dormir","Volar"],en:["Smell flowers","Work","Sleep","Fly"]},correcta:0},
+   {es:"¿Qué comprendió al final?",en:"What did she learn at the end?",opciones:{es:["El trabajo nos hace felices","Las flores son tontas","La miel es mala","No hay que trabajar"],en:["Work makes us happy","Flowers are silly","Honey is bad","Don't work"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-nino-perdio-su-sonrisa",archivo:"",titulo:{es:"El Niño que Perdió su Sonrisa",en:"The Boy Who Lost His Smile"},categoria:"amigos",nivel:"inicial",paginas:4,portada:"😊",color:"#FF7675",destacado:true},
+ {id:"el-nino-perdio-su-sonrisa",titulo:{es:"El Niño que Perdió su Sonrisa",en:"The Boy Who Lost His Smile"},categoria:"amigos",nivel:"inicial",color:"#FF7675",portada:"😊",
+  paginas:[
+   {ilustracion:"🧒😔🏠",fondo:"linear-gradient(160deg,#FFEAA7,#FAB1A0)",oraciones:[{es:"Había un niño llamado Lucas que no sonreía.",en:"There was a boy named Lucas who didn't smile."},{es:"Había perdido su sonrisa en alguna parte.",en:"He had lost his smile somewhere."},{es:"Nada lo hacía reír ni estar contento.",en:"Nothing made him laugh or feel happy."}]},
+   {ilustracion:"🧒🐶🎈",fondo:"linear-gradient(160deg,#74B9FF,#A8E6CF)",oraciones:[{es:"Su perrito le trajo su pelota favorita.",en:"His puppy brought him his favorite ball."},{es:"Su amiga le regaló un globo de colores.",en:"His friend gave him a colorful balloon."},{es:"Pero Lucas seguía muy serio y triste.",en:"But Lucas still looked serious and sad."}]},
+   {ilustracion:"🧒👵🍪",fondo:"linear-gradient(160deg,#FDCB6E,#FFEAA7)",oraciones:[{es:"La abuela le hizo galletas de chocolate.",en:"Grandma made him chocolate cookies."},{es:"¿Dónde creés que está tu sonrisa? le preguntó.",en:"Where do you think your smile is? she asked."},{es:"No sé, dijo Lucas con los ojos bajos.",en:"I don't know, said Lucas with downcast eyes."}]},
+   {ilustracion:"🧒😊❤️🎉",fondo:"linear-gradient(160deg,#FF7675,#FDCB6E)",oraciones:[{es:"La abuela lo abrazó muy fuerte y le hizo cosquillas.",en:"Grandma hugged him tight and tickled him."},{es:"Lucas empezó a reír a carcajadas.",en:"Lucas began to laugh out loud."},{es:"¡Encontré mi sonrisa! gritó feliz.",en:"I found my smile! he shouted happily."}]}
+],
+  vocabulario:[{es:"sonrisa",en:"smile",img:"😊"},{es:"niño",en:"boy",img:"🧒"},{es:"amigo",en:"friend",img:"🤝"},{es:"abuela",en:"grandma",img:"👵"},{es:"galleta",en:"cookie",img:"🍪"},{es:"feliz",en:"happy",img:"😄"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba el niño?",en:"What was the boy's name?",opciones:{es:["Lucas","Toby","Pablo","Diego"],en:["Lucas","Toby","Pablo","Diego"]},correcta:0},
+   {es:"¿Qué le hizo la abuela?",en:"What did grandma do?",opciones:{es:["Lo abrazó y le hizo cosquillas","Lo regañó","Le dio dinero","Se fue"],en:["Hugged and tickled him","Scolded him","Gave him money","Left"]},correcta:0},
+   {es:"¿Qué encontró al final?",en:"What did he find at the end?",opciones:{es:["Su sonrisa","Su juguete","Su perro","Su casa"],en:["His smile","His toy","His dog","His house"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-tortuga-queria-correr",archivo:"",titulo:{es:"La Tortuga que Quería Correr",en:"The Turtle Who Wanted to Run"},categoria:"animales",nivel:"primario",paginas:5,portada:"🐢",color:"#00B894",destacado:true},
+ {id:"la-tortuga-queria-correr",titulo:{es:"La Tortuga que Quería Correr",en:"The Turtle Who Wanted to Run"},categoria:"animales",nivel:"primario",color:"#00B894",portada:"🐢",
+  paginas:[
+   {ilustracion:"🐢🌳",fondo:"linear-gradient(160deg,#55EFC4,#81ECEC)",oraciones:[{es:"Una tortuga llamada Shelly miraba a los conejos correr.",en:"A turtle named Shelly watched the rabbits run."},{es:"Yo también quiero correr muy rápido, decía.",en:"I want to run fast too, she said."},{es:"Pero sus patitas eran cortas y su caparazón pesado.",en:"But her legs were short and her shell heavy."}]},
+   {ilustracion:"🐢🏃",fondo:"linear-gradient(160deg,#FFEAA7,#FAB1A0)",oraciones:[{es:"Todos los días entrenaba en el bosque.",en:"Every day she trained in the forest."},{es:"Caminaba deprisa, subía piedras, nadaba en el arroyo.",en:"She walked fast, climbed stones, swam in the stream."},{es:"Los animales se reían: ¡una tortuga corriendo!",en:"The animals laughed: A turtle running!"}]},
+   {ilustracion:"🏁🐢🐰",fondo:"linear-gradient(160deg,#74B9FF,#A29BFE)",oraciones:[{es:"Llegó el día de la gran carrera del bosque.",en:"The day of the great forest race arrived."},{es:"El conejo rápido se burlaba de Shelly.",en:"The fast rabbit made fun of Shelly."},{es:"¡Te ganaré fácil! decía riendo.",en:"I'll beat you easily! he said laughing."}]},
+   {ilustracion:"🐰😴🐢🏁",fondo:"linear-gradient(160deg,#FDCB6E,#55EFC4)",oraciones:[{es:"El conejo corrió tanto que se durmió bajo un árbol.",en:"The rabbit ran so much he fell asleep under a tree."},{es:"Shelly siguió caminando sin parar, paso a paso.",en:"Shelly kept walking without stopping, step by step."},{es:"Cuando el conejo despertó, ¡ya era tarde!",en:"When the rabbit woke up, it was too late!"}]},
+   {ilustracion:"🐢🏆❤️",fondo:"linear-gradient(160deg,#FFD43B,#FF9F43)",oraciones:[{es:"Shelly cruzó la meta primero y ganó la carrera.",en:"Shelly crossed the finish line first and won the race."},{es:"Todos los animales aplaudieron con asombro.",en:"All the animals applauded in amazement."},{es:"Comprendieron que la constancia vence a la rapidez.",en:"They learned that perseverance beats speed."}]}
+],
+  vocabulario:[{es:"tortuga",en:"turtle",img:"🐢"},{es:"correr",en:"to run",img:"🏃"},{es:"carrera",en:"race",img:"🏁"},{es:"constancia",en:"perseverance",img:"💪"},{es:"conejo",en:"rabbit",img:"🐰"},{es:"ganar",en:"to win",img:"🏆"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba la tortuga?",en:"What was the turtle's name?",opciones:{es:["Shelly","Luna","Mimi","Nube"],en:["Shelly","Luna","Mimi","Cloud"]},correcta:0},
+   {es:"¿Qué hizo el conejo en la carrera?",en:"What did the rabbit do in the race?",opciones:{es:["Se durmió","Ganó","Se lastimó","Se fue"],en:["Fell asleep","Won","Got hurt","Left"]},correcta:0},
+   {es:"¿Qué enseñó la historia?",en:"What did the story teach?",opciones:{es:["La constancia vence a la rapidez","Las tortugas son rápidas","Los conejos son tontos","No hay que competir"],en:["Perseverance beats speed","Turtles are fast","Rabbits are silly","Don't compete"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-arbol-hablaba-con-el-viento",archivo:"",titulo:{es:"El Árbol que Hablaba con el Viento",en:"The Tree That Talked to the Wind"},categoria:"naturaleza",nivel:"primario",paginas:5,portada:"🌳",color:"#6BCB77",destacado:true},
+ {id:"el-arbol-hablaba-con-el-viento",titulo:{es:"El Árbol que Hablaba con el Viento",en:"The Tree That Talked to the Wind"},categoria:"naturaleza",nivel:"primario",color:"#6BCB77",portada:"🌳",
+  paginas:[
+   {ilustracion:"🌳💨🌿",fondo:"linear-gradient(160deg,#95D5B2,#D8F3DC)",oraciones:[{es:"En lo alto de una colina vivía un árbol viejo.",en:"On top of a hill lived an old tree."},{es:"Sus hojas susurraban cuando pasaba el viento.",en:"His leaves whispered when the wind passed by."},{es:"Los niños del pueblo creían que hablaba.",en:"The village children believed he could talk."}]},
+   {ilustracion:"🌳💬🌬️",fondo:"linear-gradient(160deg,#B7E4C7,#74C69D)",oraciones:[{es:"Viento, ¿de dónde venís? preguntaba el árbol.",en:"Wind, where do you come from? asked the tree."},{es:"Vengo del mar, traigo barcos y sal, respondía.",en:"I come from the sea, I bring ships and salt, he answered."},{es:"Y el árbol movía sus ramas emocionado.",en:"And the tree moved his branches with excitement."}]},
+   {ilustracion:"🌳❄️💨",fondo:"linear-gradient(160deg,#74C0FC,#E7F5FF)",oraciones:[{es:"En invierno, el viento traía nieve y frío.",en:"In winter, the wind brought snow and cold."},{es:"Árbol, dormí, que la primavera volverá, decía.",en:"Tree, sleep, spring will return, he said."},{es:"El árbol perdía sus hojas y descansaba.",en:"The tree lost his leaves and rested."}]},
+   {ilustracion:"🌳🌸☀️",fondo:"linear-gradient(160deg,#FFE066,#FFD6A5)",oraciones:[{es:"Cuando volvía el calor, el árbol florecía.",en:"When the warmth returned, the tree blossomed."},{es:"Los niños venían a jugar bajo su sombra.",en:"The children came to play in his shade."},{es:"El viento les contaba historias lejanas.",en:"The wind told them faraway stories."}]},
+   {ilustracion:"🌳❤️🌬️",fondo:"linear-gradient(160deg,#6BCB77,#FFE066)",oraciones:[{es:"El árbol comprendió que todo cambia y vuelve.",en:"The tree understood that everything changes and returns."},{es:"Que el viento es amigo que viaja por el mundo.",en:"That the wind is a friend who travels the world."},{es:"Y que esperar con paciencia trae hermosas flores.",en:"And that waiting patiently brings beautiful flowers."}]}
+],
+  vocabulario:[{es:"árbol",en:"tree",img:"🌳"},{es:"viento",en:"wind",img:"💨"},{es:"hojas",en:"leaves",img:"🍃"},{es:"primavera",en:"spring",img:"🌸"},{es:"invierno",en:"winter",img:"❄️"},{es:"paciencia",en:"patience",img:"⏳"}],
+  preguntas:[
+   {es:"¿De dónde venía el viento?",en:"Where did the wind come from?",opciones:{es:["Del mar","De la montaña","Del pueblo","Del desierto"],en:["From the sea","From the mountain","From the village","From the desert"]},correcta:0},
+   {es:"¿Qué hacía el árbol en invierno?",en:"What did the tree do in winter?",opciones:{es:["Perdía hojas y descansaba","Corría","Florecía","Jugaba"],en:["Lost leaves and rested","Ran","Blossomed","Played"]},correcta:0},
+   {es:"¿Qué comprendió el árbol?",en:"What did the tree understand?",opciones:{es:["Todo cambia y vuelve","El viento es malo","Los niños son ruidosos","La nieve es divertida"],en:["Everything changes and returns","Wind is bad","Children are noisy","Snow is fun"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-nube-que-lloraba",archivo:"",titulo:{es:"La Nube que Lloraba Mucho",en:"The Cloud Who Cried a Lot"},categoria:"naturaleza",nivel:"inicial",paginas:4,portada:"☁️",color:"#A29BFE",destacado:true},
+ {id:"la-nube-que-lloraba",titulo:{es:"La Nube que Lloraba Mucho",en:"The Cloud Who Cried a Lot"},categoria:"naturaleza",nivel:"inicial",color:"#A29BFE",portada:"☁️",
+  paginas:[
+   {ilustracion:"☁️😢🌧️",fondo:"linear-gradient(160deg,#DFE6E9,#A29BFE)",oraciones:[{es:"Había una nube llamada Lluvia que lloraba siempre.",en:"There was a cloud named Rain who always cried."},{es:"Lloraba por todo, incluso por las cosas bonitas.",en:"She cried about everything, even beautiful things."},{es:"Las otras nubes no entendían por qué.",en:"The other clouds didn't understand why."}]},
+   {ilustracion:"☁️💧🌻",fondo:"linear-gradient(160deg,#A29BFE,#74B9FF)",oraciones:[{es:"Sus lágrimas caían sobre un campo de girasoles.",en:"Her tears fell on a field of sunflowers."},{es:"Los girasoles crecían más y más cada día.",en:"The sunflowers grew taller every day."},{es:"¡Gracias, nube! gritaban felices.",en:"Thank you, cloud! they shouted happily."}]},
+   {ilustracion:"☁️🌈☀️",fondo:"linear-gradient(160deg,#74B9FF,#FDCB6E)",oraciones:[{es:"Un día salió el sol entre sus lágrimas.",en:"One day the sun came out between her tears."},{es:"Se formó un arcoíris enorme y colorido.",en:"A huge colorful rainbow formed."},{es:"Todos los niños miraban al cielo asombrados.",en:"All the children looked at the sky in amazement."}]},
+   {ilustracion:"☁️😊❤️",fondo:"linear-gradient(160deg,#FFEAA7,#A8E6CF)",oraciones:[{es:"Lluvia comprendió que sus lágrimas eran útiles.",en:"Rain understood that her tears were useful."},{es:"Que llorar a veces ayuda a crecer.",en:"That crying sometimes helps things grow."},{es:"Y ahora llora solo cuando el campo tiene sed.",en:"And now she cries only when the fields are thirsty."}]}
+],
+  vocabulario:[{es:"nube",en:"cloud",img:"☁️"},{es:"lluvia",en:"rain",img:"🌧️"},{es:"girasol",en:"sunflower",img:"🌻"},{es:"arcoíris",en:"rainbow",img:"🌈"},{es:"sol",en:"sun",img:"☀️"},{es:"lágrimas",en:"tears",img:"💧"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba la nube?",en:"What was the cloud's name?",opciones:{es:["Lluvia","Nube","Blanca","Sol"],en:["Rain","Cloud","White","Sun"]},correcta:0},
+   {es:"¿Qué crecía con sus lágrimas?",en:"What grew with her tears?",opciones:{es:["Girasoles","Árboles","Casas","Peces"],en:["Sunflowers","Trees","Houses","Fish"]},correcta:0},
+   {es:"¿Qué se formó con el sol y la lluvia?",en:"What formed with sun and rain?",opciones:{es:["Un arcoíris","Una tormenta","Un río","Un volcán"],en:["A rainbow","A storm","A river","A volcano"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-robot-queria-ser-de-verdad",archivo:"",titulo:{es:"El Robot que Quería ser de Verdad",en:"The Robot Who Wanted to Be Real"},categoria:"ciencia",nivel:"primario",paginas:6,portada:"🤖",color:"#6C5CE7",destacado:true},
+ {id:"el-robot-queria-ser-de-verdad",titulo:{es:"El Robot que Quería ser de Verdad",en:"The Robot Who Wanted to Be Real"},categoria:"ciencia",nivel:"primario",color:"#6C5CE7",portada:"🤖",
+  paginas:[
+   {ilustracion:"🤖🏭⚡",fondo:"linear-gradient(160deg,#6C5CE7,#A29BFE)",oraciones:[{es:"En un laboratorio crearon a Robi, un robot pequeño.",en:"In a lab they created Robi, a small robot."},{es:"Podía caminar, hablar y resolver cuentas.",en:"He could walk, talk, and solve math."},{es:"Pero quería sentir: alegría, miedo, amor.",en:"But he wanted to feel: joy, fear, love."}]},
+   {ilustracion:"🤖🧒",fondo:"linear-gradient(160deg,#74B9FF,#81ECEC)",oraciones:[{es:"Un día conoció a Sofi, una niña del barrio.",en:"One day he met Sofi, a girl from the neighborhood."},{es:"¿Querés ser mi amigo? le preguntó ella.",en:"Do you want to be my friend? she asked."},{es:"Robi asintió con su cabeza metálica.",en:"Robi nodded his metallic head."}]},
+   {ilustracion:"🤖🎈😢",fondo:"linear-gradient(160deg,#FF7675,#FAB1A0)",oraciones:[{es:"Un día se le rompió el globo a Sofi y ella lloró.",en:"One day Sofi's balloon broke and she cried."},{es:"Robi sintió algo raro en su circuito central.",en:"Robi felt something strange in his central circuit."},{es:"¿Esto es tristeza? se preguntó.",en:"Is this sadness? he wondered."}]},
+   {ilustracion:"🤖🎁😊",fondo:"linear-gradient(160deg,#FDCB6E,#FFEAA7)",oraciones:[{es:"Robi fue a la tienda y compró otro globo.",en:"Robi went to the store and bought another balloon."},{es:"Se lo regaló a Sofi con sus manos frías.",en:"He gave it to Sofi with his cold hands."},{es:"Ella sonrió y lo abrazó fuerte.",en:"She smiled and hugged him tightly."}]},
+   {ilustracion:"🤖❤️⚡",fondo:"linear-gradient(160deg,#FF7675,#FDCB6E)",oraciones:[{es:"En ese momento, el corazón de Robi brilló mucho.",en:"At that moment, Robi's heart glowed brightly."},{es:"¡Siento alegría! gritó emocionado.",en:"I feel joy! he shouted excitedly."},{es:"Había aprendido que amar nos hace reales.",en:"He had learned that loving makes us real."}]},
+   {ilustracion:"🤖🧒❤️",fondo:"linear-gradient(160deg,#A29BFE,#FFEAA7)",oraciones:[{es:"Desde entonces, Robi fue el mejor amigo de Sofi.",en:"Ever since, Robi was Sofi's best friend."},{es:"Reía, lloraba y jugaba como un niño más.",en:"He laughed, cried, and played like any other child."},{es:"Y su corazón de metal nunca dejó de brillar.",en:"And his metal heart never stopped shining."}]}
+],
+  vocabulario:[{es:"robot",en:"robot",img:"🤖"},{es:"amigo",en:"friend",img:"🤝"},{es:"alegría",en:"joy",img:"😄"},{es:"tristeza",en:"sadness",img:"😢"},{es:"amor",en:"love",img:"❤️"},{es:"corazón",en:"heart",img:"💖"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba el robot?",en:"What was the robot's name?",opciones:{es:["Robi","Tito","Max","Rocco"],en:["Robi","Tito","Max","Rocco"]},correcta:0},
+   {es:"¿Qué quería sentir?",en:"What did he want to feel?",opciones:{es:["Alegría, miedo y amor","Solo frío","Dolor","Nada"],en:["Joy, fear and love","Only cold","Pain","Nothing"]},correcta:0},
+   {es:"¿Qué le regaló a Sofi?",en:"What did he give Sofi?",opciones:{es:["Un globo","Un juguete","Un helado","Un libro"],en:["A balloon","A toy","Ice cream","A book"]},correcta:0},
+   {es:"¿Qué aprendió?",en:"What did he learn?",opciones:{es:["Amar nos hace reales","Los robots no sienten","Los globos son caros","Mejor estar solo"],en:["Loving makes us real","Robots don't feel","Balloons are expensive","Better alone"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-cebra-un-solo-color",archivo:"",titulo:{es:"La Cebra que Quería ser de un Solo Color",en:"The Zebra Who Wanted to Be One Color"},categoria:"animales",nivel:"inicial",paginas:4,portada:"🦓",color:"#636E72",destacado:true},
+ {id:"la-cebra-un-solo-color",titulo:{es:"La Cebra que Quería ser de un Solo Color",en:"The Zebra Who Wanted to Be One Color"},categoria:"animales",nivel:"inicial",color:"#636E72",portada:"🦓",
+  paginas:[
+   {ilustracion:"🦓🌿",fondo:"linear-gradient(160deg,#DFE6E9,#B2BEC3)",oraciones:[{es:"Una cebra llamada Rayas no quería ser rayada.",en:"A zebra named Stripes didn't want to be striped."},{es:"Quiero ser toda de un solo color, decía.",en:"I want to be all one color, she said."},{es:"Todos los animales la miraban extrañados.",en:"All the animals looked at her strangely."}]},
+   {ilustracion:"🦓🎨",fondo:"linear-gradient(160deg,#FF7675,#FDCB6E)",oraciones:[{es:"Se revolcó en barro rojo para ser toda roja.",en:"She rolled in red mud to be all red."},{es:"Pero al secarse, las rayas volvieron a aparecer.",en:"But when it dried, the stripes appeared again."},{es:"Probó con hojas verdes y con polvo amarillo.",en:"She tried green leaves and yellow dust."}]},
+   {ilustracion:"🦓🦁🌾",fondo:"linear-gradient(160deg,#FDCB6E,#FAB1A0)",oraciones:[{es:"Un león la vio entre la hierba alta.",en:"A lion saw her among the tall grass."},{es:"Las rayas de la cebra la confundían con el pasto.",en:"The zebra's stripes confused her with the grass."},{es:"El león no pudo verla bien y se fue.",en:"The lion couldn't see her well and left."}]},
+   {ilustracion:"🦓😊❤️",fondo:"linear-gradient(160deg,#A8E6CF,#81ECEC)",oraciones:[{es:"Rayas comprendió que sus rayas la protegían.",en:"Stripes understood that her stripes protected her."},{es:"Que cada uno es especial como es.",en:"That everyone is special just as they are."},{es:"Y desde entonces, corre feliz por la sabana.",en:"And ever since, she runs happily across the savanna."}]}
+],
+  vocabulario:[{es:"cebra",en:"zebra",img:"🦓"},{es:"rayas",en:"stripes",img:"📏"},{es:"color",en:"color",img:"🎨"},{es:"león",en:"lion",img:"🦁"},{es:"especial",en:"special",img:"⭐"},{es:"sabana",en:"savanna",img:"🌾"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba la cebra?",en:"What was the zebra's name?",opciones:{es:["Rayas","Luna","Mimi","Nube"],en:["Stripes","Luna","Mimi","Cloud"]},correcta:0},
+   {es:"¿Qué quería ser?",en:"What did she want to be?",opciones:{es:["De un solo color","Más grande","Más rápida","Un león"],en:["One color","Bigger","Faster","A lion"]},correcta:0},
+   {es:"¿Qué la protegió del león?",en:"What protected her from the lion?",opciones:{es:["Sus rayas","Su velocidad","Su amigo","El barro"],en:["Her stripes","Her speed","Her friend","The mud"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-sombrero-magico-de-la-abuela",archivo:"",titulo:{es:"El Sombrero Mágico de la Abuela",en:"Grandma's Magic Hat"},categoria:"aventura",nivel:"primario",paginas:6,portada:"🎩",color:"#E17055",destacado:true},
+ {id:"el-sombrero-magico-de-la-abuela",titulo:{es:"El Sombrero Mágico de la Abuela",en:"Grandma's Magic Hat"},categoria:"aventura",nivel:"primario",color:"#E17055",portada:"🎩",
+  paginas:[
+   {ilustracion:"👵🎩🧒",fondo:"linear-gradient(160deg,#E17055,#FDCB6E)",oraciones:[{es:"La abuela le regaló a Mateo un sombrero viejo.",en:"Grandma gave Mateo an old hat."},{es:"Es mágico, le dijo al oído. Ponte lo y pedí un deseo.",en:"It's magic, she whispered. Wear it and make a wish."},{es:"Mateo no lo creía, pero se lo puso igual.",en:"Mateo didn't believe it, but he put it on anyway."}]},
+   {ilustracion:"🧒🎩🐘",fondo:"linear-gradient(160deg,#74B9FF,#A8E6CF)",oraciones:[{es:"Desearía ver un elefante de verdad, pidió.",en:"I wish I could see a real elephant, he wished."},{es:"De pronto, un elefante asomó la trompa por la ventana.",en:"Suddenly, an elephant poked its trunk through the window."},{es:"Mateo se quedó con la boca abierta.",en:"Mateo's mouth dropped open in surprise."}]},
+   {ilustracion:"🧒🎩🌋",fondo:"linear-gradient(160deg,#FA5252,#FF922B)",oraciones:[{es:"¡Quiero ver un volcán! gritó emocionado.",en:"I want to see a volcano! he shouted excitedly."},{es:"Al instante estaba en una isla con un volcán humeante.",en:"In an instant he was on an island with a smoking volcano."},{es:"¡Esto es increíble! pensó.",en:"This is amazing! he thought."}]},
+   {ilustracion:"🧒🎩🏠😢",fondo:"linear-gradient(160deg,#A29BFE,#DFE6E9)",oraciones:[{es:"Después de muchos viajes, Mateo se sintió solo.",en:"After many trips, Mateo felt lonely."},{es:"Extrañaba su casa, a sus amigos y a la abuela.",en:"He missed his home, his friends, and grandma."},{es:"Quiero volver, deseó con el sombrero.",en:"I want to go back, he wished with the hat."}]},
+   {ilustracion:"🧒👵❤️🎩",fondo:"linear-gradient(160deg,#FDCB6E,#FFEAA7)",oraciones:[{es:"Estaba de nuevo en casa, con la abuela sonriendo.",en:"He was home again, with grandma smiling."},{es:"¿Viste que el sombrero es mágico? le dijo ella.",en:"See, the hat is magic? she told him."},{es:"Sí, pero lo mejor es estar con vos, respondió.",en:"Yes, but the best thing is being with you, he answered."}]},
+   {ilustracion:"🧒🎩❤️",fondo:"linear-gradient(160deg,#E17055,#FDCB6E)",oraciones:[{es:"Mateo guardó el sombrero en un cajón especial.",en:"Mateo kept the hat in a special drawer."},{es:"A veces lo usa para viajar con la abuela.",en:"Sometimes he wears it to travel with grandma."},{es:"Porque la magia es más linda cuando se comparte.",en:"Because magic is lovelier when shared."}]}
+],
+  vocabulario:[{es:"sombrero",en:"hat",img:"🎩"},{es:"magia",en:"magic",img:"🪄"},{es:"deseo",en:"wish",img:"⭐"},{es:"abuela",en:"grandma",img:"👵"},{es:"viaje",en:"journey",img:"🧭"},{es:"amor",en:"love",img:"❤️"}],
+  preguntas:[
+   {es:"¿Quién le regaló el sombrero?",en:"Who gave him the hat?",opciones:{es:["Su abuela","Su mamá","Su amigo","Un mago"],en:["His grandma","His mom","His friend","A wizard"]},correcta:0},
+   {es:"¿Qué deseó primero?",en:"What did he wish for first?",opciones:{es:["Ver un elefante","Ver un volcán","Volver a casa","Ser grande"],en:["See an elephant","See a volcano","Go home","Be big"]},correcta:0},
+   {es:"¿Por qué quiso volver?",en:"Why did he want to go back?",opciones:{es:["Se sentía solo","Tenía miedo","Tení hambre","Se perdió"],en:["He felt lonely","He was scared","He was hungry","He was lost"]},correcta:0},
+   {es:"¿Qué aprendió?",en:"What did he learn?",opciones:{es:["La magia es más linda compartida","Los sombreros son viejos","No hay que viajar","Los volcanes son feos"],en:["Magic is lovelier shared","Hats are old","Don't travel","Volcanoes are ugly"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-pinguino-queria-volar",archivo:"",titulo:{es:"El Pingüino que Quería Volar",en:"The Penguin Who Wanted to Fly"},categoria:"animales",nivel:"inicial",paginas:4,portada:"🐧",color:"#0984E3",destacado:true},
+ {id:"el-pinguino-queria-volar",titulo:{es:"El Pingüino que Quería Volar",en:"The Penguin Who Wanted to Fly"},categoria:"animales",nivel:"inicial",color:"#0984E3",portada:"🐧",
+  paginas:[
+   {ilustracion:"🐧❄️🐦",fondo:"linear-gradient(160deg,#74C0FC,#E7F5FF)",oraciones:[{es:"En la Antártida vivía un pingüino llamado Pipo.",en:"In Antarctica lived a penguin named Pipo."},{es:"Miraba a las gaviotas volar y suspiraba.",en:"He watched the seagulls fly and sighed."},{es:"Yo también quiero volar por el cielo, decía.",en:"I want to fly through the sky too, he said."}]},
+   {ilustracion:"🐧🍂😅",fondo:"linear-gradient(160deg,#A29BFE,#74B9FF)",oraciones:[{es:"Se hizo alas con hojas grandes y corrió saltando.",en:"He made wings from big leaves and ran jumping."},{es:"Saltó de una roca y plop, cayó en la nieve.",en:"He jumped from a rock and plop, fell in the snow."},{es:"Lo intentó muchas veces sin éxito.",en:"He tried many times without success."}]},
+   {ilustracion:"🐧🌊🐟",fondo:"linear-gradient(160deg,#0984E3,#81ECEC)",oraciones:[{es:"Un día, persiguiendo un pez, se metió al mar.",en:"One day, chasing a fish, he dove into the sea."},{es:"Nadó tan rápido que parecía volar bajo el agua.",en:"He swam so fast he seemed to fly underwater."},{es:"¡Estoy volando! gritó feliz entre las olas.",en:"I'm flying! he shouted happily among the waves."}]},
+   {ilustracion:"🐧😊❤️",fondo:"linear-gradient(160deg,#81ECEC,#A8E6CF)",oraciones:[{es:"Pipo comprendió que cada uno vuela a su manera.",en:"Pipo understood that everyone flies in their own way."},{es:"Que el mar era su cielo y las aletas sus alas.",en:"That the sea was his sky and his flippers his wings."},{es:"Y ahora nada más rápido que cualquier pez.",en:"And now he swims faster than any fish."}]}
+],
+  vocabulario:[{es:"pingüino",en:"penguin",img:"🐧"},{es:"volar",en:"to fly",img:"🪽"},{es:"mar",en:"sea",img:"🌊"},{es:"nieve",en:"snow",img:"❄️"},{es:"aleta",en:"flipper",img:"🐟"},{es:"nadar",en:"to swim",img:"🏊"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba el pingüino?",en:"What was the penguin's name?",opciones:{es:["Pipo","Tito","Nube","Luna"],en:["Pipo","Tito","Cloud","Luna"]},correcta:0},
+   {es:"¿Con qué se hizo alas?",en:"What did he make wings from?",opciones:{es:["Hojas","Papel","Plumas","Hielo"],en:["Leaves","Paper","Feathers","Ice"]},correcta:0},
+   {es:"¿Dónde voló al final?",en:"Where did he fly at the end?",opciones:{es:["Bajo el mar","En el cielo","En la nieve","En un árbol"],en:["Under the sea","In the sky","In the snow","In a tree"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-estrella-que-cayo-del-cielo",archivo:"",titulo:{es:"La Estrella que Cayó del Cielo",en:"The Star That Fell From the Sky"},categoria:"naturaleza",nivel:"primario",paginas:5,portada:"⭐",color:"#FDCB6E",destacado:true},
+ {id:"la-estrella-que-cayo-del-cielo",titulo:{es:"La Estrella que Cayó del Cielo",en:"The Star That Fell From the Sky"},categoria:"naturaleza",nivel:"primario",color:"#FDCB6E",portada:"⭐",
+  paginas:[
+   {ilustracion:"⭐🌙✨",fondo:"linear-gradient(160deg,#2D1B69,#6C5CE7)",oraciones:[{es:"Una noche, una estrellita se cayó del cielo.",en:"One night, a little star fell from the sky."},{es:"Se llamaba Centella y brillaba muy poquito.",en:"Her name was Sparkle and she shone very dimly."},{es:"Quería volver arriba con sus hermanas.",en:"She wanted to go back up with her sisters."}]},
+   {ilustracion:"⭐🧒🏠",fondo:"linear-gradient(160deg,#4D96FF,#9BF6FF)",oraciones:[{es:"Un niño llamado Leo la encontró en el jardín.",en:"A boy named Leo found her in the garden."},{es:"¿Estás bien? le preguntó con cuidado.",en:"Are you okay? he asked carefully."},{es:"Me caí y no puedo volar sola, respondió ella.",en:"I fell and can't fly alone, she answered."}]},
+   {ilustracion:"⭐🧒🪁",fondo:"linear-gradient(160deg,#FF9F43,#FFD43B)",oraciones:[{es:"Leo la ató a un cometa para lanzarla al cielo.",en:"Leo tied her to a kite to launch her into the sky."},{es:"Corrió por el parque con el hilo en la mano.",en:"He ran through the park with the string in his hand."},{es:"Pero el viento no era suficiente esa noche.",en:"But the wind wasn't strong enough that night."}]},
+   {ilustracion:"⭐🧒❤️🌙",fondo:"linear-gradient(160deg,#6C5CE7,#FF8FA3)",oraciones:[{es:"Leo la subió a lo más alto de un árbol.",en:"Leo carried her to the top of a tall tree."},{es:"Desde ahí, Centella vio a la luna cerca.",en:"From there, Sparkle saw the moon close by."},{es:"La luna la tomó de la mano y la ayudó a subir.",en:"The moon took her hand and helped her up."}]},
+   {ilustracion:"⭐✨❤️",fondo:"linear-gradient(160deg,#2D1B69,#FDCB6E)",oraciones:[{es:"Centella volvió a brillar entre sus hermanas.",en:"Sparkle shone again among her sisters."},{es:"Cada noche saluda a Leo desde el cielo.",en:"Every night she waves to Leo from the sky."},{es:"Y Leo sabe que una estrella es su amiga.",en:"And Leo knows that one star is his friend."}]}
+],
+  vocabulario:[{es:"estrella",en:"star",img:"⭐"},{es:"cielo",en:"sky",img:"🌌"},{es:"luna",en:"moon",img:"🌙"},{es:"niño",en:"boy",img:"🧒"},{es:"cometa",en:"kite",img:"🪁"},{es:"amigo",en:"friend",img:"🤝"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba la estrella?",en:"What was the star's name?",opciones:{es:["Centella","Luna","Sol","Nube"],en:["Sparkle","Luna","Sun","Cloud"]},correcta:0},
+   {es:"¿Quién la encontró?",en:"Who found her?",opciones:{es:["Leo","Toby","Mimi","La abuela"],en:["Leo","Toby","Mimi","Grandma"]},correcta:0},
+   {es:"¿Quién la ayudó a subir?",en:"Who helped her go up?",opciones:{es:["La luna","El viento","El árbol","El cometa"],en:["The moon","The wind","The tree","The kite"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-monstruo-miedo-a-los-ninos",archivo:"",titulo:{es:"El Monstruo que Tenía Miedo a los Niños",en:"The Monster Who Was Afraid of Children"},categoria:"humor",nivel:"primario",paginas:6,portada:"👾",color:"#A29BFE",destacado:true},
+ {id:"el-monstruo-miedo-a-los-ninos",titulo:{es:"El Monstruo que Tenía Miedo a los Niños",en:"The Monster Who Was Afraid of Children"},categoria:"humor",nivel:"primario",color:"#A29BFE",portada:"👾",
+  paginas:[
+   {ilustracion:"👾🏚️😱",fondo:"linear-gradient(160deg,#6C5CE7,#2D3436)",oraciones:[{es:"En una casa vieja vivía un monstruo llamado Peluso.",en:"In an old house lived a monster named Fluffy."},{es:"Era peludo, grande y tenía dientes enormes.",en:"He was furry, big, and had enormous teeth."},{es:"Pero le tenía pánico a los niños.",en:"But he was terrified of children."}]},
+   {ilustracion:"👾🧒🎈",fondo:"linear-gradient(160deg,#A29BFE,#74B9FF)",oraciones:[{es:"Unos niños se mudaron a la casa de al lado.",en:"Some children moved into the house next door."},{es:"Peluso se escondía en el clóset todo el día.",en:"Fluffy hid in the closet all day."},{es:"Si escuchaba risas, temblaba de miedo.",en:"If he heard laughter, he trembled with fear."}]},
+   {ilustracion:"👾🧸🧒",fondo:"linear-gradient(160deg,#FF7675,#FDCB6E)",oraciones:[{es:"Una niña perdió su osito de peluche.",en:"A little girl lost her teddy bear."},{es:"Estaba en el jardín de Peluso, bajo un arbusto.",en:"It was in Fluffy's garden, under a bush."},{es:"Peluso lo vio y quiso devolvérselo.",en:"Fluffy saw it and wanted to return it."}]},
+   {ilustracion:"👾🧒❤️",fondo:"linear-gradient(160deg,#55EFC4,#81ECEC)",oraciones:[{es:"Con mucho miedo, se acercó a la niña.",en:"Very afraid, he approached the girl."},{es:"La niña lo miró y sonrió: ¡qué peludo tan lindo!",en:"The girl looked at him and smiled: What a cute furry!"},{es:"No tenía miedo, al contrario, le hizo cariño.",en:"She wasn't afraid, on the contrary, she petted him."}]},
+   {ilustracion:"👾🧒🎉🎂",fondo:"linear-gradient(160deg,#FDCB6E,#FF9F43)",oraciones:[{es:"Los niños lo invitaron a su fiesta de cumpleaños.",en:"The children invited him to their birthday party."},{es:"Peluso comió torta y jugó a las escondidas.",en:"Fluffy ate cake and played hide and seek."},{es:"Se rió tanto que sus dientes brillaban.",en:"He laughed so much his teeth shone."}]},
+   {ilustracion:"👾❤️🧒",fondo:"linear-gradient(160deg,#A29BFE,#FFEAA7)",oraciones:[{es:"Peluso comprendió que los niños no son malos.",en:"Fluffy understood that children aren't bad."},{es:"Que el miedo muchas veces es solo desconocimiento.",en:"That fear is often just not knowing."},{es:"Y ahora es el monstruo más querido del barrio.",en:"And now he is the most beloved monster in the neighborhood."}]}
+],
+  vocabulario:[{es:"monstruo",en:"monster",img:"👾"},{es:"miedo",en:"fear",img:"😱"},{es:"niños",en:"children",img:"🧒"},{es:"peluche",en:"stuffed toy",img:"🧸"},{es:"fiesta",en:"party",img:"🎉"},{es:"amigo",en:"friend",img:"🤝"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba el monstruo?",en:"What was the monster's name?",opciones:{es:["Peluso","Diente","Terror","Sombra"],en:["Fluffy","Tooth","Terror","Shadow"]},correcta:0},
+   {es:"¿De qué tenía miedo?",en:"What was he afraid of?",opciones:{es:["De los niños","De la oscuridad","De los perros","Del agua"],en:["Of children","Of the dark","Of dogs","Of water"]},correcta:0},
+   {es:"¿Qué devolvió a la niña?",en:"What did he return to the girl?",opciones:{es:["Su osito de peluche","Un pastel","Un globo","Un libro"],en:["Her teddy bear","A cake","A balloon","A book"]},correcta:0},
+   {es:"¿Qué comprendió?",en:"What did he understand?",opciones:{es:["El miedo es desconocimiento","Los niños son malos","Mejor esconderse","Las fiestas son aburridas"],en:["Fear is not knowing","Children are bad","Better hide","Parties are boring"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-flor-del-desierto",archivo:"",titulo:{es:"La Flor que Crecía en el Desierto",en:"The Flower That Grew in the Desert"},categoria:"naturaleza",nivel:"inicial",paginas:4,portada:"🌵",color:"#E17055",destacado:true},
+ {id:"la-flor-del-desierto",titulo:{es:"La Flor que Crecía en el Desierto",en:"The Flower That Grew in the Desert"},categoria:"naturaleza",nivel:"inicial",color:"#E17055",portada:"🌵",
+  paginas:[
+   {ilustracion:"🌵☀️🏜️",fondo:"linear-gradient(160deg,#FDCB6E,#E17055)",oraciones:[{es:"En medio del desierto, una semilla esperaba.",en:"In the middle of the desert, a seed waited."},{es:"Hacía mucho calor y casi no llovía nunca.",en:"It was very hot and it almost never rained."},{es:"Todos decían que nada podía crecer ahí.",en:"Everyone said nothing could grow there."}]},
+   {ilustracion:"🌵💧🌱",fondo:"linear-gradient(160deg,#81ECEC,#55EFC4)",oraciones:[{es:"Una mañana cayó una sola gota de lluvia.",en:"One morning a single drop of rain fell."},{es:"La semilla la absorbió con toda su fuerza.",en:"The seed absorbed it with all its strength."},{es:"Poco a poco, un brote verde asomó de la arena.",en:"Little by little, a green sprout peeked from the sand."}]},
+   {ilustracion:"🌵🌸🦋",fondo:"linear-gradient(160deg,#FF7675,#FDCB6E)",oraciones:[{es:"Creció despacio, guardando agua en su tallo.",en:"It grew slowly, storing water in its stem."},{es:"Un día abrió una flor rosa muy hermosa.",en:"One day it opened a beautiful pink flower."},{es:"Una mariposa viajera se detuvo a admirarla.",en:"A traveling butterfly stopped to admire it."}]},
+   {ilustracion:"🌵❤️🌸",fondo:"linear-gradient(160deg,#E17055,#FFEAA7)",oraciones:[{es:"La flor comprendió que no hay lugar imposible.",en:"The flower understood there is no impossible place."},{es:"Que con paciencia, todo puede florecer.",en:"That with patience, everything can bloom."},{es:"Y cada primavera, el desierto se llena de color.",en:"And every spring, the desert fills with color."}]}
+],
+  vocabulario:[{es:"flor",en:"flower",img:"🌸"},{es:"desierto",en:"desert",img:"🏜️"},{es:"semilla",en:"seed",img:"🌰"},{es:"agua",en:"water",img:"💧"},{es:"paciencia",en:"patience",img:"⏳"},{es:"mariposa",en:"butterfly",img:"🦋"}],
+  preguntas:[
+   {es:"¿Dónde crecía la flor?",en:"Where did the flower grow?",opciones:{es:["En el desierto","En un jardín","En la montaña","En el mar"],en:["In the desert","In a garden","On the mountain","In the sea"]},correcta:0},
+   {es:"¿Qué cayó una mañana?",en:"What fell one morning?",opciones:{es:["Una gota de lluvia","Una piedra","Un pájaro","Una semilla"],en:["A drop of rain","A stone","A bird","A seed"]},correcta:0},
+   {es:"¿Qué aprendió?",en:"What did she learn?",opciones:{es:["Con paciencia todo florece","El desierto es feo","No hay que crecer","Las flores son débiles"],en:["With patience everything blooms","The desert is ugly","Don't grow","Flowers are weak"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-barco-de-papel",archivo:"",titulo:{es:"El Barco de Papel que Cruzó el Océano",en:"The Paper Boat That Crossed the Ocean"},categoria:"aventura",nivel:"primario",paginas:5,portada:"⛵",color:"#0984E3",destacado:true},
+ {id:"el-barco-de-papel",titulo:{es:"El Barco de Papel que Cruzó el Océano",en:"The Paper Boat That Crossed the Ocean"},categoria:"aventura",nivel:"primario",color:"#0984E3",portada:"⛵",
+  paginas:[
+   {ilustracion:"⛵🧒🌊",fondo:"linear-gradient(160deg,#74B9FF,#9BF6FF)",oraciones:[{es:"Un niño hizo un barco de papel azul.",en:"A boy made a blue paper boat."},{es:"Lo puso en el río y lo vio navegar.",en:"He put it in the river and watched it sail."},{es:"El barco se llamaba Viento y quería viajar.",en:"The boat was named Wind and wanted to travel."}]},
+   {ilustracion:"⛵🌊🐟",fondo:"linear-gradient(160deg,#0984E3,#00B4D8)",oraciones:[{es:"El río lo llevó hasta el gran océano.",en:"The river carried it to the great ocean."},{es:"Vio ballenas, delfines y peces de colores.",en:"It saw whales, dolphins, and colorful fish."},{es:"Las olas lo mecían como una cuna.",en:"The waves rocked it like a cradle."}]},
+   {ilustracion:"⛵🌪️😰",fondo:"linear-gradient(160deg,#636E72,#2D3436)",oraciones:[{es:"Una tormenta grande sacudió el mar.",en:"A big storm shook the sea."},{es:"Viento se dobló pero no se rompió.",en:"Wind bent but didn't break."},{es:"Su papel resistió porque era fuerte y delgado.",en:"Its paper held on because it was strong and thin."}]},
+   {ilustracion:"⛵🏝️☀️",fondo:"linear-gradient(160deg,#FDCB6E,#55EFC4)",oraciones:[{es:"Después de la tormenta, llegó a una isla.",en:"After the storm, it reached an island."},{es:"Una niña lo encontró en la arena blanca.",en:"A girl found it in the white sand."},{es:"Dentro había una carta del niño que lo hizo.",en:"Inside was a letter from the boy who made it."}]},
+   {ilustracion:"⛵❤️🌍",fondo:"linear-gradient(160deg,#0984E3,#FDCB6E)",oraciones:[{es:"La niña respondió la carta y envió otro barco.",en:"The girl answered the letter and sent another boat."},{es:"Así empezó una amistad entre dos continentes.",en:"Thus began a friendship between two continents."},{es:"Viento comprendió que los viajes unen corazones.",en:"Wind understood that journeys unite hearts."}]}
+],
+  vocabulario:[{es:"barco",en:"boat",img:"⛵"},{es:"papel",en:"paper",img:"📄"},{es:"océano",en:"ocean",img:"🌊"},{es:"viaje",en:"journey",img:"🧭"},{es:"amistad",en:"friendship",img:"🤝"},{es:"isla",en:"island",img:"🏝️"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba el barco?",en:"What was the boat's name?",opciones:{es:["Viento","Azul","Río","Ola"],en:["Wind","Blue","River","Wave"]},correcta:0},
+   {es:"¿Qué encontró dentro?",en:"What was found inside?",opciones:{es:["Una carta","Un tesoro","Una moneda","Una flor"],en:["A letter","A treasure","A coin","A flower"]},correcta:0},
+   {es:"¿Qué comprendió?",en:"What did he understand?",opciones:{es:["Los viajes unen corazones","El papel es débil","El mar es peligroso","No hay que navegar"],en:["Journeys unite hearts","Paper is weak","The sea is dangerous","Don't sail"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-gato-que-usaba-botas",archivo:"",titulo:{es:"El Gato que Usaba Botas",en:"The Cat Who Wore Boots"},categoria:"humor",nivel:"inicial",paginas:5,portada:"🐱",color:"#E84393",destacado:true},
+ {id:"el-gato-que-usaba-botas",titulo:{es:"El Gato que Usaba Botas",en:"The Cat Who Wore Boots"},categoria:"humor",nivel:"inicial",color:"#E84393",portada:"🐱",
+  paginas:[
+   {ilustracion:"🐱👢🏠",fondo:"linear-gradient(160deg,#E84393,#FDCB6E)",oraciones:[{es:"Había un gato llamado Mishi que usaba botas.",en:"There was a cat named Mishi who wore boots."},{es:"Eran rojas, brillantes y le quedaban grandes.",en:"They were red, shiny, and too big for him."},{es:"Las usaba siempre, incluso para dormir.",en:"He wore them always, even to sleep."}]},
+   {ilustracion:"🐱👢💃",fondo:"linear-gradient(160deg,#74B9FF,#A8E6CF)",oraciones:[{es:"Con las botas, Mishi bailaba muy bien.",en:"With the boots, Mishi danced very well."},{es:"Hacía piruetas en el jardín del vecino.",en:"He did pirouettes in the neighbor's garden."},{es:"Los pájaros lo miraban asombrados.",en:"The birds watched him in amazement."}]},
+   {ilustracion:"🐱👢😿",fondo:"linear-gradient(160deg,#A29BFE,#DFE6E9)",oraciones:[{es:"Un día las botas se rompieron de tanto bailar.",en:"One day the boots broke from so much dancing."},{es:"Mishi se puso muy triste y no quiso salir.",en:"Mishi became very sad and didn't want to go out."},{es:"Pensaba que sin botas no podía bailar.",en:"He thought without boots he couldn't dance."}]},
+   {ilustracion:"🐱😊💃",fondo:"linear-gradient(160deg,#55EFC4,#81ECEC)",oraciones:[{es:"Su amiga la gata lo invitó a bailar igual.",en:"His friend the cat invited him to dance anyway."},{es:"Mishi bailó sin botas y lo hizo genial.",en:"Mishi danced without boots and did great."},{es:"Comprendió que el talento está en él, no en las botas.",en:"He understood the talent is in him, not the boots."}]}
+],
+  vocabulario:[{es:"gato",en:"cat",img:"🐱"},{es:"botas",en:"boots",img:"👢"},{es:"bailar",en:"to dance",img:"💃"},{es:"talento",en:"talent",img:"⭐"},{es:"amigo",en:"friend",img:"🤝"},{es:"triste",en:"sad",img:"😿"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba el gato?",en:"What was the cat's name?",opciones:{es:["Mishi","Toby","Luna","Nube"],en:["Mishi","Toby","Luna","Cloud"]},correcta:0},
+   {es:"¿De qué color eran las botas?",en:"What color were the boots?",opciones:{es:["Rojas","Azules","Verdes","Amarillas"],en:["Red","Blue","Green","Yellow"]},correcta:0},
+   {es:"¿Qué comprendió?",en:"What did he understand?",opciones:{es:["El talento está en él","Las botas son mágicas","No hay que bailar","Los gatos no bailan"],en:["The talent is in him","Boots are magic","Don't dance","Cats don't dance"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-hormiga-gigante",archivo:"",titulo:{es:"La Hormiga que Quería ser Gigante",en:"The Ant Who Wanted to Be Giant"},categoria:"animales",nivel:"primario",paginas:5,portada:"🐜",color:"#00B894",destacado:true},
+ {id:"la-hormiga-gigante",titulo:{es:"La Hormiga que Quería ser Gigante",en:"The Ant Who Wanted to Be Giant"},categoria:"animales",nivel:"primario",color:"#00B894",portada:"🐜",
+  paginas:[
+   {ilustracion:"🐜🌱👣",fondo:"linear-gradient(160deg,#55EFC4,#95D5B2)",oraciones:[{es:"Una hormiga llamada Chiqui quería ser gigante.",en:"An ant named Tiny wanted to be giant."},{es:"Todo le parecía enorme y ella muy pequeña.",en:"Everything seemed huge and she very small."},{es:"Soñaba con tocar las nubes con sus patas.",en:"She dreamed of touching the clouds with her legs."}]},
+   {ilustracion:"🐜💪🍂",fondo:"linear-gradient(160deg,#FDCB6E,#FFEAA7)",oraciones:[{es:"Un día, una hoja enorme cayó sobre el hormiguero.",en:"One day, a huge leaf fell on the anthill."},{es:"Las otras hormigas no podían moverla.",en:"The other ants couldn't move it."},{es:"Chiqui organizó a todas en fila.",en:"Tiny organized all of them in a line."}]},
+   {ilustracion:"🐜🐜🐜💪",fondo:"linear-gradient(160deg,#00B894,#55EFC4)",oraciones:[{es:"Juntas empujaron la hoja con mucha fuerza.",en:"Together they pushed the leaf with great force."},{es:"¡Lograron moverla y salvar el hormiguero!",en:"They managed to move it and save the anthill!"},{es:"Todas celebraron bajo tierra.",en:"They all celebrated underground."}]},
+   {ilustracion:"🐜❤️😊",fondo:"linear-gradient(160deg,#95D5B2,#FDCB6E)",oraciones:[{es:"Chiqui comprendió que no hace falta ser grande.",en:"Tiny understood that you don't need to be big."},{es:"Que unidos, somos más fuertes que cualquier gigante.",en:"That united, we are stronger than any giant."},{es:"Y ahora es la líder más querida del hormiguero.",en:"And now she is the most beloved leader of the anthill."}]}
+],
+  vocabulario:[{es:"hormiga",en:"ant",img:"🐜"},{es:"grande",en:"big",img:"🐘"},{es:"unión",en:"unity",img:"🤝"},{es:"fuerza",en:"strength",img:"💪"},{es:"hoja",en:"leaf",img:"🍃"},{es:"líder",en:"leader",img:"👑"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba la hormiga?",en:"What was the ant's name?",opciones:{es:["Chiqui","Gigante","Fuerte","Reina"],en:["Tiny","Giant","Strong","Queen"]},correcta:0},
+   {es:"¿Qué cayó sobre el hormiguero?",en:"What fell on the anthill?",opciones:{es:["Una hoja enorme","Una piedra","Un zapato","Un palo"],en:["A huge leaf","A stone","A shoe","A stick"]},correcta:0},
+   {es:"¿Qué aprendió?",en:"What did she learn?",opciones:{es:["Unidos somos más fuertes","Hay que ser grande","Las hojas son pesadas","Los gigantes existen"],en:["United we are stronger","You must be big","Leaves are heavy","Giants exist"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-zapato-perdido",archivo:"",titulo:{es:"El Zapato que Perdió a su Pareja",en:"The Shoe Who Lost Its Partner"},categoria:"humor",nivel:"inicial",paginas:4,portada:"👟",color:"#0984E3",destacado:true},
+ {id:"el-zapato-perdido",titulo:{es:"El Zapato que Perdió a su Pareja",en:"The Shoe Who Lost Its Partner"},categoria:"humor",nivel:"inicial",color:"#0984E3",portada:"👟",
+  paginas:[
+   {ilustracion:"👟👟🏠",fondo:"linear-gradient(160deg,#74B9FF,#DFE6E9)",oraciones:[{es:"En un ropero vivían dos zapatos iguales.",en:"In a closet lived two identical shoes."},{es:"Eran inseparables, iban a todos lados juntos.",en:"They were inseparable, went everywhere together."},{es:"Se llamaban Izquierdo y Derecho.",en:"They were called Left and Right."}]},
+   {ilustracion:"👟😢🔍",fondo:"linear-gradient(160deg,#A29BFE,#74B9FF)",oraciones:[{es:"Un día, Derecho desapareció de la caja.",en:"One day, Right disappeared from the box."},{es:"Izquierdo lo buscó por toda la casa.",en:"Left searched the whole house for him."},{es:"Debajo de la cama, atrás del sofá, en el baño.",en:"Under the bed, behind the sofa, in the bathroom."}]},
+   {ilustracion:"👟🐶🦴",fondo:"linear-gradient(160deg,#FDCB6E,#FF7675)",oraciones:[{es:"Lo encontró en el jardín, con el perro.",en:"He found him in the garden, with the dog."},{es:"El perro lo usaba como juguete para morder.",en:"The dog was using him as a chew toy."},{es:"¡Socorro! gritaba Derecho asustado.",en:"Help! shouted Right, scared."}]},
+   {ilustracion:"👟👟❤️",fondo:"linear-gradient(160deg,#55EFC4,#81ECEC)",oraciones:[{es:"Izquierdo lo rescató y volvieron juntos.",en:"Left rescued him and they were together again."},{es:"Desde entonces duermen abrazados en la caja.",en:"Ever since they sleep hugging in the box."},{es:"Y el perro tiene su propio hueso para morder.",en:"And the dog has his own bone to chew."}]}
+],
+  vocabulario:[{es:"zapato",en:"shoe",img:"👟"},{es:"pareja",en:"pair",img:"👟"},{es:"perro",en:"dog",img:"🐶"},{es:"buscar",en:"to search",img:"🔍"},{es:"juntos",en:"together",img:"🤝"},{es:"hogar",en:"home",img:"🏠"}],
+  preguntas:[
+   {es:"¿Cómo se llamaban los zapatos?",en:"What were the shoes called?",opciones:{es:["Izquierdo y Derecho","Grande y Chico","Rojo y Azul","Arriba y Abajo"],en:["Left and Right","Big and Small","Red and Blue","Up and Down"]},correcta:0},
+   {es:"¿Dónde encontró al otro?",en:"Where did he find the other?",opciones:{es:["En el jardín con el perro","En la cocina","En el baño","En el techo"],en:["In the garden with the dog","In the kitchen","In the bathroom","On the roof"]},correcta:0},
+   {es:"¿Qué usaba el perro?",en:"What was the dog using?",opciones:{es:["El zapato como juguete","Un hueso","Una pelota","Un pan"],en:["The shoe as a toy","A bone","A ball","Bread"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"la-biblioteca-magica",archivo:"",titulo:{es:"La Biblioteca Mágica",en:"The Magic Library"},categoria:"aventura",nivel:"primario",paginas:6,portada:"📚",color:"#6C5CE7",destacado:true},
+ {id:"la-biblioteca-magica",titulo:{es:"La Biblioteca Mágica",en:"The Magic Library"},categoria:"aventura",nivel:"primario",color:"#6C5CE7",portada:"📚",
+  paginas:[
+   {ilustracion:"📚🧒🔮",fondo:"linear-gradient(160deg,#6C5CE7,#A29BFE)",oraciones:[{es:"Sofía encontró una biblioteca escondida en el parque.",en:"Sofia found a hidden library in the park."},{es:"La puerta era de madera vieja con letras doradas.",en:"The door was old wood with golden letters."},{es:"Al entrar, los libros volaban solos por el aire.",en:"Inside, books flew through the air by themselves."}]},
+   {ilustracion:"📚🐉✨",fondo:"linear-gradient(160deg,#E17055,#FDCB6E)",oraciones:[{es:"Abrió un libro de dragones y uno salió de las páginas.",en:"She opened a book of dragons and one came out of the pages."},{es:"No era feroz, al contrario, era muy tierno.",en:"He wasn't fierce, on the contrary, he was very tender."},{es:"La invitó a volar sobre los estantes.",en:"He invited her to fly over the shelves."}]},
+   {ilustracion:"📚🚀🌌",fondo:"linear-gradient(160deg,#2D1B69,#4D96FF)",oraciones:[{es:"Después abrió un libro del espacio.",en:"Then she opened a book about space."},{es:"Viajó a Saturno y bailó con sus anillos.",en:"She traveled to Saturn and danced with its rings."},{es:"Los aliens le regalaron una piedra brillante.",en:"The aliens gave her a shiny stone."}]},
+   {ilustracion:"📚⏰😮",fondo:"linear-gradient(160deg,#FF7675,#FDCB6E)",oraciones:[{es:"Un reloj mágico le avisó que era tarde.",en:"A magic clock warned her it was late."},{es:"Volvió a casa justo antes de la cena.",en:"She returned home just before dinner."},{es:"Guardó la piedra brillante bajo la almohada.",en:"She kept the shiny stone under her pillow."}]},
+   {ilustracion:"📚❤️🧒",fondo:"linear-gradient(160deg,#A29BFE,#FFEAA7)",oraciones:[{es:"Cada tarde, Sofía vuelve a la biblioteca.",en:"Every afternoon, Sofia returns to the library."},{es:"Lee un libro nuevo y vive una aventura.",en:"She reads a new book and lives an adventure."},{es:"Comprendió que los libros son puertas mágicas.",en:"She learned that books are magic doors."}]}
+],
+  vocabulario:[{es:"libro",en:"book",img:"📚"},{es:"biblioteca",en:"library",img:"🏛️"},{es:"magia",en:"magic",img:"🪄"},{es:"aventura",en:"adventure",img:"🗺️"},{es:"dragón",en:"dragon",img:"🐉"},{es:"leer",en:"to read",img:"📖"}],
+  preguntas:[
+   {es:"¿Cómo se llamaba la niña?",en:"What was the girl's name?",opciones:{es:["Sofía","Maya","Luna","Mimi"],en:["Sofia","Maya","Luna","Mimi"]},correcta:0},
+   {es:"¿Qué salió del primer libro?",en:"What came out of the first book?",opciones:{es:["Un dragón tierno","Un monstruo","Un pirata","Un robot"],en:["A tender dragon","A monster","A pirate","A robot"]},correcta:0},
+   {es:"¿A dónde viajó con el segundo libro?",en:"Where did she travel with the second book?",opciones:{es:["A Saturno","A la luna","Al mar","Al desierto"],en:["To Saturn","To the moon","To the sea","To the desert"]},correcta:0},
+   {es:"¿Qué comprendió?",en:"What did she understand?",opciones:{es:["Los libros son puertas mágicas","Las bibliotecas son aburridas","Los dragones son malos","No hay que leer"],en:["Books are magic doors","Libraries are boring","Dragons are bad","Don't read"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-perdon-de-los-amigos",archivo:"",titulo:{es:"El Perdón de los Amigos",en:"The Forgiveness of Friends"},categoria:"amigos",nivel:"inicial",paginas:4,portada:"🤝",color:"#00CEC9",destacado:true},
+ {id:"el-perdon-de-los-amigos",titulo:{es:"El Perdón de los Amigos",en:"The Forgiveness of Friends"},categoria:"amigos",nivel:"inicial",color:"#00CEC9",portada:"🤝",
+  paginas:[
+   {ilustracion:"🧒🧒🎈❤️",fondo:"linear-gradient(160deg,#55EFC4,#81ECEC)",oraciones:[{es:"Tomás y Benito eran mejores amigos del mundo.",en:"Tomas and Benito were best friends in the world."},{es:"Jugaban todos los días en el parque.",en:"They played every day in the park."},{es:"Se turnaban el globo rojo que querían los dos.",en:"They took turns with the red balloon they both wanted."}]},
+   {ilustracion:"🧒😡🧒💔",fondo:"linear-gradient(160deg,#FF7675,#FAB1A0)",oraciones:[{es:"Un día, el globo se rompió y se pelearon.",en:"One day, the balloon broke and they fought."},{es:"Cada uno culpaba al otro del accidente.",en:"Each blamed the other for the accident."},{es:"No se hablaron durante toda una semana.",en:"They didn't speak for a whole week."}]},
+   {ilustracion:"🧒🍪❤️🧒",fondo:"linear-gradient(160deg,#FDCB6E,#FFEAA7)",oraciones:[{es:"Tomás hizo una tarjeta con dibujos y galletas.",en:"Tomas made a card with drawings and cookies."},{es:"Se la llevó a Benito para pedirle perdón.",en:"He brought it to Benito to ask for forgiveness."},{es:"Benito también tenía un regalo para Tomás.",en:"Benito also had a gift for Tomas."}]},
+   {ilustracion:"🧒🧒🎈❤️",fondo:"linear-gradient(160deg,#00CEC9,#55EFC4)",oraciones:[{es:"Se abrazaron y se perdonaron muy fuerte.",en:"They hugged and forgave each other tightly."},{es:"Compraron un globo nuevo entre los dos.",en:"They bought a new balloon together."},{es:"Comprendieron que la amistad vale más que un globo.",en:"They learned that friendship is worth more than a balloon."}]}
+],
+  vocabulario:[{es:"amigo",en:"friend",img:"🤝"},{es:"perdón",en:"forgiveness",img:"❤️"},{es:"pelea",en:"fight",img:"😡"},{es:"amistad",en:"friendship",img:"💖"},{es:"globos",en:"balloons",img:"🎈"},{es:"abrazo",en:"hug",img:"🤗"}],
+  preguntas:[
+   {es:"¿Cómo se llamaban los amigos?",en:"What were the friends' names?",opciones:{es:["Tomás y Benito","Leo y Max","Lucas y Toby","Pipo y Tito"],en:["Tomas and Benito","Leo and Max","Lucas and Toby","Pipo and Tito"]},correcta:0},
+   {es:"¿Por qué se pelearon?",en:"Why did they fight?",opciones:{es:["Se rompió el globo","Por un juguete","Por un helado","Por un libro"],en:["The balloon broke","Over a toy","Over ice cream","Over a book"]},correcta:0},
+   {es:"¿Qué hicieron al final?",en:"What did they do at the end?",opciones:{es:["Se perdonaron y abrazaron","Se fueron enojados","No se hablaron más","Lloraron"],en:["They forgave and hugged","Left angry","Never spoke again","Cried"]},correcta:0}
+]});
+
+SB_registrar(
+ {id:"el-arcoiris-perdio-colores",archivo:"",titulo:{es:"El Arcoíris que Perdió sus Colores",en:"The Rainbow Who Lost Its Colors"},categoria:"naturaleza",nivel:"primario",paginas:5,portada:"🌈",color:"#E84393",destacado:true},
+ {id:"el-arcoiris-perdio-colores",titulo:{es:"El Arcoíris que Perdió sus Colores",en:"The Rainbow Who Lost Its Colors"},categoria:"naturaleza",nivel:"primario",color:"#E84393",portada:"🌈",
+  paginas:[
+   {ilustracion:"🌈😢☁️",fondo:"linear-gradient(160deg,#DFE6E9,#B2BEC3)",oraciones:[{es:"Después de la lluvia, el arcoíris salió pálido.",en:"After the rain, the rainbow came out pale."},{es:"Había perdido todos sus colores brillantes.",en:"It had lost all its bright colors."},{es:"Estaba gris y triste en el cielo.",en:"It was gray and sad in the sky."}]},
+   {ilustracion:"🌻☀️💛",fondo:"linear-gradient(160deg,#FDCB6E,#FFEAA7)",oraciones:[{es:"El sol le dio un poco de amarillo dorado.",en:"The sun gave it a little golden yellow."},{es:"Las flores le dieron rojo y rosa intenso.",en:"The flowers gave it red and bright pink."},{es:"El mar le prestó su azul más profundo.",en:"The sea lent it its deepest blue."}]},
+   {ilustracion:"🌿🍃💚",fondo:"linear-gradient(160deg,#55EFC4,#95D5B2)",oraciones:[{es:"Los árboles le dieron verde para el medio.",en:"The trees gave it green for the middle."},{es:"Las uvas del viñedo le dieron violeta.",en:"The grapes from the vineyard gave it violet."},{es:"Las naranjas maduras le dieron naranja.",en:"Ripe oranges gave it orange."}]},
+   {ilustracion:"🌈✨❤️",fondo:"linear-gradient(160deg,#E84393,#FDCB6E)",oraciones:[{es:"Poco a poco, el arcoíris recuperó sus colores.",en:"Little by little, the rainbow got its colors back."},{es:"Brillaba más hermoso que nunca en el cielo.",en:"It shone more beautifully than ever in the sky."},{es:"Todos los niños salieron a mirarlo felices.",en:"All the children came out to look at it happily."}]},
+   {ilustracion:"🌈❤️🌍",fondo:"linear-gradient(160deg,#6C5CE7,#FF7675)",oraciones:[{es:"El arcoíris comprendió que los colores vienen de la naturaleza.",en:"The rainbow learned that colors come from nature."},{es:"Que todos juntos formamos algo hermoso.",en:"That all together we form something beautiful."},{es:"Y cada lluvia trae un nuevo arcoíris de colores.",en:"And every rain brings a new rainbow of colors."}]}
+],
+  vocabulario:[{es:"arcoíris",en:"rainbow",img:"🌈"},{es:"colores",en:"colors",img:"🎨"},{es:"sol",en:"sun",img:"☀️"},{es:"naturaleza",en:"nature",img:"🌿"},{es:"mar",en:"sea",img:"🌊"},{es:"flores",en:"flowers",img:"🌸"}],
+  preguntas:[
+   {es:"¿Qué le pasó al arcoíris?",en:"What happened to the rainbow?",opciones:{es:["Perdió sus colores","Se rompió","Se cayó","Se escondió"],en:["Lost its colors","Broke","Fell","Hid"]},correcta:0},
+   {es:"¿Quién le dio amarillo?",en:"Who gave it yellow?",opciones:{es:["El sol","Las flores","El mar","Los árboles"],en:["The sun","Flowers","The sea","Trees"]},correcta:0},
+   {es:"¿Qué le dio el mar?",en:"What did the sea give?",opciones:{es:["Azul profundo","Verde","Rojo","Violeta"],en:["Deep blue","Green","Red","Violet"]},correcta:0},
+   {es:"¿Qué comprendió?",en:"What did he learn?",opciones:{es:["Los colores vienen de la naturaleza","Los arcoíris son feos","No hay que llover","Los colores no importan"],en:["Colors come from nature","Rainbows are ugly","Don't rain","Colors don't matter"]},correcta:0}
+]});
+
 /* ============================================================
    2) CSS PREMIUM INYECTADO (reemplaza storybooks.css)
    ============================================================ */
@@ -705,6 +1049,40 @@ SB_registrar(
     .sb-grid{grid-template-columns:repeat(2,1fr);}
     .sb-title{font-size:20px;}
     .sb-page-illustration{height:140px;font-size:60px;}}
+  /* ===== SUPER PREMIUM EXTRAS ===== */
+  .sb-mic-btn.listening{background:#FF6B6B!important;animation:sb-pulse 1s infinite;}
+  @keyframes sb-pulse{0%{box-shadow:0 0 0 0 rgba(255,107,107,.7);}70%{box-shadow:0 0 0 14px rgba(255,107,107,0);}100%{box-shadow:0 0 0 0 rgba(255,107,107,0);}}
+  .sb-mic-result{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);background:#fff;border-radius:28px;padding:28px 36px;
+    box-shadow:0 20px 60px rgba(0,0,0,.3);z-index:10002;text-align:center;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.34,1.56,.64,1);font-family:var(--sb-font);max-width:90vw;}
+  .sb-mic-result.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
+  .sb-mic-result .stars{font-size:42px;letter-spacing:6px;margin:8px 0;}
+  .sb-mic-result .msg{font-size:20px;font-weight:900;color:var(--sb-text);margin:6px 0;}
+  .sb-mic-result .pct{font-size:15px;color:var(--sb-muted);font-weight:700;}
+  .sb-mic-result .heard{font-size:13px;color:#999;margin-top:8px;font-style:italic;max-width:280px;}
+  .sb-mic-result button{margin-top:14px;background:linear-gradient(135deg,#FF9F43,#FF6B9D);color:#fff;border:none;border-radius:999px;padding:10px 26px;font-weight:900;font-size:15px;cursor:pointer;font-family:var(--sb-font);}
+  .sb-sentence.approved{background:linear-gradient(90deg,#D4FCF4,#E8FFF9)!important;border-left:4px solid #00B894;}
+  .sb-sentence.approved::after{content:'✓';position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#00B894;font-weight:900;font-size:18px;}
+  .sb-super-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:16px;}
+  .sb-super-card{background:#fff;border-radius:20px;padding:20px 14px;text-align:center;cursor:pointer;box-shadow:var(--sb-shadow);transition:transform .2s,box-shadow .2s;border:none;font-family:var(--sb-font);}
+  .sb-super-card:hover{transform:translateY(-4px) scale(1.03);box-shadow:var(--sb-shadow-hover);}
+  .sb-super-card .ico{font-size:44px;display:block;margin-bottom:8px;}
+  .sb-super-card .tit{font-weight:900;font-size:15px;color:var(--sb-text);display:block;}
+  .sb-super-card .sub{font-size:11px;color:var(--sb-muted);font-weight:700;display:block;margin-top:3px;}
+  .sb-abc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:8px;margin-top:14px;}
+  .sb-abc-letter{background:linear-gradient(135deg,#FF9F43,#FF6B9D);color:#fff;border:none;border-radius:14px;padding:12px 0;font-size:22px;font-weight:900;cursor:pointer;font-family:var(--sb-font);box-shadow:0 4px 10px rgba(0,0,0,.12);transition:transform .15s;}
+  .sb-abc-letter:active{transform:scale(.9);}
+  .sb-verb-row{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:10px 14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+  .sb-verb-row .v{font-weight:900;font-size:16px;color:var(--sb-accent2);min-width:80px;}
+  .sb-verb-row .c{font-size:13px;color:var(--sb-text);flex:1;}
+  .sb-verb-row button{background:var(--sb-secondary);color:#fff;border:none;border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;flex:0 0 auto;}
+  .sb-orac-word{display:inline-block;background:#fff;border:2px solid var(--sb-secondary);border-radius:12px;padding:8px 14px;margin:4px;font-weight:800;font-size:15px;cursor:pointer;font-family:var(--sb-font);color:var(--sb-text);transition:all .15s;}
+  .sb-orac-word:active{transform:scale(.92);}
+  .sb-orac-word.used{opacity:.3;pointer-events:none;}
+  .sb-orac-slot{min-height:44px;background:#F7F3EE;border-radius:14px;padding:8px;margin:10px 0;border:2px dashed #D4C5B5;}
+  .sb-confetti{position:fixed;width:10px;height:10px;top:-10px;z-index:10003;pointer-events:none;border-radius:2px;}
+  @keyframes sb-confetti-fall{to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+  .sb-badge-super{background:linear-gradient(135deg,#FFD43B,#FF9F43);color:#5B3A00;font-size:10px;font-weight:900;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;}
+
   `;
   var s = document.createElement('style'); s.textContent = css; document.head.appendChild(s);
 })();
@@ -792,14 +1170,14 @@ SB_registrar(
 
   var TXT = {
     es:{ titulo:'Storybooks Bilingües', subtitulo:'Cuentos en español e inglés', buscar:'Buscar cuento...',
-      todas:'Todos', tabBiblio:'Biblioteca', tabFav:'Favoritos', tabProg:'Progreso', paginas:'páginas',
+      todas:'Todos', tabBiblio:'Biblioteca', tabFav:'Favoritos', tabProg:'Progreso', tabSuper:'Super Premium', paginas:'páginas',
       leido:'Leído', vacioFav:'Aún no tenés favoritos. Tocá el corazón en un cuento.',
       vacioProg:'Aún no empezaste ningún cuento. ¡Elegí uno!', vacioBusq:'No encontramos cuentos con esa búsqueda.',
       cargando:'Cargando biblioteca...', error:'No se pudo cargar la biblioteca.', reintentar:'Reintentar',
       empezar:'Empezar', continuar:'Continuar', terminado:'Terminado',
       estrellas:'Estrellas', leidos:'Leídos', racha:'Días seguidos', meta:'Meta diaria' },
     en:{ titulo:'Bilingual Storybooks', subtitulo:'Stories in Spanish and English', buscar:'Search story...',
-      todas:'All', tabBiblio:'Library', tabFav:'Favorites', tabProg:'Progress', paginas:'pages',
+      todas:'All', tabBiblio:'Library', tabFav:'Favorites', tabProg:'Progress', tabSuper:'Super Premium', paginas:'pages',
       leido:'Read', vacioFav:'No favorites yet. Tap the heart on a story.',
       vacioProg:'No stories started yet. Pick one!', vacioBusq:'No stories match that search.',
       cargando:'Loading library...', error:'Could not load library.', reintentar:'Retry',
@@ -873,26 +1251,27 @@ SB_registrar(
   function elegirVoz(codigoIdioma){
     if(!vocesDisponibles.length) cargarVoces();
     var vocesDelIdioma = vocesDisponibles.filter(function(v){
-      return (v.lang||'').toLowerCase().startsWith(codigoIdioma.toLowerCase());
+      var l=(v.lang||'').toLowerCase(); return l.startsWith(codigoIdioma.toLowerCase()) || (codigoIdioma==='es' && l.startsWith('es'));
     });
     if(!vocesDelIdioma.length) return null;
     var preferida = vocesDelIdioma.find(function(v){
       var n = (v.name||'').toLowerCase();
-      return n.indexOf('natural')>=0 || n.indexOf('male')>=0 || n.indexOf('hombre')>=0 ||
-             n.indexOf('jorge')>=0 || n.indexOf('alvaro')>=0 || n.indexOf('google')>=0 ||
-             n.indexOf('microsoft')>=0 || n.indexOf('samantha')>=0;
+      return n.indexOf('microsoft sabrina')>=0 || n.indexOf('microsoft laura')>=0 ||
+             n.indexOf('google espa')>=0 || n.indexOf('google espan')>=0 ||
+             n.indexOf('monica')>=0 || n.indexOf('juan')>=0 || n.indexOf('salma')>=0 ||
+             n.indexOf('natural')>=0 || n.indexOf('microsoft')>=0 || n.indexOf('google')>=0;
     });
     return preferida || vocesDelIdioma[0];
   }
   function hablar(texto, lang, onend){
     try{
       if(EK.Voz && typeof EK.Voz.hablar==='function'){
-        EK.Voz.hablar(texto, { lang:lang==='en'?'en-US':'es-ES', rate:0.92, pitch:0.85, onend:onend }); return true;
+        EK.Voz.hablar(texto, { lang:lang==='en'?'en-US':'es-MX', rate:0.92, pitch:0.85, onend:onend }); return true;
       }
       if('speechSynthesis' in window){
         window.speechSynthesis.cancel();
         var u = new SpeechSynthesisUtterance(texto);
-        u.lang = lang==='en'?'en-US':'es-ES';
+        u.lang = lang==='en'?'en-US':'es-MX';
         u.rate = 0.92;   // pausado, estilo narrador
         u.pitch = 0.85;  // tono grave y cálido (no infantil)
         u.volume = 1;
@@ -936,6 +1315,7 @@ SB_registrar(
   }
 
   function renderBiblioteca(){
+    if(estado.tab==='super'){ renderSuperPremium(); return; }
     var cont = estado.contenedor, cat = estado.catalogo, txt = t;
     var cats = cat.categorias||[];
     var cuentos = filtrarCuentos(cat);
@@ -996,6 +1376,7 @@ SB_registrar(
           '<button class="sb-tab'+(estado.tab==='biblioteca'?' active':'')+'" data-tab="biblioteca">📖 '+escapar(txt('tabBiblio'))+'</button>'+
           '<button class="sb-tab'+(estado.tab==='favoritos'?' active':'')+'" data-tab="favoritos">❤️ '+escapar(txt('tabFav'))+'</button>'+
           '<button class="sb-tab'+(estado.tab==='progreso'?' active':'')+'" data-tab="progreso">📊 '+escapar(txt('tabProg'))+'</button>'+
+          '<button class="sb-tab'+(estado.tab==='super'?' active':'')+'" data-tab="super">🌟 '+escapar(txt('tabSuper'))+'</button>'+
         '</div>'+
         '<div class="sb-search-wrap"><span class="sb-search-icon">🔍</span>'+
           '<input class="sb-search" type="search" placeholder="'+escapar(txt('buscar'))+'" value="'+escapar(estado.busqueda)+'">'+
@@ -1091,6 +1472,233 @@ SB_registrar(
     var el = e.target.closest('[data-mundo="storybooks"],[data-id="storybooks"],[data-world="storybooks"],[data-sb-abrir]');
     if(el){ e.preventDefault(); e.stopPropagation(); abrir(); }
   }, true);
+
+
+  /* ============================================================
+     SUPER PREMIUM: Aprendizaje integral (abecedario, verbos, oraciones, narración)
+     ============================================================ */
+  var SP = { vista:'hub', letraActual:'', verboIdx:0, oracIdx:0, oracUsados:[], oracSlots:[] };
+  var SP_TXT = {
+    es:{ hubTit:'🌟 Super Premium', hubSub:'Aprendé lectura, narración, verbos, sílabas y abecedario',
+         abc:'Abecedario', abcSub:'A-Z con audio', verb:'Verbos', verbSub:'Conjugación y audio',
+         orac:'Oraciones', oracSub:'Armá oraciones', narr:'Narración', narrSub:'Leé y grabá tu voz',
+         escuchar:'Escuchar', volver:'← Volver', tocaLetra:'Tocá una letra para escucharla',
+         eligeVerbo:'Verbos en presente (tocá 🔊 para escuchar)',
+         armaOrac:'Tocá las palabras en orden para armar la oración',
+         bien:'¡Muy bien! ✅', mal:'No es correcto, intentá de nuevo',
+         narrInstr:'Escuchá la oración y luego repetila con el micrófono 🎤' },
+    en:{ hubTit:'🌟 Super Premium', hubSub:'Learn reading, narration, verbs, syllables & alphabet',
+         abc:'Alphabet', abcSub:'A-Z with audio', verb:'Verbs', verbSub:'Conjugation & audio',
+         orac:'Sentences', oracSub:'Build sentences', narr:'Narration', narrSub:'Read & record your voice',
+         escuchar:'Listen', volver:'← Back', tocaLetra:'Tap a letter to hear it',
+         eligeVerbo:'Verbs in present (tap 🔊 to listen)',
+         armaOrac:'Tap words in order to build the sentence',
+         bien:'Well done! ✅', mal:'Not right, try again',
+         narrInstr:'Listen to the sentence then repeat with the mic 🎤' }
+  };
+  function spt(k){ var l=estado.lang==='en'?'en':'es'; return SP_TXT[l][k]||SP_TXT.es[k]; }
+  function spHablar(texto, lang){
+    try{
+      if('speechSynthesis' in window){
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(texto);
+        u.lang = lang==='en'?'en-US':'es-MX'; u.rate=0.9; u.pitch=0.9; u.volume=1;
+        var vs = window.speechSynthesis.getVoices()||[];
+        var pref = vs.filter(function(v){return (v.lang||'').toLowerCase().indexOf(lang)==0;});
+        if(pref.length) u.voice = pref[0];
+        window.speechSynthesis.speak(u);
+      }
+    }catch(e){}
+  }
+  var SP_VERBOS = [
+    {es:'ser', en:'to be', conj:'yo soy / tú eres / él es / nosotros somos'},
+    {es:'tener', en:'to have', conj:'yo tengo / tú tienes / él tiene / nosotros tenemos'},
+    {es:'ir', en:'to go', conj:'yo voy / tú vas / él va / nosotros vamos'},
+    {es:'comer', en:'to eat', conj:'yo como / tú comes / él come / nosotros comemos'},
+    {es:'jugar', en:'to play', conj:'yo juego / tú juegas / él juega / nosotros jugamos'},
+    {es:'querer', en:'to want', conj:'yo quiero / tú quieres / él quiere / nosotros queremos'},
+    {es:'ver', en:'to see', conj:'yo veo / tú ves / él ve / nosotros vemos'},
+    {es:'hablar', en:'to speak', conj:'yo hablo / tú hablas / él habla / nosotros hablamos'},
+    {es:'leer', en:'to read', conj:'yo leo / tú lees / él lee / nosotros leemos'},
+    {es:'vivir', en:'to live', conj:'yo vivo / tú vives / él vive / nosotros vivimos'}
+  ];
+  var SP_ORACIONES = [
+    {es:'El perro juega en el parque', en:'The dog plays in the park', palabras:['El','perro','juega','en','el','parque']},
+    {es:'La niña come una manzana roja', en:'The girl eats a red apple', palabras:['La','niña','come','una','manzana','roja']},
+    {es:'Mi abuela lee un libro bonito', en:'My grandma reads a nice book', palabras:['Mi','abuela','lee','un','libro','bonito']},
+    {es:'Los pájaros cantan en el árbol', en:'The birds sing in the tree', palabras:['Los','pájaros','cantan','en','el','árbol']},
+    {es:'El sol brilla en el cielo azul', en:'The sun shines in the blue sky', palabras:['El','sol','brilla','en','el','cielo','azul']}
+  ];
+  var SP_NARRACION = [
+    {es:'Había una vez un dragón que vivía en una montaña.', en:'Once upon a time a dragon lived on a mountain.'},
+    {es:'Un día, el dragón decidió viajar para conocer el mundo.', en:'One day, the dragon decided to travel to see the world.'},
+    {es:'Conoció muchos animales y aprendió cosas nuevas.', en:'He met many animals and learned new things.'},
+    {es:'Al final, comprendió que la amistad es el mayor tesoro.', en:'In the end, he understood that friendship is the greatest treasure.'}
+  ];
+  function barajarArr(a){ var b=a.slice(); for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;} return b; }
+  function renderSuperPremium(){
+    var cont = estado.contenedor;
+    if(SP.vista==='hub'){ renderSPHub(cont); return; }
+    if(SP.vista==='abc'){ renderSPAbc(cont); return; }
+    if(SP.vista==='verb'){ renderSPVerb(cont); return; }
+    if(SP.vista==='orac'){ renderSPOrac(cont); return; }
+    if(SP.vista==='narr'){ renderSPNarr(cont); return; }
+  }
+  function renderSPHub(cont){
+    var html = '<div class="sb-root sb-page-enter">'+
+      '<div class="sb-header"><button class="sb-btn-back" data-sp-volver>←</button>'+
+      '<div><h1 class="sb-title">'+spt('hubTit')+' <span class="sb-badge-super">NEW</span></h1>'+
+      '<p class="sb-subtitle">'+spt('hubSub')+'</p></div></div>'+
+      '<div class="sb-super-grid">'+
+      '<button class="sb-super-card" data-sp-go="abc"><span class="ico">🔤</span><span class="tit">'+spt('abc')+'</span><span class="sub">'+spt('abcSub')+'</span></button>'+
+      '<button class="sb-super-card" data-sp-go="verb"><span class="ico">⚡</span><span class="tit">'+spt('verb')+'</span><span class="sub">'+spt('verbSub')+'</span></button>'+
+      '<button class="sb-super-card" data-sp-go="orac"><span class="ico">📝</span><span class="tit">'+spt('orac')+'</span><span class="sub">'+spt('oracSub')+'</span></button>'+
+      '<button class="sb-super-card" data-sp-go="narr"><span class="ico">🎙️</span><span class="tit">'+spt('narr')+'</span><span class="sub">'+spt('narrSub')+'</span></button>'+
+      '</div></div>';
+    cont.innerHTML = html;
+    cont.querySelector('[data-sp-volver]').addEventListener('click', function(){ estado.tab='biblioteca'; renderBiblioteca(); });
+    cont.querySelectorAll('[data-sp-go]').forEach(function(b){
+      b.addEventListener('click', function(){ SP.vista=b.getAttribute('data-sp-go'); renderSuperPremium(); });
+    });
+  }
+  function spVolverHub(cont){ SP.vista='hub'; renderSuperPremium(); }
+  function renderSPAbc(cont){
+    var letras='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    var html='<div class="sb-root sb-page-enter"><div class="sb-header"><button class="sb-btn-back" data-sp-volver>←</button>'+
+      '<div><h1 class="sb-title">🔤 '+spt('abc')+'</h1><p class="sb-subtitle">'+spt('tocaLetra')+'</p></div></div>'+
+      '<div class="sb-abc-grid">';
+    letras.forEach(function(L){
+      html+='<button class="sb-abc-letter" data-letra="'+L+'">'+L+'</button>';
+    });
+    html+='</div><div style="text-align:center;margin-top:20px;font-size:18px;font-weight:800;color:var(--sb-accent2);" id="sp-abc-actual">🔊</div></div>';
+    cont.innerHTML=html;
+    cont.querySelector('[data-sp-volver]').addEventListener('click', spVolverHub);
+    cont.querySelectorAll('[data-letra]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var L=b.getAttribute('data-letra');
+        document.getElementById('sp-abc-actual').textContent=L+' — '+L.toLowerCase();
+        spHablar(L, estado.lang==='en'?'en':'es');
+        setTimeout(function(){ spHablar(L+' como '+ (estado.lang==='en'?'apple':'árbol'), estado.lang==='en'?'en':'es'); }, 700);
+      });
+    });
+  }
+  function renderSPVerb(cont){
+    var html='<div class="sb-root sb-page-enter"><div class="sb-header"><button class="sb-btn-back" data-sp-volver>←</button>'+
+      '<div><h1 class="sb-title">⚡ '+spt('verb')+'</h1><p class="sb-subtitle">'+spt('eligeVerbo')+'</p></div></div>';
+    SP_VERBOS.forEach(function(v, i){
+      html+='<div class="sb-verb-row"><span class="v">'+v.es+'<br><small style="color:#999;font-weight:600;">'+v.en+'</small></span>'+
+        '<span class="c">'+v.conj+'</span><button data-verb-esc="'+i+'">🔊</button></div>';
+    });
+    html+='</div>';
+    cont.innerHTML=html;
+    cont.querySelector('[data-sp-volver]').addEventListener('click', spVolverHub);
+    cont.querySelectorAll('[data-verb-esc]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var v=SP_VERBOS[parseInt(b.getAttribute('data-verb-esc'),10)];
+        spHablar(v.es+' — '+v.conj, 'es');
+      });
+    });
+  }
+  function renderSPOrac(cont){
+    var ora = SP_ORACIONES[SP.oracIdx % SP_ORACIONES.length];
+    var desorden = barajarArr(ora.palabras.slice());
+    SP.oracSlots = []; SP.oracUsados = [];
+    var html='<div class="sb-root sb-page-enter"><div class="sb-header"><button class="sb-btn-back" data-sp-volver>←</button>'+
+      '<div><h1 class="sb-title">📝 '+spt('orac')+'</h1><p class="sb-subtitle">'+spt('armaOrac')+' ('+(SP.oracIdx+1)+'/'+SP_ORACIONES.length+')</p></div></div>'+
+      '<div style="background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;font-weight:800;color:var(--sb-secondary);">🇬🇧 '+ora.en+'</div>'+
+      '<div class="sb-orac-slot" id="sp-orac-slot"></div>'+
+      '<div id="sp-orac-palabras">';
+    desorden.forEach(function(p, i){ html+='<span class="sb-orac-word" data-pal="'+i+'">'+p+'</span>'; });
+    html+='</div><div style="margin-top:14px;display:flex;gap:10px;">'+
+      '<button class="sb-action-btn ghost" id="sp-orac-check" style="flex:1;">✅ Check</button>'+
+      '<button class="sb-action-btn ghost" id="sp-orac-reset" style="flex:1;">↺ Reset</button>'+
+      '<button class="sb-action-btn primary" id="sp-orac-next" style="flex:1;">→ Next</button></div>'+
+      '<div id="sp-orac-feedback" style="text-align:center;margin-top:12px;font-weight:900;font-size:18px;"></div></div>';
+    cont.innerHTML=html;
+    cont.querySelector('[data-sp-volver]').addEventListener('click', spVolverHub);
+    var slot=cont.querySelector('#sp-orac-slot');
+    cont.querySelectorAll('[data-pal]').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(b.classList.contains('used')) return;
+        b.classList.add('used'); SP.oracSlots.push(b.textContent);
+        var s=document.createElement('span'); s.className='sb-orac-word'; s.style.background='#E8F5E9'; s.style.borderColor='#00B894';
+        s.textContent=b.textContent; slot.appendChild(s);
+      });
+    });
+    cont.querySelector('#sp-orac-reset').addEventListener('click', function(){ renderSPOrac(cont); });
+    cont.querySelector('#sp-orac-next').addEventListener('click', function(){ SP.oracIdx++; renderSPOrac(cont); });
+    cont.querySelector('#sp-orac-check').addEventListener('click', function(){
+      var fb=cont.querySelector('#sp-orac-feedback');
+      if(SP.oracSlots.join(' ')===ora.palabras.join(' ')){
+        fb.textContent='🎉 '+spt('bien'); fb.style.color='#00B894';
+        spHablar(ora.es, 'es'); setTimeout(function(){ spHablar(ora.en,'en'); }, 1500);
+        lanzarConfetiGlobal(); if(estado.sumarEstrellas) estado.sumarEstrellas(2);
+      } else { fb.textContent='❌ '+spt('mal'); fb.style.color='#FA5252'; }
+    });
+  }
+  function lanzarConfetiGlobal(){
+    try{
+      var colores=['#FF9F43','#FF6B9D','#4D96FF','#00B894','#FFD43B'];
+      for(var i=0;i<30;i++){
+        var c=document.createElement('div'); c.className='sb-confeti';
+        c.style.left=(Math.random()*100)+'vw'; c.style.background=colores[i%colores.length];
+        c.style.animation='sb-confetti-fall '+(1.5+Math.random())+'s linear forwards';
+        document.body.appendChild(c); (function(el){setTimeout(function(){el.remove();},3000);})(c);
+      }
+    }catch(e){}
+  }
+  function renderSPNarr(cont){
+    var idx = SP.oracIdx % SP_NARRACION.length;
+    var ora = SP_NARRACION[idx];
+    var html='<div class="sb-root sb-page-enter"><div class="sb-header"><button class="sb-btn-back" data-sp-volver>←</button>'+
+      '<div><h1 class="sb-title">🎙️ '+spt('narr')+'</h1><p class="sb-subtitle">'+spt('narrInstr')+' ('+(idx+1)+'/'+SP_NARRACION.length+')</p></div></div>'+
+      '<div style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border-radius:20px;padding:20px;margin:14px 0;font-size:18px;font-weight:800;color:var(--sb-text);line-height:1.5;">'+
+      '🇪🇸 '+ora.es+'<br><br><span style="color:var(--sb-secondary);">🇬🇧 '+ora.en+'</span></div>'+
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;">'+
+      '<button class="sb-action-btn primary" id="sp-narr-esc" style="flex:1;">🔊 '+spt('escuchar')+' ES</button>'+
+      '<button class="sb-action-btn secondary" id="sp-narr-escen" style="flex:1;">🔊 Listen EN</button>'+
+      '<button class="sb-action-btn" id="sp-narr-mic" style="flex:1;background:linear-gradient(135deg,#FF6B6B,#FF9F43);color:#fff;">🎤 Repetir EN</button>'+
+      '<button class="sb-action-btn ghost" id="sp-narr-next" style="flex:1;">→ Siguiente</button></div>'+
+      '<div id="sp-narr-feedback" style="text-align:center;margin-top:16px;font-weight:900;"></div></div>';
+    cont.innerHTML=html;
+    cont.querySelector('[data-sp-volver]').addEventListener('click', spVolverHub);
+    cont.querySelector('#sp-narr-esc').addEventListener('click', function(){ spHablar(ora.es,'es'); });
+    cont.querySelector('#sp-narr-escen').addEventListener('click', function(){ spHablar(ora.en,'en'); });
+    cont.querySelector('#sp-narr-next').addEventListener('click', function(){ SP.oracIdx++; renderSPNarr(cont); });
+    cont.querySelector('#sp-narr-mic').addEventListener('click', function(){
+      var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      var fb=cont.querySelector('#sp-narr-feedback');
+      if(!SR){ fb.textContent='🎤 No soportado (usá Chrome)'; fb.style.color='#FA5252'; return; }
+      try{
+        var rec=new SR(); rec.lang='en-US'; rec.interimResults=false; rec.maxAlternatives=3;
+        var btn=cont.querySelector('#sp-narr-mic'); btn.textContent='🎙️ Escuchando...'; btn.style.animation='sb-pulse 1s infinite';
+        rec.onresult=function(e){
+          var mejorPct=0, mejorTxt='';
+          for(var a=0;a<e.results[0].length;a++){
+            var t=e.results[0][a].transcript; var pct=compararTextosGlobal(ora.en, t);
+            if(pct>mejorPct){mejorPct=pct;mejorTxt=t;}
+          }
+          var pctF=mejorPct||compararTextosGlobal(ora.en, e.results[0][0].transcript);
+          var est=pctF>=80?3:(pctF>=60?2:(pctF>=40?1:0));
+          fb.innerHTML=(est>0?'⭐'.repeat(est):'☆☆☆')+' '+pctF+'%<br><small style="font-weight:600;color:#999;">Escuchado: "'+(mejorTxt||e.results[0][0].transcript)+'"</small>';
+          fb.style.color=est>=2?'#00B894':'#FA5252';
+          if(est>=2) lanzarConfetiGlobal();
+        };
+        rec.onerror=function(e){ fb.textContent='🎤 Error: '+e.error; fb.style.color='#FA5252'; };
+        rec.onend=function(){ btn.textContent='🎤 Repetir EN'; btn.style.animation=''; };
+        setTimeout(function(){ try{rec.start();}catch(e){} },100);
+      }catch(err){ fb.textContent='🎤 Error al iniciar'; }
+    });
+  }
+  function compararTextosGlobal(objetivo, reconocido){
+    var norm=function(s){return (s||'').toLowerCase().replace(/[.,!?¡¿;:()"'-]/g,' ').replace(/\s+/g,' ').trim();};
+    var a=norm(objetivo).split(' ').filter(Boolean), b=norm(reconocido).split(' ').filter(Boolean);
+    if(!a.length) return 0; var c=0, usado={};
+    for(var i=0;i<a.length;i++) for(var j=0;j<b.length;j++){
+      if(!usado[j] && (a[i]===b[j] || (a[i].length>3 && b[j].indexOf(a[i].slice(0,3))===0))){c++;usado[j]=1;break;}
+    }
+    return Math.round(c/a.length*100);
+  }
 
   EK.Storybooks = {
     MUNDO: MUNDO_STORYBOOKS, abrir: abrir, abrirCuento: abrirCuento,
@@ -1400,19 +2008,95 @@ SB_registrar(
     siguiente();
   }
 
+  function normalizarTexto(s){ return (s||'').toLowerCase().replace(/[.,!?¡¿;:()"'-]/g,' ').replace(/\s+/g,' ').trim(); }
+  function compararTextos(objetivo, reconocido){
+    var a = normalizarTexto(objetivo).split(' ').filter(Boolean);
+    var b = normalizarTexto(reconocido).split(' ').filter(Boolean);
+    if(!a.length) return 0;
+    var coinciden = 0;
+    var bUsado = {};
+    for(var i=0;i<a.length;i++){
+      for(var j=0;j<b.length;j++){
+        if(!bUsado[j] && (a[i]===b[j] || (a[i].length>3 && b[j].indexOf(a[i].slice(0,3))===0) || (b[j].length>3 && a[i].indexOf(b[j].slice(0,3))===0))){
+          coinciden++; bUsado[j]=true; break;
+        }
+      }
+    }
+    return Math.round(coinciden/a.length*100);
+  }
+  function lanzarConfeti(){
+    var colores=['#FF9F43','#FF6B9D','#4D96FF','#00B894','#FFD43B','#6C5CE7'];
+    for(var i=0;i<40;i++){
+      var c=document.createElement('div'); c.className='sb-confeti';
+      c.style.left=(Math.random()*100)+'vw'; c.style.background=colores[i%colores.length];
+      c.style.animation='sb-confetti-fall '+(1.5+Math.random()*1.5)+'s linear forwards';
+      c.style.animationDelay=(Math.random()*0.5)+'s';
+      document.body.appendChild(c); (function(el){setTimeout(function(){el.remove();},3500);})(c);
+    }
+  }
+  function mostrarResultadoMic(pct, escuchado, objetivo){
+    var v = (st&&st.lang)||'es';
+    var estrellas = pct>=80?3:(pct>=60?2:(pct>=40?1:0));
+    var msg = estrellas===3?(v==='en'?'Excellent! Perfect pronunciation!':'¡Excelente! Pronunciación perfecta')
+             : estrellas===2?(v==='en'?'Very good! Keep it up!':'¡Muy bien! Seguí así')
+             : estrellas===1?(v==='en'?'Good try! Practice more.':'¡Buen intento! Practicá más')
+             : (v==='en'?'Try again! Listen first.':'Intentá de nuevo, escuchá primero');
+    var starStr = estrellas>0 ? '⭐'.repeat(estrellas)+'☆'.repeat(3-estrellas) : '☆☆☆';
+    var el = document.createElement('div'); el.className='sb-mic-result';
+    el.innerHTML = '<div class="stars">'+starStr+'</div><div class="msg">'+msg+'</div>'+
+      '<div class="pct">'+pct+'% '+ (v==='en'?'correct':'de precisión') +'</div>'+
+      (escuchado?'<div class="heard">'+(v==='en'?'Heard:':'Escuchado:')+' "'+escuchado+'"</div>':'')+
+      '<button onclick="this.parentElement.classList.remove(\'show\');setTimeout(function(){this.parentElement.remove();}.bind(this),400);">'+(v==='en'?'Close':'Cerrar')+'</button>';
+    document.body.appendChild(el);
+    setTimeout(function(){ el.classList.add('show'); }, 50);
+    if(estrellas>=2){ lanzarConfeti(); if(st.opts && st.opts.sumarEstrellas) st.opts.sumarEstrellas(estrellas); }
+    return estrellas;
+  }
   function practicarPronunciacion(sentIdx){
     var pag = st.cuento.paginas[st.pagina], o = (pag.oraciones||[])[sentIdx]; if(!o) return;
-    var texto = o[st.lang]||o.es, langCode = st.lang==='en'?'en-US':'es-AR';
-    if(EK.Voz && typeof EK.Voz.escucharYComparar==='function'){
-      var row = st.contenedor.querySelector('.sb-sentence[data-sent="'+sentIdx+'"]');
-      if(row) row.classList.add('playing');
-      EK.Voz.escucharYComparar(texto, langCode, function(res){
-        if(row) row.classList.remove('playing');
-        if(res && res.exito){ if(st.opts.sumarEstrellas) st.opts.sumarEstrellas(1); EK.SB.sonido.estrella(); st.opts.toast('⭐ ¡Perfecto! +1 estrella'); }
-        else if(res && res.soportado===false) st.opts.toast('🎤 Micrófono no disponible');
-        else st.opts.toast('💪 Casi, escuchá de nuevo');
-      });
-    } else st.opts.toast('🎤 Función micrófono no disponible');
+    var row = st.contenedor.querySelector('.sb-sentence[data-sent="'+sentIdx+'"]');
+    var objetivo = o.en || o.es; // el niño repite SIEMPRE en inglés
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){
+      if(st.opts && st.opts.toast) st.opts.toast('🎤 Micrófono no soportado en este navegador (usá Chrome)');
+      else alert('Tu navegador no soporta reconocimiento de voz. Usá Google Chrome.');
+      return;
+    }
+    try{
+      var rec = new SR();
+      rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3;
+      if(row){ row.classList.add('playing'); var btn = row.querySelector('.sb-mic-btn'); if(btn) btn.classList.add('listening'); }
+      if(st.opts && st.opts.toast) st.opts.toast('🎤 Repetí en inglés: '+objetivo);
+      var finalizado = false;
+      rec.onresult = function(e){
+        finalizado = true;
+        var transcript = '';
+        var mejorPct = 0, mejorTxt = '';
+        for(var a=0; a<e.results[0].length; a++){
+          var t = e.results[0][a].transcript;
+          var pct = compararTextos(objetivo, t);
+          if(pct>mejorPct){ mejorPct=pct; mejorTxt=t; }
+        }
+        transcript = mejorTxt || e.results[0][0].transcript;
+        var pctFinal = mejorPct || compararTextos(objetivo, transcript);
+        var est = mostrarResultadoMic(pctFinal, transcript, objetivo);
+        if(est>=2 && row) row.classList.add('approved');
+        if(st.opts && st.opts.guardarProgreso) st.opts.guardarProgreso('mic_'+sentIdx, pctFinal);
+      };
+      rec.onerror = function(e){
+        finalizado = true;
+        if(st.opts && st.opts.toast){
+          if(e.error==='not-allowed') st.opts.toast('🔒 Permiso de micrófono denegado. Habilitalo en el navegador.');
+          else if(e.error==='no-speech') st.opts.toast('🤫 No escuché nada, hablá más fuerte.');
+          else st.opts.toast('🎤 Error: '+e.error);
+        }
+      };
+      rec.onend = function(){
+        if(row){ row.classList.remove('playing'); var b2 = row.querySelector('.sb-mic-btn'); if(b2) b2.classList.remove('listening'); }
+        if(!finalizado && st.opts && st.opts.toast) st.opts.toast('🎤 Intento finalizado, probá de nuevo.');
+      };
+      setTimeout(function(){ try{ rec.start(); }catch(e){} }, 100);
+    }catch(err){ if(st.opts && st.opts.toast) st.opts.toast('🎤 Error al iniciar micrófono'); }
   }
 
   /* ================= VOCABULARIO ================= */
