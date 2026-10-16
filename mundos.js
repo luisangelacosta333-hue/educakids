@@ -163,9 +163,9 @@
      NIVELES EDUCATIVOS (INICIAL / PRIMARIO / SECUNDARIO)
      ============================================================ */
   var NIVELES_EDAD = {
-    inicial:    { rango: '3 a 5 años',  grados: 'Sala de 3, 4 y 5',     mundos: ['creatividad','emociones','profesiones','idiomas','matematicas','juegos','cocina','musica','salud','storybooks'] },
-    primario:   { rango: '6 a 12 años', grados: '1° a 7° grado',        mundos: ['matematicas','lengua','ciencia','geografia','sociales','dinero','verde','idiomas','historia','deportes','arte','mitologia','logica','puzzles','emprendimiento','programacion','robotica','musica','cocina','salud','juegos','storybooks'] },
-    secundario: { rango: '13 a 17 años',grados: 'Ciclo básico y orientado', mundos: ['matematicas','lengua','ciencia','geografia','sociales','historia','ia','programacion','robotica','filosofia','dinero','logica','puzzles','emprendimiento','arte','astronomia','ods','seguridad','primerosauxilios','idiomas','storybooks'] }
+    inicial:    { rango: '3 a 5 años',  grados: 'Sala de 3, 4 y 5',     mundos: ['creatividad','emociones','profesiones','idiomas','matematicas','juegos','cocina','musica','salud'] },
+    primario:   { rango: '6 a 12 años', grados: '1° a 7° grado',        mundos: ['matematicas','lengua','ciencia','geografia','sociales','dinero','verde','idiomas','historia','deportes','arte','mitologia','logica','programacion','robotica','musica','cocina','salud','juegos'] },
+    secundario: { rango: '13 a 17 años',grados: 'Ciclo básico y orientado', mundos: ['matematicas','lengua','ciencia','geografia','sociales','historia','ia','programacion','robotica','filosofia','dinero','logica','arte','astronomia','ods','seguridad','primerosauxilios','idiomas'] }
   };
 
   /* ============================================================
@@ -189,8 +189,6 @@
     { id: 'musica',       nombre: 'Música',         emoji: '🎵', color: '#FF6B6B', tipo: 'categorias',   nivel: 'todos',      desc: 'Notas, instrumentos, ritmos y composición' },
     { id: 'historia',     nombre: 'Historia',       emoji: '📜', color: '#D4A574', tipo: 'categorias',   nivel: 'primario',   desc: 'Prehistoria, Egipto, Edad Media, Argentina' },
     { id: 'logica',       nombre: 'Lógica',         emoji: '🧩', color: '#45B7D1', tipo: 'niveles',      nivel: 'todos',      desc: 'Acertijos, patrones, razonamiento y puzzles' },
-    { id: 'puzzles',      nombre: 'Puzzles y Retos', emoji: '🧩', color: '#96CEB4', tipo: 'niveles',      nivel: 'todos',      desc: 'Sudoku, tangram, diferencias y retos visuales' },
-    { id: 'emprendimiento', nombre: 'Emprendimiento', emoji: '🚀', color: '#FFEAA7', tipo: 'niveles',      nivel: 'primario',   desc: 'Ideas, ahorro, venta y proyectos creativos' },
     { id: 'emociones',    nombre: 'Emociones',      emoji: '❤️', color: '#FF8FA3', tipo: 'categorias',   nivel: 'inicial',    desc: 'Sentimientos, valores y convivencia' },
     { id: 'deportes',     nombre: 'Deportes',       emoji: '⚽', color: '#51CF66', tipo: 'categorias',   nivel: 'todos',      desc: 'Fútbol, olimpiadas, reglas y salud deportiva' },
     { id: 'salud',        nombre: 'Salud',          emoji: '🩺', color: '#FF8787', tipo: 'categorias',   nivel: 'todos',      desc: 'Cuerpo, alimentación, higiene y primeros auxilios' },
@@ -209,9 +207,7 @@
     { id: 'cine',         nombre: 'Cine',           emoji: '🎬', color: '#868E96', tipo: 'categorias',   nivel: 'todos',      desc: 'Películas, géneros, animación y rodaje' },
     { id: 'arquitectura', nombre: 'Arquitectura',   emoji: '🏗️', color: '#ADB5BD', tipo: 'categorias',   nivel: 'primario',   desc: 'Edificios, monumentos y cómo se construye' },
     { id: 'huerta',       nombre: 'Huerta',         emoji: '🥕', color: '#94D82D', tipo: 'categorias',   nivel: 'todos',      desc: 'Plantas, semillas, cultivo y alimentos' },
-    { id: 'energias',     nombre: 'Energías',       emoji: '⚡', color: '#FFE066', tipo: 'categorias',   nivel: 'secundario', desc: 'Solar, eólica, nuclear y el futuro energético' },
-    // ---- MUNDO NUEVO v3.4: STORYBOOKS BILINGÜES ----
-    { id: 'storybooks',   nombre: 'Storybooks Bilingües', emoji: '📚', color: '#FF9F43', tipo: 'storybooks', nivel: 'todos',      desc: 'Cuentos ilustrados en español e inglés con audio y juegos' }
+    { id: 'energias',     nombre: 'Energías',       emoji: '⚡', color: '#FFE066', tipo: 'categorias',   nivel: 'secundario', desc: 'Solar, eólica, nuclear y el futuro energético' }
   ];
 
   /* ============================================================
@@ -220,7 +216,6 @@
      ============================================================ */
   var EMO = ['🍎','🍌','⭐','🎈','🐶','🌸','🚗','⚽','🦄','🍪','🐱','🌈','🍓','🐸','🎁','🌻'];
   function genMate(nivel) {
-    nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
     var P = [], i, a, b, c, d, em, nn, mm, nums, den, num, x, y, base, exp, lado, n, suma;
     if (nivel === 1) {
       var n1 = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
@@ -330,7 +325,6 @@
      DINERO — 15 NIVELES (Inicial, Primario, Secundario con inversión)
      ============================================================ */
   function genDinero(nivel) {
-    nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
     var P = [], i, a, b, c2, tot, g1, g2, queda, semanas, precio, ahorro;
     if (nivel <= 2) {
       var v1 = [
@@ -370,7 +364,12 @@
         {p:'¿Qué es la inflación?',c:'Los precios suben y el dinero vale menos',opts:['Los precios suben y el dinero vale menos','Los precios bajan','El banco regala dinero','Sube el sueldo siempre']},
         {p:'¿Qué pasa si no pagás la tarjeta de crédito?',c:'Cobran intereses muy altos',opts:['Cobran intereses muy altos','Nada','Te regalan cosas','Se borra la deuda']},
         {p:'¿Qué es un plazo fijo?',c:'Dejas tu dinero en el banco y te pagan interés',opts:['Dejas tu dinero en el banco y te pagan interés','Comprar un electrodoméstico','Una multa','Un préstamo']},
-        {p:'¿Conviene comprar en cuotas sin interés?',c:'Sí, si lo necesitás y podés pagar',opts:['Sí, si lo necesitás y podés pagar','Nunca','Siempre, aunque no lo necesites','Solo si es más caro']}
+        {p:'¿Conviene comprar en cuotas sin interés?',c:'Sí, si lo necesitás y podés pagar',opts:['Sí, si lo necesitás y podés pagar','Nunca','Siempre, aunque no lo necesites','Solo si es más caro']},
+        {p:'¿Qué es un emprendimiento?',c:'Crear tu propio negocio o proyecto',opts:['Crear tu propio negocio o proyecto','Un trabajo fijo','Una multa','Un juego']},
+        {p:'¿Qué es la ganancia de un emprendimiento?',c:'Lo que queda después de pagar los costos',opts:['Lo que queda después de pagar los costos','Todo el dinero que entra','Lo que gastás en insumos','Un impuesto']},
+        {p:'Vendés una limonada a $50 y te costó $20 hacerla. ¿Ganancia?',c:'$30',opts:['$30','$50','$20','$70']},
+        {p:'¿Quién es un cliente en tu emprendimiento?',c:'La persona que compra tu producto',opts:['La persona que compra tu producto','El que lo fabrica','El que lo regala','El que limpia el local']},
+        {p:'¿Qué es un costo en un emprendimiento?',c:'Lo que gastás para hacer el producto',opts:['Lo que gastás para hacer el producto','Lo que ganás','Lo que regalan','El premio']}
       ];
       P = P.concat(banco(v5, 4));
     } else {
@@ -382,7 +381,11 @@
         {p:'¿Qué es el IVA?',c:'Un impuesto que pagás al comprar',opts:['Un impuesto que pagás al comprar','Un regalo del estado','Un descuento','Un interés del banco']},
         {p:'¿Qué es una criptomoneda (concepto)?',c:'Dinero digital descentralizado',opts:['Dinero digital descentralizado','Un videojuego','Una tarjeta de crédito','Un billete de papel']},
         {p:'¿Invertir en acciones tiene riesgo?',c:'Sí, puede subir o bajar',opts:['Sí, puede subir o bajar','No, siempre sube','No, siempre baja','Solo sube si es de bancos']},
-        {p:'¿Qué es un fondo común de inversión?',c:'Muchas personas juntan su dinero para invertir',opts:['Muchas personas juntan su dinero para invertir','Una cuenta bancaria','Un préstamo','Una multa']}
+        {p:'¿Qué es un fondo común de inversión?',c:'Muchas personas juntan su dinero para invertir',opts:['Muchas personas juntan su dinero para invertir','Una cuenta bancaria','Un préstamo','Una multa']},
+        {p:'¿Qué es un plan de negocios?',c:'El plan de cómo funcionará tu emprendimiento',opts:['El plan de cómo funcionará tu emprendimiento','Una receta de cocina','Un videojuego','Una multa']},
+        {p:'¿Qué significa invertir en tu emprendimiento?',c:'Poner dinero para que crezca',opts:['Poner dinero para que crezca','Gastarlo en golosinas','Tirarlo','Regalarlo']},
+        {p:'Si tu emprendimiento gasta más de lo que gana...',c:'Tiene pérdidas, hay que cambiar algo',opts:['Tiene pérdidas, hay que cambiar algo','Es un éxito total','No paga impuestos','Gana más dinero']},
+        {p:'¿Qué es la publicidad de un emprendimiento?',c:'Contarle a la gente tu producto',opts:['Contarle a la gente tu producto','Guardar el secreto','Tirar volantes a la basura','Cerrar el local']}
       ];
       P = banco(v6, 8);
       for (i = 0; i < 2; i++) { precio = rand(10,100)*10; a = rand(1,5); P.push(q('Compraste ' + a + ' acciones a $' + precio + '. ¿Invertiste?', a*precio)); }
@@ -436,7 +439,7 @@
       {p:'¿Qué es un parque nacional?',c:'Lugar protegido para la naturaleza',opts:['Lugar protegido para la naturaleza','Un shopping','Un estadio','Una fábrica']},
       {p:'¿Qué es el compost?',c:'Restos de comida que viran abono',opts:['Restos de comida que viran abono','Plástico','Metal','Vidrio']} ]
   ];
-  function genVerde(nivel) { var n = parseInt(nivel,10); if(isNaN(n)||n<1) n=1; return banco(VERDES[Math.min(n - 1, VERDES.length - 1)], 8); }
+  function genVerde(nivel) { return banco(VERDES[Math.min(nivel - 1, VERDES.length - 1)], 8); }
 
   /* ============================================================
      CIENCIA — 10 CATEGORÍAS (más del doble)
@@ -958,166 +961,7 @@
     {es:'¿Quién?',en:'Who?',pt:'Quem?',fr:'Qui?',it:'Chi?',de:'Wer?',emoji:'❓'},
     {es:'¿Dónde?',en:'Where?',pt:'Onde?',fr:'Où?',it:'Dove?',de:'Wo?',emoji:'📍'},
     {es:'¿Cuándo?',en:'When?',pt:'Quando?',fr:'Quand?',it:'Quando?',de:'Wann?',emoji:'⏰'},
-    {es:'Reloj',en:'Watch',pt:'Relógio',fr:'Montre',it:'Orologio',de:'Uhr',emoji:'⌚'},
-    // ---- EXTRA v3.2: 150 palabras nuevas (total 550 por idioma) ----
-    // A: Números 11-100 y Ordinales (20)
-    {es:'Once',en:'Eleven',pt:'Onze',fr:'Onze',it:'Undici',de:'Elf',emoji:'🔢'},
-    {es:'Doce',en:'Twelve',pt:'Doze',fr:'Douze',it:'Dodici',de:'Zwölf',emoji:'🔢'},
-    {es:'Quince',en:'Fifteen',pt:'Quinze',fr:'Quinze',it:'Quindici',de:'Fünfzehn',emoji:'🔢'},
-    {es:'Veinte',en:'Twenty',pt:'Vinte',fr:'Vingt',it:'Venti',de:'Zwanzig',emoji:'🔢'},
-    {es:'Treinta',en:'Thirty',pt:'Trinta',fr:'Trente',it:'Trenta',de:'Dreißig',emoji:'🔢'},
-    {es:'Cincuenta',en:'Fifty',pt:'Cinquenta',fr:'Cinquante',it:'Cinquanta',de:'Fünfzig',emoji:'🔢'},
-    {es:'Mil',en:'Thousand',pt:'Mil',fr:'Mille',it:'Mille',de:'Tausend',emoji:'🔢'},
-    {es:'Millón',en:'Million',pt:'Milhão',fr:'Million',it:'Milione',de:'Million',emoji:'💰'},
-    {es:'Primero',en:'First',pt:'Primeiro',fr:'Premier',it:'Primo',de:'Erster',emoji:'🥇'},
-    {es:'Segundo',en:'Second',pt:'Segundo',fr:'Deuxième',it:'Secondo',de:'Zweiter',emoji:'🥈'},
-    {es:'Tercero',en:'Third',pt:'Terceiro',fr:'Troisième',it:'Terzo',de:'Dritter',emoji:'🥉'},
-    {es:'Último',en:'Last',pt:'Último',fr:'Dernier',it:'Ultimo',de:'Letzter',emoji:'🔚'},
-    {es:'Mitad',en:'Half',pt:'Metade',fr:'Moitié',it:'Metà',de:'Hälfte',emoji:'➗'},
-    {es:'Doble',en:'Double',pt:'Dobro',fr:'Double',it:'Doppio',de:'Doppel',emoji:'✌️'},
-    {es:'Par',en:'Even',pt:'Par',fr:'Pair',it:'Pari',de:'Gerade',emoji:'2️⃣'},
-    {es:'Impar',en:'Odd',pt:'Ímpar',fr:'Impair',it:'Dispari',de:'Ungerade',emoji:'3️⃣'},
-    {es:'Decimal',en:'Decimal',pt:'Decimal',fr:'Décimal',it:'Decimale',de:'Dezimal',emoji:'🔢'},
-    {es:'Fracción',en:'Fraction',pt:'Fração',fr:'Fraction',it:'Frazione',de:'Bruch',emoji:'➗'},
-    {es:'Porcentaje',en:'Percentage',pt:'Porcentagem',fr:'Pourcentage',it:'Percentuale',de:'Prozentsatz',emoji:'💯'},
-    {es:'Infinito',en:'Infinity',pt:'Infinito',fr:'Infini',it:'Infinito',de:'Unendlichkeit',emoji:'♾️'},
-    // B: Formas y Posiciones (15)
-    {es:'Círculo',en:'Circle',pt:'Círculo',fr:'Cercle',it:'Cerchio',de:'Kreis',emoji:'⭕'},
-    {es:'Cuadrado',en:'Square',pt:'Quadrado',fr:'Carré',it:'Quadrato',de:'Quadrat',emoji:'⬛'},
-    {es:'Triángulo',en:'Triangle',pt:'Triângulo',fr:'Triangle',it:'Triangolo',de:'Dreieck',emoji:'🔺'},
-    {es:'Rectángulo',en:'Rectangle',pt:'Retângulo',fr:'Rectangle',it:'Rettangolo',de:'Rechteck',emoji:'▭'},
-    {es:'Estrella',en:'Star',pt:'Estrela',fr:'Étoile',it:'Stella',de:'Stern',emoji:'⭐'},
-    {es:'Corazón',en:'Heart',pt:'Coração',fr:'Cœur',it:'Cuore',de:'Herz',emoji:'❤️'},
-    {es:'Esfera',en:'Sphere',pt:'Esfera',fr:'Sphère',it:'Sfera',de:'Kugel',emoji:'🌐'},
-    {es:'Cubo',en:'Cube',pt:'Cubo',fr:'Cube',it:'Cubo',de:'Würfel',emoji:'🧊'},
-    {es:'Arriba',en:'Up',pt:'Acima',fr:'En haut',it:'Su',de:'Oben',emoji:'⬆️'},
-    {es:'Abajo',en:'Down',pt:'Abaixo',fr:'En bas',it:'Giù',de:'Unten',emoji:'⬇️'},
-    {es:'Izquierda',en:'Left',pt:'Esquerda',fr:'Gauche',it:'Sinistra',de:'Links',emoji:'⬅️'},
-    {es:'Derecha',en:'Right',pt:'Direita',fr:'Droite',it:'Destra',de:'Rechts',emoji:'➡️'},
-    {es:'Dentro',en:'Inside',pt:'Dentro',fr:'Dedans',it:'Dentro',de:'Drinnen',emoji:'📥'},
-    {es:'Fuera',en:'Outside',pt:'Fora',fr:'Dehors',it:'Fuori',de:'Draußen',emoji:'📤'},
-    {es:'Medio',en:'Middle',pt:'Meio',fr:'Milieu',it:'Mezzo',de:'Mitte',emoji:'🎯'},
-    // C: Materias Escolares (15)
-    {es:'Matemáticas',en:'Math',pt:'Matemática',fr:'Mathématiques',it:'Matematica',de:'Mathematik',emoji:'🔢'},
-    {es:'Ciencias',en:'Science',pt:'Ciências',fr:'Sciences',it:'Scienze',de:'Wissenschaft',emoji:'🔬'},
-    {es:'Historia',en:'History',pt:'História',fr:'Histoire',it:'Storia',de:'Geschichte',emoji:'📜'},
-    {es:'Geografía',en:'Geography',pt:'Geografia',fr:'Géographie',it:'Geografia',de:'Geographie',emoji:'🗺️'},
-    {es:'Inglés',en:'English',pt:'Inglês',fr:'Anglais',it:'Inglese',de:'Englisch',emoji:'🇬🇧'},
-    {es:'Arte',en:'Art',pt:'Arte',fr:'Art',it:'Arte',de:'Kunst',emoji:'🎨'},
-    {es:'Música',en:'Music',pt:'Música',fr:'Musique',it:'Musica',de:'Musik',emoji:'🎵'},
-    {es:'Educación Física',en:'Physical Education',pt:'Educação Física',fr:'Éducation physique',it:'Educazione fisica',de:'Sportunterricht',emoji:'⚽'},
-    {es:'Literatura',en:'Literature',pt:'Literatura',fr:'Littérature',it:'Letteratura',de:'Literatur',emoji:'📚'},
-    {es:'Química',en:'Chemistry',pt:'Química',fr:'Chimie',it:'Chimica',de:'Chemie',emoji:'⚗️'},
-    {es:'Física',en:'Physics',pt:'Física',fr:'Physique',it:'Fisica',de:'Physik',emoji:'🚀'},
-    {es:'Biología',en:'Biology',pt:'Biologia',fr:'Biologie',it:'Biologia',de:'Biologie',emoji:'🧬'},
-    {es:'Filosofía',en:'Philosophy',pt:'Filosofia',fr:'Philosophie',it:'Filosofia',de:'Philosophie',emoji:'🤔'},
-    {es:'Informática',en:'Computing',pt:'Informática',fr:'Informatique',it:'Informatica',de:'Informatik',emoji:'💻'},
-    {es:'Examen',en:'Exam',pt:'Prova',fr:'Examen',it:'Esame',de:'Prüfung',emoji:'📝'},
-    // D: Instrumentos y Arte (15)
-    {es:'Guitarra',en:'Guitar',pt:'Violão',fr:'Guitare',it:'Chitarra',de:'Gitarre',emoji:'🎸'},
-    {es:'Piano',en:'Piano',pt:'Piano',fr:'Piano',it:'Pianoforte',de:'Klavier',emoji:'🎹'},
-    {es:'Violín',en:'Violin',pt:'Violino',fr:'Violon',it:'Violino',de:'Geige',emoji:'🎻'},
-    {es:'Batería',en:'Drums',pt:'Bateria',fr:'Batterie',it:'Batteria',de:'Schlagzeug',emoji:'🥁'},
-    {es:'Flauta',en:'Flute',pt:'Flauta',fr:'Flûte',it:'Flauto',de:'Flöte',emoji:'🪈'},
-    {es:'Trompeta',en:'Trumpet',pt:'Trompeta',fr:'Trompette',it:'Tromba',de:'Trompete',emoji:'🎺'},
-    {es:'Arpa',en:'Harp',pt:'Harpa',fr:'Harpe',it:'Arpa',de:'Harfe',emoji:'🎼'},
-    {es:'Saxofón',en:'Saxophone',pt:'Saxofone',fr:'Saxophone',it:'Sassofono',de:'Saxophon',emoji:'🎷'},
-    {es:'Acuarela',en:'Watercolor',pt:'Aquarela',fr:'Aquarelle',it:'Acquerello',de:'Aquarell',emoji:'🎨'},
-    {es:'Escultura',en:'Sculpture',pt:'Escultura',fr:'Sculpture',it:'Scultura',de:'Skulptur',emoji:'🗿'},
-    {es:'Dibujo',en:'Drawing',pt:'Desenho',fr:'Dessin',it:'Disegno',de:'Zeichnung',emoji:'✏️'},
-    {es:'Pincel',en:'Brush',pt:'Pincel',fr:'Pinceau',it:'Pennello',de:'Pinsel',emoji:'🖌️'},
-    {es:'Lienzo',en:'Canvas',pt:'Tela',fr:'Toile',it:'Tela',de:'Leinwand',emoji:'🖼️'},
-    {es:'Collage',en:'Collage',pt:'Colagem',fr:'Collage',it:'Collage',de:'Collage',emoji:'🖼️'},
-    {es:'Ritmo',en:'Rhythm',pt:'Ritmo',fr:'Rythme',it:'Ritmo',de:'Rhythmus',emoji:'🎵'},
-    // E: Viaje y Objetos (20)
-    {es:'Pasaporte',en:'Passport',pt:'Passaporte',fr:'Passeport',it:'Passaporto',de:'Reisepass',emoji:'🛂'},
-    {es:'Maleta',en:'Suitcase',pt:'Mala',fr:'Valise',it:'Valigia',de:'Koffer',emoji:'🧳'},
-    {es:'Billete',en:'Ticket',pt:'Passagem',fr:'Billet',it:'Biglietto',de:'Ticket',emoji:'🎫'},
-    {es:'Hotel',en:'Hotel',pt:'Hotel',fr:'Hôtel',it:'Hotel',de:'Hotel',emoji:'🏨'},
-    {es:'Mapamundi',en:'World map',pt:'Mapa-múndi',fr:'Planisphère',it:'Mappamondo',de:'Weltkarte',emoji:'🗺️'},
-    {es:'Cámara',en:'Camera',pt:'Câmera',fr:'Appareil photo',it:'Fotocamera',de:'Kamera',emoji:'📷'},
-    {es:'Sombrilla',en:'Umbrella',pt:'Guarda-chuva',fr:'Parapluie',it:'Ombrello',de:'Regenschirm',emoji:'☂️'},
-    {es:'Gafas de sol',en:'Sunglasses',pt:'Óculos de sol',fr:'Lunettes de soleil',it:'Occhiali da sole',de:'Sonnenbrille',emoji:'🕶️'},
-    {es:'Protector solar',en:'Sunscreen',pt:'Protetor solar',fr:'Crème solaire',it:'Crema solare',de:'Sonnencreme',emoji:'🧴'},
-    {es:'Botella de agua',en:'Water bottle',pt:'Garrafa de água',fr:'Bouteille d\'eau',it:'Borraccia',de:'Wasserflasche',emoji:'💧'},
-    {es:'Toalla',en:'Towel',pt:'Toalha',fr:'Serviette de plage',it:'Asciugamano',de:'Handtuch',emoji:'🧖'},
-    {es:'Zapatillas',en:'Sneakers',pt:'Tênis',fr:'Baskets',it:'Scarpe da ginnastica',de:'Turnschuhe',emoji:'👟'},
-    {es:'Linterna',en:'Flashlight',pt:'Lanterna',fr:'Lampe de poche',it:'Torcia',de:'Taschenlampe',emoji:'🔦'},
-    {es:'Brújula',en:'Compass',pt:'Bússola',fr:'Boussole',it:'Bussola',de:'Kompass',emoji:'🧭'},
-    {es:'Tienda de campaña',en:'Tent',pt:'Barraca',fr:'Tente',it:'Tenda',de:'Zelt',emoji:'⛺'},
-    {es:'Saco de dormir',en:'Sleeping bag',pt:'Saco de dormir',fr:'Sac de couchage',it:'Sacco a pelo',de:'Schlafsack',emoji:'🛌'},
-    {es:'Mochila de viaje',en:'Travel backpack',pt:'Mochila de viagem',fr:'Sac à dos de voyage',it:'Zaino da viaggio',de:'Reise-Rucksack',emoji:'🎒'},
-    {es:'Souvenir',en:'Souvenir',pt:'Lembrança',fr:'Souvenir',it:'Ricordo',de:'Andenken',emoji:'🎁'},
-    {es:'Guía turística',en:'Guidebook',pt:'Guia de viagem',fr:'Guide touristique',it:'Guida turistica',de:'Reiseführer',emoji:'📖'},
-    {es:'Dinero extranjero',en:'Foreign currency',pt:'Dinheiro estrangeiro',fr:'Devises étrangères',it:'Valuta estera',de:'Fremdwährung',emoji:'💱'},
-    // F: En Casa Detalle (20)
-    {es:'Aspiradora',en:'Vacuum cleaner',pt:'Aspirador',fr:'Aspirateur',it:'Aspirapolvere',de:'Staubsauger',emoji:'🧹'},
-    {es:'Lavarropas',en:'Washing machine',pt:'Máquina de lavar',fr:'Machine à laver',it:'Lavatrice',de:'Waschmaschine',emoji:'🧺'},
-    {es:'Microondas',en:'Microwave',pt:'Micro-ondas',fr:'Micro-ondes',it:'Microonde',de:'Mikrowelle',emoji:'📡'},
-    {es:'Cafetera',en:'Coffee maker',pt:'Cafeteira',fr:'Cafetière',it:'Caffettiera',de:'Kaffeemaschine',emoji:'☕'},
-    {es:'Tostadora',en:'Toaster',pt:'Torradeira',fr:'Grille-pain',it:'Tostapane',de:'Toaster',emoji:'🍞'},
-    {es:'Plancha',en:'Iron',pt:'Ferro de passar',fr:'Fer à repasser',it:'Ferro da stiro',de:'Bügeleisen',emoji:'👔'},
-    {es:'Cubiertos',en:'Cutlery',pt:'Talheres',fr:'Couverts',it:'Posate',de:'Besteck',emoji:'🍴'},
-    {es:'Plato',en:'Plate',pt:'Prato',fr:'Assiette',it:'Piatto',de:'Teller',emoji:'🍽️'},
-    {es:'Vaso',en:'Glass',pt:'Copo',fr:'Verre',it:'Bicchiere',de:'Glas',emoji:'🥛'},
-    {es:'Taza',en:'Cup',pt:'Xícara',fr:'Tasse',it:'Tazza',de:'Tasse',emoji:'☕'},
-    {es:'Almohada',en:'Pillow',pt:'Travesseiro',fr:'Oreiller',it:'Cuscino',de:'Kissen',emoji:'🛏️'},
-    {es:'Sábanas',en:'Bed sheets',pt:'Lençóis',fr:'Draps',it:'Lenzuola',de:'Bettwäsche',emoji:'🛏️'},
-    {es:'Perchero',en:'Coat rack',pt:'Cabide',fr:'Porte-manteaux',it:'Appendiabiti',de:'Garderobe',emoji:'🧥'},
-    {es:'Escoba',en:'Broom',pt:'Vassoura',fr:'Balai',it:'Scopa',de:'Besen',emoji:'🧹'},
-    {es:'Balde',en:'Bucket',pt:'Balde',fr:'Seau',it:'Secchio',de:'Eimer',emoji:'🪣'},
-    {es:'Jabón',en:'Soap',pt:'Sabão',fr:'Savon',it:'Sapone',de:'Seife',emoji:'🧼'},
-    {es:'Champú',en:'Shampoo',pt:'Shampoo',fr:'Shampoing',it:'Shampoo',de:'Shampoo',emoji:'🧴'},
-    {es:'Toalla de mano',en:'Hand towel',pt:'Toalha de mão',fr:'Serviette',it:'Asciugamano',de:'Handtuch',emoji:'🤚'},
-    {es:'Papel higiénico',en:'Toilet paper',pt:'Papel higiênico',fr:'Papier toilette',it:'Carta igienica',de:'Klopapier',emoji:'🧻'},
-    {es:'Botiquín',en:'First aid kit',pt:'Kit de primeiros socorros',fr:'Trousse de secours',it:'Cassetta di pronto soccorso',de:'Erste-Hilfe-Kasten',emoji:'🩹'},
-    // G: Fenómenos Naturales (15)
-    {es:'Tormenta',en:'Storm',pt:'Tempestade',fr:'Orage',it:'Tempesta',de:'Sturm',emoji:'⛈️'},
-    {es:'Terremoto',en:'Earthquake',pt:'Terremoto',fr:'Tremblement de terre',it:'Terremoto',de:'Erdbeben',emoji:'🌍'},
-    {es:'Tornado',en:'Tornado',pt:'Tornado',fr:'Tornade',it:'Tornado',de:'Tornado',emoji:'🌪️'},
-    {es:'Huracán',en:'Hurricane',pt:'Furacão',fr:'Ouragan',it:'Uragano',de:'Hurrikan',emoji:'🌀'},
-    {es:'Inundación',en:'Flood',pt:'Inundação',fr:'Inondation',it:'Inondazione',de:'Überschwemmung',emoji:'🌊'},
-    {es:'Sequía',en:'Drought',pt:'Seca',fr:'Sécheresse',it:'Siccità',de:'Dürre',emoji:'🏜️'},
-    {es:'Avalancha',en:'Avalanche',pt:'Avalanche',fr:'Avalanche',it:'Valanga',de:'Lawine',emoji:'🏔️'},
-    {es:'Erupción volcánica',en:'Volcanic eruption',pt:'Erupção vulcânica',fr:'Éruption volcanique',it:'Eruzione vulcanica',de:'Vulkanausbruch',emoji:'🌋'},
-    {es:'Maremoto',en:'Tsunami',pt:'Tsunami',fr:'Tsunami',it:'Tsunami',de:'Tsunami',emoji:'🌊'},
-    {es:'Aurora boreal',en:'Northern lights',pt:'Aurora boreal',fr:'Aurore boréale',it:'Aurora boreale',de:'Nordlicht',emoji:'🌌'},
-    {es:'Eclipse',en:'Eclipse',pt:'Eclipse',fr:'Éclipse',it:'Eclissi',de:'Finsternis',emoji:'🌑'},
-    {es:'Meteorito',en:'Meteorite',pt:'Meteorito',fr:'Météorite',it:'Meteorite',de:'Meteorit',emoji:'☄️'},
-    {es:'Géiser',en:'Geyser',pt:'Géiser',fr:'Geyser',it:'Geyser',de:'Geysir',emoji:'♨️'},
-    {es:'Glaciar',en:'Glacier',pt:'Geleira',fr:'Glacier',it:'Ghiacciaio',de:'Gletscher',emoji:'🧊'},
-    {es:'Deshielo',en:'Thaw',pt:'Degelo',fr:'Dégel',it:'Disgelo',de:'Tauwetter',emoji:'🏔️'},
-    // H: Expresiones Útiles (30)
-    {es:'Bienvenido',en:'Welcome',pt:'Bem-vindo',fr:'Bienvenue',it:'Benvenuto',de:'Willkommen',emoji:'🙌'},
-    {es:'Feliz cumpleaños',en:'Happy birthday',pt:'Feliz aniversário',fr:'Joyeux anniversaire',it:'Buon compleanno',de:'Alles Gute zum Geburtstag',emoji:'🎂'},
-    {es:'Feliz año nuevo',en:'Happy new year',pt:'Feliz ano novo',fr:'Bonne année',it:'Buon anno',de:'Frohes neues Jahr',emoji:'🎆'},
-    {es:'Salud (estornudo)',en:'Bless you',pt:'Saúde',fr:'Santé',it:'Salute',de:'Gesundheit',emoji:'🤧'},
-    {es:'¡Salud! (brindis)',en:'Cheers!',pt:'Saúde!',fr:'Santé !',it:'Cin cin!',de:'Prost!',emoji:'🥂'},
-    {es:'Buen provecho',en:'Enjoy your meal',pt:'Bom apetite',fr:'Bon appétit',it:'Buon appetito',de:'Mahlzeit',emoji:'🍽️'},
-    {es:'Disculpe',en:'Excuse me',pt:'Com licença',fr:'Pardon',it:'Scusi',de:'Entschuldigung',emoji:'🙇'},
-    {es:'¿Habla español?',en:'Do you speak Spanish?',pt:'Fala espanhol?',fr:'Parlez-vous espagnol ?',it:'Parla spagnolo?',de:'Sprechen Sie Spanisch?',emoji:'🗣️'},
-    {es:'No entiendo',en:'I don\'t understand',pt:'Não entendo',fr:'Je ne comprends pas',it:'Non capisco',de:'Ich verstehe nicht',emoji:'🤷'},
-    {es:'Repita, por favor',en:'Repeat, please',pt:'Repita, por favor',fr:'Répétez, s\'il vous plaît',it:'Ripeta, per favore',de:'Wiederholen Sie bitte',emoji:'🔁'},
-    {es:'Más despacio',en:'Slower, please',pt:'Mais devagar',fr:'Plus lentement',it:'Più lentamente',de:'Langsamer, bitte',emoji:'🐢'},
-    {es:'¿Cuánto cuesta?',en:'How much?',pt:'Quanto custa?',fr:'Combien ça coûte ?',it:'Quanto costa?',de:'Wie viel kostet es?',emoji:'💰'},
-    {es:'La cuenta, por favor',en:'The bill, please',pt:'A conta, por favor',fr:'L\'addition, s\'il vous plaît',it:'Il conto, per favore',de:'Die Rechnung, bitte',emoji:'🧾'},
-    {es:'¿Dónde está el baño?',en:'Where is the bathroom?',pt:'Onde fica o banheiro?',fr:'Où sont les toilettes ?',it:'Dov\'è il bagno?',de:'Wo ist die Toilette?',emoji:'🚻'},
-    {es:'Necesito ayuda',en:'I need help',pt:'Preciso de ajuda',fr:'J\'ai besoin d\'aide',it:'Ho bisogno di aiuto',de:'Ich brauche Hilfe',emoji:'🆘'},
-    {es:'Llame a la policía',en:'Call the police',pt:'Ligue a polícia',fr:'Appelez la police',it:'Chiama la polizia',de:'Rufen Sie die Polizei',emoji:'🚓'},
-    {es:'Estoy perdido',en:'I am lost',pt:'Estou perdido',fr:'Je suis perdu',it:'Sono perso',de:'Ich habe mich verlaufen',emoji:'🧭'},
-    {es:'A la derecha',en:'To the right',pt:'À direita',fr:'À droite',it:'A destra',de:'Nach rechts',emoji:'➡️'},
-    {es:'Todo recto',en:'Straight ahead',pt:'Sempre em frente',fr:'Tout droit',it:'Sempre dritto',de:'Geradeaus',emoji:'⬆️'},
-    {es:'Cerca',en:'Near',pt:'Perto',fr:'Près',it:'Vicino',de:'Nah',emoji:'📍'},
-    {es:'Lejos',en:'Far',pt:'Longe',fr:'Loin',it:'Lontano',de:'Fern',emoji:'🛣️'},
-    {es:'Abierto',en:'Open',pt:'Aberto',fr:'Ouvert',it:'Aperto',de:'Offen',emoji:'🟢'},
-    {es:'Cerrado',en:'Closed',pt:'Fechado',fr:'Fermé',it:'Chiuso',de:'Geschlossen',emoji:'🔴'},
-    {es:'Gratis',en:'Free',pt:'Grátis',fr:'Gratuit',it:'Gratuito',de:'Kostenlos',emoji:'🆓'},
-    {es:'Descuento',en:'Discount',pt:'Desconto',fr:'Réduction',it:'Sconto',de:'Rabatt',emoji:'🏷️'},
-    {es:'Factura',en:'Receipt',pt:'Recibo',fr:'Reçu',it:'Scontrino',de:'Quittung',emoji:'🧾'},
-    {es:'Tarjeta de crédito',en:'Credit card',pt:'Cartão de crédito',fr:'Carte de crédito',it:'Carta di credito',de:'Kreditkarte',emoji:'💳'},
-    {es:'Efectivo',en:'Cash',pt:'Dinheiro',fr:'Espèces',it:'Contanti',de:'Bargeld',emoji:'💵'},
-    {es:'Reservar',en:'To book',pt:'Reservar',fr:'Réserver',it:'Prenotare',de:'Reservieren',emoji:'📅'},
-    {es:'Hasta pronto',en:'See you soon',pt:'Até logo',fr:'À bientôt',it:'A presto',de:'Bis bald',emoji:'👋'}
+    {es:'Reloj',en:'Watch',pt:'Relógio',fr:'Montre',it:'Orologio',de:'Uhr',emoji:'⌚'}
   ];
 
   // Saludos y frases básicas (16) para cada idioma
@@ -1173,21 +1017,7 @@
       ['Llame a una ambulancia','Call an ambulance','Ligue uma ambulância','Appelez une ambulance','Chiama un\'ambulanza','Rufen Sie einen Krankenwagen'],
       ['Me lastimé','I hurt myself','Eu me machuquei','Je me suis fait mal','Mi sono fatto male','Ich habe mich verletzt'],
       ['Necesito un médico','I need a doctor','Preciso de um médico','J\'ai besoin d\'un médecin','Ho bisogno di un dottore','Ich brauche einen Arzt'],
-      ['¿Dónde está el hospital?','Where is the hospital?','Onde fica o hospital?','Où est l\'hôpital ?','Dov\'è l\'ospedale?','Wo ist das Krankenhaus?'],
-    ],
-  '🛒 Compras': [
-      ['¿Cuánto cuesta esto?','How much is this?','Quanto custa isto?','Combien ça coûte ?','Quanto costa questo?','Wie viel kostet das?'],
-      ['¿Aceptan tarjeta?','Do you accept cards?','Aceitam cartão?','Acceptez-vous les cartes ?','Accettate carte?','Akzeptieren Sie Karten?'],
-      ['¿Tiene otro talle?','Do you have another size?','Tem outro tamanho?','Avez-vous une autre taille ?','Avete un\'altra taglia?','Haben Sie eine andere Größe?'],
-      ['Estoy buscando un regalo','I am looking for a gift','Estou procurando um presente','Je cherche un cadeau','Cerco un regalo','Ich suche ein Geschenk'],
-      ['¿Puedo probarme esto?','Can I try this on?','Posso provar isto?','Puis-je essayer ceci ?','Posso provarlo?','Kann ich das anprobieren?']
-    ],
-  '🏥 Médico': [
-      ['Me duele la cabeza','I have a headache','Estou com dor de cabeça','J\'ai mal à la tête','Ho mal di testa','Ich habe Kopfschmerzen'],
-      ['Tengo fiebre','I have a fever','Estou com febre','J\'ai de la fièvre','Ho la febbre','Ich habe Fieber'],
-      ['¿Tiene cita disponible?','Do you have an appointment available?','Tem horário disponível?','Avez-vous un rendez-vous disponible ?','Avete un appuntamento disponibile?','Haben Sie einen Termin frei?'],
-      ['Soy alérgico a...','I am allergic to...','Sou alérgico a...','Je suis allergique à...','Sono allergico a...','Ich bin allergisch gegen...'],
-      ['¿Cuándo viene el médico?','When does the doctor come?','Quando vem o médico?','Quand arrive le médecin ?','Quando arriva il dottore?','Wann kommt der Arzt?']
+      ['¿Dónde está el hospital?','Where is the hospital?','Onde fica o hospital?','Où est l\'hôpital ?','Dov\'è l\'ospedale?','Wo ist das Krankenhaus?']
     ]
   };
 
@@ -1198,7 +1028,7 @@
 
   function frasesAvanzadasDe(lang) {
     var idx = { ingles: 1, portugues: 2, frances: 3, italiano: 4, aleman: 5 }[lang];
-    var emojis = { '🍽️ Restaurante':'🍽️', '🏫 Escuela':'🏫', '✈️ Viaje':'✈️', '🚑 Emergencias':'🚑', '🛒 Compras':'🛒', '🏥 Médico':'🏥' };
+    var emojis = { '🍽️ Restaurante':'🍽️', '🏫 Escuela':'🏫', '✈️ Viaje':'✈️', '🚑 Emergencias':'🚑' };
     var out = {};
     Object.keys(FRASES_AVANZADAS).forEach(function (cat) {
       out[cat] = FRASES_AVANZADAS[cat].map(function (fila) { return v(fila[0], fila[idx], emojis[cat]); });
@@ -1240,15 +1070,6 @@
     cats['🌿 Naturaleza Extra'] = base.slice(365, 380);
     cats['🦵 Cuerpo Extra'] = base.slice(380, 390);
     cats['👥 Pronombres y Preguntas'] = base.slice(390, 401);
-    // v3.2: 150 palabras nuevas (8 categorías, índices 401-550)
-    cats['🔢 Números y Ordinales'] = base.slice(401, 421);
-    cats['🔷 Formas y Posiciones'] = base.slice(421, 436);
-    cats['🎒 Materias Escolares'] = base.slice(436, 451);
-    cats['🎸 Instrumentos y Arte'] = base.slice(451, 466);
-    cats['🧳 Viaje y Objetos'] = base.slice(466, 486);
-    cats['🏠 En Casa Detalle'] = base.slice(486, 506);
-    cats['🌪️ Fenómenos Naturales'] = base.slice(506, 521);
-    cats['💬 Expresiones Útiles'] = base.slice(521, 551);
     return { nombre: nombre, bandera: bandera, lang: code, categorias: cats, totalPalabras: base.length };
   }
 
@@ -1455,73 +1276,11 @@
   };
 
   var LOGICA_BANCO = {
-    1: [
-      qc('¿Qué sigue? 🔴🔵🔴🔵?','🔴',['🔴','🔵','🟢','🟡']),
-      qc('¿Qué sigue? 🍎🍎🍌🍎🍎?','🍌',['🍌','🍎','🍇','🍊']),
-      qc('¿Cuál es diferente? 🐶🐶🐱🐶','🐱',['🐱','🐶','🐶','🐶']),
-      qc('2, 4, 6, ¿qué sigue?','8',['8','7','9','10']),
-      qc('Si tengo 3 manzanas y como 1, ¿cuántas quedan?','2',['2','3','1','4']),
-      qc('¿Cuál pesa más: 1 kg de plumas o 1 kg de piedras?','Igual',['Igual','Plumas','Piedras','No sé']),
-      qc('¿Cuál es diferente? 🌟🌟⭐🌟','⭐',['⭐','🌟','🌟','🌟']),
-      qc('1, 3, 5, 7, ¿qué sigue?','9',['9','8','10','11']),
-      qc('¿Cuál es diferente? 🚗🚗🚲🚗','🚲',['🚲','🚗','🚗','🚗']),
-      qc('Si un lápiz cuesta 2 pesos, ¿cuánto cuestan 3 lápices?','6 pesos',['6 pesos','5 pesos','4 pesos','3 pesos'])
-    ],
-    2: [
-      qc('¿Qué se moja al secar?','Una toalla',['Una toalla','El sol','El fuego','Una piedra']),
-      qc('¿Qué tiene cuello pero no cabeza?','Una botella',['Una botella','Un perro','Un árbol','Una mesa']),
-      qc('¿Cuántos meses tienen 28 días?','Todos',['Todos','1','2','Ninguno']),
-      qc('¿Qué sube pero no baja?','La edad',['La edad','Un ascensor','Una pelota','Un pájaro']),
-      qc('Si 5 máquinas hacen 5 artículos en 5 min, 100 máquinas hacen 100 en?','5 min',['5 min','100 min','20 min','50 min']),
-      qc('¿Cuánto es la mitad de 2 más 2?','3',['3','2','4','5']),
-      qc('¿Qué tiene dientes pero no puede morder?','Un peine',['Un peine','Un león','Un tiburón','Un cocodrilo']),
-      qc('¿Qué se rompe al decir su nombre?','El silencio',['El silencio','Un vaso','Un huevo','Una rama']),
-      qc('2, 4, 8, 16, ¿qué sigue?','32',['32','20','24','18']),
-      qc('Si un gallo pone un huevo en la punta del techo, ¿para dónde cae?','Los gallos no ponen huevos',['Los gallos no ponen huevos','Para la izquierda','Para la derecha','Para abajo'])
-    ],
-    3: [
-      qc('Tres gatos en 3 min atrapan 3 ratones. ¿Cuántos gatos para 100 ratones en 100 min?','3',['3','100','33','10']),
-      qc('¿Qué número multiplicado por sí mismo da 49?','7',['7','6','8','9']),
-      qc('¿Cuál es el próximo? 1, 1, 2, 3, 5, 8, ?','13',['13','10','11','12']),
-      qc('¿Qué es lógicamente imposible?','Un cuadrado redondo',['Un cuadrado redondo','Un perro negro','Un día lluvioso','Un gato blanco']),
-      qc('Si todos los gatos son animales y algunos animales vuelan, ¿algunos gatos vuelan?','No se puede saber',['No se puede saber','Sí','No','Ninguno']),
-      qc('¿Qué es un silogismo?','Razonamiento de dos premisas y una conclusión',['Razonamiento de dos premisas y una conclusión','Un error de lógica','Un premio','Un juego de mesa']),
-      qc('¿Cuánto es 15 + 27?','42',['42','32','52','38']),
-      qc('Si ayer fue miércoles, ¿qué día es pasado mañana?','Sábado',['Sábado','Jueves','Viernes','Domingo']),
-      qc('¿Cuál es el próximo? 10, 20, 30, 40, ?','50',['50','45','60','42']),
-      qc('Un padre y un hijo tienen 36 años entre los dos. El padre tiene 30 más que el hijo. ¿Cuántos tiene el hijo?','3 años',['3 años','6 años','10 años','12 años'])
-    ],
-    4: [
-      qc('Si todos los A son B y todos los B son C, entonces...','Todos los A son C',['Todos los A son C','Todos los C son A','Ningún A es C','No se puede saber']),
-      qc('¿Cuánto es 7 × 8?','56',['56','54','64','48']),
-      qc('¿Cuál es el próximo número primo después de 7?','11',['11','9','10','12']),
-      qc('Si un tren recorre 60 km en 1 hora, ¿cuánto recorre en 2 horas y media?','150 km',['150 km','120 km','140 km','160 km']),
-      qc('¿Qué figura tiene 4 lados iguales y 4 ángulos rectos?','Un cuadrado',['Un cuadrado','Un triángulo','Un círculo','Un rectángulo']),
-      qc('Si 3 obreros construyen una pared en 6 horas, ¿cuánto tardan 6 obreros?','3 horas',['3 horas','6 horas','2 horas','12 horas']),
-      qc('¿Cuál es el próximo? 1, 4, 9, 16, 25, ?','36',['36','30','32','49']),
-      qc('Si hoy es martes 15, ¿qué día es el 22?','Martes',['Martes','Miércoles','Jueves','Lunes']),
-      qc('¿Cuántos lados tiene un hexágono?','6',['6','5','7','8']),
-      qc('Si mezclo 2 litros de agua con 3 litros de jugo, ¿cuánto líquido tengo?','5 litros',['5 litros','4 litros','6 litros','3 litros'])
-    ],
-    5: [
-      qc('¿Cuál es el próximo? 2, 6, 12, 20, 30, ?','42',['42','36','40','44']),
-      qc('Si un reloj se atrasa 5 minutos cada hora, ¿cuánto se atrasa en un día?','120 minutos',['120 minutos','60 minutos','100 minutos','24 minutos']),
-      qc('¿Cuánto es (3 + 4) × 2?','14',['14','11','10','18']),
-      qc('Si todos los pianistas son músicos y algunos músicos cantan, entonces...','Algunos pianistas pueden cantar o no',['Algunos pianistas pueden cantar o no','Todos los pianistas cantan','Ningún pianista canta','Todos los cantantes son pianistas']),
-      qc('¿Cuál es el número que sumado con 17 da 42?','25',['25','27','59','35']),
-      qc('Si un libro tiene 120 páginas y leo 15 por día, ¿cuántos días tardo en terminarlo?','8 días',['8 días','7 días','10 días','6 días']),
-      qc('¿Cuál es el próximo? 1, 1, 2, 6, 24, ?','120',['120','48','72','96']),
-      qc('Si la mitad de un número es 15, ¿cuál es el número?','30',['30','7.5','45','60']),
-      qc('¿Cuántos triángulos hay en un triángulo dividido en 4 triángulos pequeños?','5 (4 pequeños + 1 grande)',['5 (4 pequeños + 1 grande)','4','3','6']),
-      qc('Si tengo 5 medias en un cajón (3 negras y 2 blancas), ¿cuántas debo sacar para asegurarme un par del mismo color?','3',['3','2','4','5'])
-    ]
+    1: [qc('¿Qué sigue? 🔴🔵🔴🔵?','🔴',['🔴','🔵','🟢','🟡']), qc('¿Qué sigue? 🍎🍎🍌🍎🍎?','🍌',['🍌','🍎','🍇','🍊']), qc('¿Cuál es diferente? 🐶🐶🐱🐶','🐱',['🐱','🐶','🐶','🐶']), qc('2,4,6,? ¿qué sigue?','8',['8','7','9','10']), qc('Si tengo 3 manzanas y como 1, ¿cuántas quedan?','2',['2','3','1','4']), qc('¿Cuál pesa más? 1 kg de plumas o 1 kg de piedras','Igual',['Igual','Plumas','Piedras','No sé'])],
+    2: [qc('¿Qué se moja al secar?','Una toalla',['Una toalla','El sol','El fuego','Una piedra']), qc('¿Qué tiene cuello pero no cabeza?','Una botella',['Una botella','Un perro','Un árbol','Una mesa']), qc('¿Cuántos meses tienen 28 días?','Todos',['Todos','1','2','Ninguno']), qc('¿Qué sube pero no baja?','La edad',['La edad','Un ascensor','Una pelota','Un pájaro']), qc('Si 5 máquinas hacen 5 artículos en 5 min, 100 máquinas hacen 100 en?','5 min',['5 min','100 min','20 min','50 min']), qc('¿Cuánto es la mitad de 2 más 2?','3',['3','2','4','5'])],
+    3: [qc('Tres gatos en 3 min atrapan 3 ratones. ¿Cuántos para 100 ratones en 100 min?','3',['3','100','33','10']), qc('¿Qué número multiplicado por sí mismo da 49?','7',['7','6','8','9']), qc('¿Cuál es el próximo? 1,1,2,3,5,8,?','13',['13','10','11','12']), qc('¿Qué es lógicamente imposible?','Un cuadrado redondo',['Un cuadrado redondo','Un perro negro','Un día lluvioso','Un gato blanco']), qc('Si todos los gatos son animales y algunos animales vuelan, ¿algunos gatos vuelan?','No se puede saber',['No se puede saber','Sí','No','Ninguno']), qc('¿Qué es un silogismo?','Razonamiento de dos premisas',['Razonamiento de dos premisas','Un error','Un premio','Un juego'])]
   };
-  function genLogica(nivel) {
-    var n = parseInt(nivel, 10);
-    if (isNaN(n) || n < 1) n = 1;
-    if (n > 5) n = 5;
-    return barajar(LOGICA_BANCO[n]).slice(0, 10);
-  }
+  function genLogica(nivel) { return barajar(LOGICA_BANCO[Math.min(nivel, 3)]).slice(0, 8); }
 
   var EMOCIONES = {
     '😊 Sentimientos': banco([
@@ -1840,7 +1599,7 @@
   /* ============================================================
      PROGRAMACIÓN, IA y ROBÓTICA — por niveles
      ============================================================ */
-  function genProgramacion(nivel) { nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
+  function genProgramacion(nivel) {
     if (nivel <= 3) return banco([
       {p:'¿Qué es un algoritmo?',c:'Pasos para resolver algo',opts:['Pasos para resolver algo','Un juego','Un dibujo','Un animal']},
       {p:'¿Qué es un bucle?',c:'Repetir algo muchas veces',opts:['Repetir algo muchas veces','Una sola vez','Nunca','Un color']},
@@ -1873,7 +1632,7 @@
     ], 8);
   }
 
-  function genIA(nivel) { nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
+  function genIA(nivel) {
     if (nivel <= 4) return banco([
       {p:'¿Qué es la inteligencia artificial?',c:'Máquinas que piensan como humanos',opts:['Máquinas que piensan como humanos','Un robot de juguete','Un videojuego','Un idioma']},
       {p:'¿Qué es un robot?',c:'Máquina que hace tareas',opts:['Máquina que hace tareas','Un humano','Un animal','Un juguete de peluche']},
@@ -1896,7 +1655,7 @@
     ], 8);
   }
 
-  function genRobotica(nivel) { nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
+  function genRobotica(nivel) {
     if (nivel <= 4) return banco([
       {p:'¿Qué es un sensor?',c:'Detecta luz, sonido, distancia',opts:['Detecta luz, sonido, distancia','Un motor','Una batería','Un engranaje']},
       {p:'¿Qué hace un motor?',c:'Mueve al robot',opts:['Mueve al robot','Detecta luz','Piensa','Da energía']},
@@ -2055,9 +1814,7 @@
       {id:'sopa',             nombre:'Cazador de Palabras', emoji:'🔤', desc:'Encontrá todas en sopa de letras',xp:150,monedas:75},
       {id:'mision_diaria',    nombre:'Misionero Diario',    emoji:'📋', desc:'Completá una misión diaria',     xp:100, monedas:50},
       {id:'mision_semanal',   nombre:'Misionero Semanal',   emoji:'🗓️', desc:'Completá una misión semanal',    xp:300, monedas:150, gemas:1},
-      {id:'certificado_1',    nombre:'Primer Diploma',      emoji:'📜', desc:'Obtené tu primer certificado',   xp:500, monedas:250, gemas:2},
-      {id:'idioma_550',          nombre:'Polyglota 550',        emoji:'🌐', desc:'Aprendé 550 palabras en un idioma', xp:800, monedas:400, gemas:3},
-      {id:'todos_idiomas_550',   nombre:'Maestro de Idiomas',   emoji:'👑', desc:'Los 5 idiomas con 550 palabras',    xp:3000, monedas:1500, gemas:10}
+      {id:'certificado_1',    nombre:'Primer Diploma',      emoji:'📜', desc:'Obtené tu primer certificado',   xp:500, monedas:250, gemas:2}
     ],
     // Misiones diarias (5, rotan cada día)
     misionesDiarias: [
@@ -2144,9 +1901,7 @@
     {id:'supervivencia2',nombre:'Supervivencia Pro',emoji:'💀', desc:'1 sola vida, ¿cuántas seguís?', tipo:'vidas', nivelRecomendado:'avanzado'},
     {id:'duelo2',      nombre:'Duelo Relámpago',  emoji:'⚡', desc:'Duelo de 60 segundos por jugador', tipo:'duelo', nivelRecomendado:'todos'},
     {id:'cadenafria',  nombre:'Cadena Fría',      emoji:'🔗', desc:'Cada respuesta correcta suma a la cadena', tipo:'cadena', nivelRecomendado:'todos'},
-    {id:'retofinal',   nombre:'Reto Final',       emoji:'🏁', desc:'5 mundos en 1, premio legendario', tipo:'examen', nivelRecomendado:'avanzado'},
-    {id:'aprender',       nombre:'Modo Aprender',      emoji:'🎓', desc:'Flashcards con repetición, sin presión', tipo:'aprender', nivelRecomendado:'todos'},
-    {id:'historiaidioma', nombre:'Historia de Idioma', emoji:'🌍', desc:'Recorrido por categorías de un idioma con certificado', tipo:'idioma', nivelRecomendado:'todos'}
+    {id:'retofinal',   nombre:'Reto Final',       emoji:'🏁', desc:'5 mundos en 1, premio legendario', tipo:'examen', nivelRecomendado:'avanzado'}
   ];
 
   /* ============================================================
@@ -2222,9 +1977,6 @@
   EK.DATOS.arquitectura = ARQUITECTURA;
   EK.DATOS.huerta = HUERTA;
   EK.DATOS.energias = ENERGIAS;
-EK.DATOS.creatividad = CREATIVIDAD;
-EK.DATOS.dibujos = DIBUJOS;
-EK.DATOS.robotica = ROBOTICA;
 
   /* ============================================================
      PREGUNTAS EXTRA — más contenido en TODOS los mundos
@@ -2299,164 +2051,9 @@ EK.DATOS.robotica = ROBOTICA;
     return base;
   };
 
-/* ============================================================ v3.3 — CREATIVIDAD / DIBUJOS PARA COLOREAR (bocetos remarcados para pincel) + ROBÓTICA EXTENDIDA (todo agregado, sin tocar el código original) ============================================================ */
-// Plantillas de dibujo con contorno remarcado (SVG) para que los niños elijan y coloreen con el pincel.
-// Cada una: id, nombre, emoji, categoría, dificultad (1=fácil, 3=difícil) y svg (solo trazos, sin relleno).
-var DIBUJOS = [
-  { id:'guerrero', nombre:'Guerrero de pelo puntiagudo (estilo Goku)', emoji:'🥋', categoria:'Personajes', dificultad:3,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="72" r="30"/><path d="M70 66 L60 30 L82 48 L78 22 L96 44 L100 18 L104 44 L122 22 L118 48 L140 30 L130 66"/><circle cx="90" cy="74" r="3"/><circle cx="110" cy="74" r="3"/><path d="M88 90 Q100 96 112 90"/><path d="M76 104 Q100 112 124 104 L130 150 L70 150 Z"/><path d="M78 118 L52 145 M122 118 L148 145"/><path d="M82 150 L78 185 M118 150 L122 185"/><path d="M70 150 L130 150 L125 160 L75 160 Z"/></svg>' },
-  { id:'nino', nombre:'Niño', emoji:'👦', categoria:'Personajes', dificultad:1,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="65" r="30"/><path d="M70 60 Q72 32 100 32 Q128 32 130 60"/><circle cx="90" cy="65" r="3"/><circle cx="110" cy="65" r="3"/><path d="M90 80 Q100 86 110 80"/><path d="M100 95 L100 148"/><path d="M100 110 L70 138 M100 110 L130 138"/><path d="M100 148 L82 185 M100 148 L118 185"/></svg>' },
-  { id:'nina', nombre:'Niña con trenzas', emoji:'👧', categoria:'Personajes', dificultad:2,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="68" r="30"/><path d="M70 62 Q72 34 100 34 Q128 34 130 62"/><path d="M68 60 Q58 90 64 110 M132 60 Q142 90 136 110"/><path d="M62 110 L58 130 M138 110 L142 130"/><circle cx="90" cy="68" r="3"/><circle cx="110" cy="68" r="3"/><path d="M90 82 Q100 88 110 82"/><path d="M100 98 L100 130"/><path d="M70 175 Q100 120 130 175 Z"/><path d="M100 112 L72 135 M100 112 L128 135"/></svg>' },
-  { id:'princesa', nombre:'Princesa con corona', emoji:'👸', categoria:'Personajes', dificultad:2,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M72 40 L80 20 L92 36 L100 16 L108 36 L120 20 L128 40 Z"/><circle cx="100" cy="72" r="28"/><circle cx="90" cy="70" r="3"/><circle cx="110" cy="70" r="3"/><path d="M88 84 Q100 90 112 84"/><path d="M100 100 L100 128"/><path d="M64 185 Q70 130 100 128 Q130 130 136 185 Z"/><path d="M100 110 L70 132 M100 110 L130 132"/><circle cx="100" cy="28" r="4"/></svg>' },
-  { id:'superheroe', nombre:'Superhéroe con capa', emoji:'🦸', categoria:'Personajes', dificultad:3,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 100 Q50 160 70 185 L100 130 L130 185 Q150 160 140 100"/><circle cx="100" cy="60" r="26"/><path d="M76 52 Q78 30 100 30 Q122 30 124 52"/><path d="M84 60 L116 60 M90 70 L110 70"/><path d="M80 86 Q100 94 120 86"/><path d="M100 86 L100 130"/><path d="M100 100 L72 120 M100 100 L128 120"/><path d="M92 130 L88 180 M108 130 L112 180"/><path d="M92 108 L108 108 L104 120 L96 120 Z"/></svg>' },
-  { id:'dinosaurio', nombre:'Dinosaurio', emoji:'🦕', categoria:'Animales', dificultad:2,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 150 Q20 120 45 105 Q60 80 95 85 Q120 60 145 75 Q165 85 160 110 L170 115 L165 125 L150 120 Q145 145 120 150 L125 175 L112 175 L108 155 L70 155 L66 175 L54 175 L58 155 Q40 155 30 150 Z"/><circle cx="140" cy="92" r="3"/><path d="M95 85 L90 70 M108 82 L106 66 M122 78 L124 62"/><path d="M45 130 L60 130"/></svg>' },
-  { id:'unicornio', nombre:'Unicornio', emoji:'🦄', categoria:'Animales', dificultad:3,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M110 60 L118 30 L128 60 Z"/><path d="M60 140 Q50 110 75 100 Q80 70 115 72 Q140 74 145 95 Q165 90 170 110 Q172 130 155 135 L150 170 L138 170 L136 145 L105 145 L103 170 L91 170 L93 145 L70 145 L68 170 L56 170 L60 145 Q58 143 60 140 Z"/><circle cx="132" cy="92" r="3"/><path d="M75 100 Q60 85 55 70 M82 95 Q70 78 68 62"/><path d="M150 115 Q160 125 158 135"/></svg>' },
-  { id:'mariposa', nombre:'Mariposa', emoji:'🦋', categoria:'Animales', dificultad:1,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="100" cy="100" rx="6" ry="40"/><circle cx="100" cy="58" r="8"/><path d="M96 52 Q80 35 70 45 Q55 55 62 75 Q70 92 96 88 Z"/><path d="M104 52 Q120 35 130 45 Q145 55 138 75 Q130 92 104 88 Z"/><path d="M96 108 Q70 105 58 125 Q52 145 72 152 Q92 155 98 135 Z"/><path d="M104 108 Q130 105 142 125 Q148 145 128 152 Q108 155 102 135 Z"/><path d="M96 50 Q88 38 82 32 M104 50 Q112 38 118 32"/></svg>' },
-  { id:'ballena', nombre:'Ballena', emoji:'🐳', categoria:'Animales', dificultad:1,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 120 Q20 90 55 85 Q90 80 130 95 Q165 105 175 125 Q180 140 160 145 L175 160 L155 155 L150 165 L135 150 Q90 160 50 150 Q25 145 30 120 Z"/><circle cx="60" cy="110" r="4"/><path d="M70 75 Q68 60 75 55 M82 78 Q80 62 88 58"/><path d="M140 120 Q150 118 155 125"/></svg>' },
-  { id:'cohete', nombre:'Cohete espacial', emoji:'🚀', categoria:'Objetos', dificultad:2,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M100 25 Q130 60 130 110 L130 140 L70 140 L70 110 Q70 60 100 25 Z"/><circle cx="100" cy="85" r="14"/><path d="M70 120 L45 155 L70 145 Z M130 120 L155 155 L130 145 Z"/><path d="M85 140 L80 170 L95 155 Z M115 140 L120 170 L105 155 Z M100 140 L100 175 L108 155 Z"/><path d="M100 25 L100 15"/></svg>' },
-  { id:'auto', nombre:'Auto', emoji:'🚗', categoria:'Objetos', dificultad:1,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M35 130 Q40 100 70 95 L85 70 Q90 62 100 62 L130 62 Q140 62 145 72 L155 95 Q175 100 175 130 L175 145 L35 145 Z"/><circle cx="70" cy="145" r="16"/><circle cx="145" cy="145" r="16"/><path d="M92 70 L92 95 L135 95 L140 72 Z"/><rect x="50" y="115" width="20" height="12"/><rect x="140" y="115" width="20" height="12"/></svg>' },
-  { id:'casa', nombre:'Casa', emoji:'🏠', categoria:'Objetos', dificultad:1,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M40 100 L100 45 L160 100 Z"/><rect x="55" y="100" width="90" height="75"/><rect x="90" y="130" width="22" height="45"/><rect x="65" y="112" width="18" height="18"/><rect x="117" y="112" width="18" height="18"/><rect x="130" y="55" width="14" height="25"/><circle cx="108" cy="152" r="2"/></svg>' },
-  { id:'flor', nombre:'Flor', emoji:'🌸', categoria:'Objetos', dificultad:1,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="70" r="16"/><ellipse cx="100" cy="38" rx="14" ry="20"/><ellipse cx="100" cy="102" rx="14" ry="20"/><ellipse cx="68" cy="70" rx="20" ry="14"/><ellipse cx="132" cy="70" rx="20" ry="14"/><ellipse cx="77" cy="47" rx="14" ry="18" transform="rotate(-45 77 47)"/><ellipse cx="123" cy="47" rx="14" ry="18" transform="rotate(45 123 47)"/><ellipse cx="77" cy="93" rx="14" ry="18" transform="rotate(45 77 93)"/><ellipse cx="123" cy="93" rx="14" ry="18" transform="rotate(-45 123 93)"/><path d="M100 86 Q98 130 100 175"/><path d="M100 140 Q75 130 68 110 M100 155 Q125 145 132 125"/></svg>' },
-  { id:'helado', nombre:'Helado', emoji:'🍦', categoria:'Objetos', dificultad:1,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="82" cy="70" r="24"/><circle cx="118" cy="70" r="24"/><circle cx="100" cy="50" r="22"/><path d="M62 88 L100 175 L138 88 Z"/><path d="M72 105 L128 105 M80 125 L120 125 M88 145 L112 145"/><circle cx="100" cy="30" r="5"/></svg>' },
-  { id:'dragon', nombre:'Dragón', emoji:'🐉', categoria:'Objetos', dificultad:3,
-    svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M160 60 Q175 55 172 70 Q165 80 150 78 Q140 95 120 92 Q100 90 95 110 Q90 130 70 135 Q50 140 45 125 Q42 115 55 112 Q65 112 68 120"/><circle cx="155" cy="66" r="3"/><path d="M165 58 L172 48 M150 55 L152 42 M135 60 L130 48"/><path d="M120 92 L115 80 L108 92 M105 100 L100 88 L95 102"/><path d="M45 125 Q30 130 28 145 Q35 155 50 150"/><path d="M70 135 L66 160 L78 155 L82 170 L90 150"/><path d="M150 78 Q160 90 155 100"/></svg>' }
-];
-
-// Banco CREATIVIDAD (colores, formas, trazos, artistas) — antes no existía, por eso "personaje" no tenía función.
-var CREATIVIDAD = {
-  '🎨 Colores y Formas': banco([
-    {p:'¿Cuáles son los colores primarios?',c:'Rojo, amarillo y azul',opts:['Rojo, amarillo y azul','Verde, naranja, violeta','Blanco y negro','Rosa y celeste']},
-    {p:'¿Qué color da rojo + blanco?',c:'Rosa',opts:['Rosa','Naranja','Violeta','Marrón']},
-    {p:'¿Qué forma tiene una pelota?',c:'Redonda (esfera)',opts:['Redonda (esfera)','Cuadrada','Triangular','En forma de estrella']},
-    {p:'¿Cuántos lados tiene un triángulo?',c:'3',opts:['3','4','5','6']},
-    {p:'¿Qué color da azul + amarillo?',c:'Verde',opts:['Verde','Naranja','Violeta','Rosa']},
-    {p:'¿Qué es un boceto?',c:'Un dibujo rápido y sin detalles',opts:['Un dibujo rápido y sin detalles','Una pintura terminada','Una foto','Un escultura']},
-    {p:'¿Con qué se delinea un dibujo para colorear?',c:'Con lápiz negro o fibrona',opts:['Con lápiz negro o fibrona','Con agua','Con tijera','Con pegamento']},
-    {p:'¿Qué es un contorno?',c:'La línea que bordea una figura',opts:['La línea que bordea una figura','El color de adentro','El fondo','Un pincel']}
-  ], 8),
-  '✏️ Trazos y Técnicas': banco([
-    {p:'¿Qué es un trazo recto?',c:'Línea sin curvas',opts:['Línea sin curvas','Línea con curvas','Un punto','Un círculo']},
-    {p:'¿Qué pincel es para pintar áreas grandes?',c:'Pincel grande y plano',opts:['Pincel grande y plano','Pincel finito','Un lápiz','Una esponja']},
-    {p:'¿Qué es colorear sin salirse del borde?',c:'Respetar el contorno',opts:['Respetar el contorno','Pintar el fondo','Rasgar el papel','Usar tijera']},
-    {p:'¿Qué técnica usa puntos de color?',c:'Puntillismo',opts:['Puntillismo','Acuarela','Óleo','Collage']},
-    {p:'¿Qué hace un borrador?',c:'Borra lo dibujado con lápiz',opts:['Borra lo dibujado con lápiz','Pinta','Corta','Pega']},
-    {p:'¿Qué es un garabato?',c:'Trazo libre sin forma definida',opts:['Trazo libre sin forma definida','Un dibujo perfecto','Una foto','Un molde']},
-    {p:'¿Para qué sirven los bordes remarcados?',c:'Para guiarse al colorear',opts:['Para guiarse al colorear','Para borrar','Para cortar','Para pegar']},
-    {p:'¿Qué es la línea curva?',c:'Línea que se dobla suavemente',opts:['Línea que se dobla suavemente','Línea recta','Un punto','Un ángulo']}
-  ], 8),
-  '🖼️ Arte y Dibujos Famosos': banco([
-    {p:'¿Qué pintó Van Gogh con cielo estrellado?',c:'La noche estrellada',opts:['La noche estrellada','El grito','Guernica','Los girasoles solo']},
-    {p:'¿Qué personaje de ficción es amarillo y tiene pelo puntiagudo?',c:'Goku (o Super Saiyajin)',opts:['Goku (o Super Saiyajin)','Batman','La Sirenita','Spider-Man']},
-    {p:'¿Qué princesa vive en un castillo?',c:'Muchas: Cenicienta, Bella, Aurora…',opts:['Muchas: Cenicienta, Bella, Aurora…','Un dinosaurio','Un robot','Un coche']},
-    {p:'¿Qué es un personaje de ficción?',c:'Criatura o persona inventada por el autor',opts:['Criatura o persona inventada por el autor','Una persona real','Un animal del zoo','Un objeto']},
-    {p:'¿Qué color se asocia con una princesa?',c:'Rosa o violeta (comúnmente)',opts:['Rosa o violeta (comúnmente)','Gris','Marrón','Negro']},
-    {p:'¿Qué usan los superhéroes en la espalda?',c:'Capa',opts:['Capa','Alas de verdad','Cola','Aletas']},
-    {p:'¿Qué animal escupe fuego en los cuentos?',c:'Dragón',opts:['Dragón','Perro','Gato','Pez']},
-    {p:'¿Qué es un cómic?',c:'Historia con dibujos y viñetas',opts:['Historia con dibujos y viñetas','Un libro sin imágenes','Una canción','Una escultura']}
-  ], 8)
-};
-
-// Generadores de creatividad (nuevos, no existían)
-function genCreatividad(nivel) {
-  var cats = Object.keys(CREATIVIDAD);
-  var cat = CREATIVIDAD[cats[rand(0, cats.length - 1)]];
-  var base = barajar(cat).slice(0, 6);
-  // Siempre incluye una actividad de dibujo para colorear para elegir personaje
-  base.push({
-    pregunta: '🎨 Elegí un dibujo y colorealo con el pincel',
-    tipo: 'dibujoColorear',
-    emojiPregunta: '🖌️',
-    plantillas: barajar(DIBUJOS).slice(0, 6),
-    correcta: 'dibujo'
-  });
-  return barajar(base);
-}
-function genDibujoColorear(cantidad) {
-  return barajar(DIBUJOS).slice(0, Math.min(cantidad || 8, DIBUJOS.length));
-}
-function genPersonajeColorear() {
-  return barajar(DIBUJOS.filter(function (d) { return d.categoria === 'Personajes'; }));
-}
-
-/* ---------- ROBÓTICA EXTENDIDA (5 categorías nuevas) + wrapper sin romper genRobotica original ---------- */
-var ROBOTICA = {
-  '🔧 Piezas y Mecanismos': banco([
-    {p:'¿Qué transmite movimiento entre ejes?',c:'Engranaje',opts:['Engranaje','Sensor','Batería','Cable']},
-    {p:'¿Qué es una polea?',c:'Rueda con cuerda para levantar cosas',opts:['Rueda con cuerda para levantar cosas','Un sensor','Un motor','Un tornillo']},
-    {p:'¿Qué es una palanca?',c:'Barra que mueve cosas con poco esfuerzo',opts:['Barra que mueve cosas con poco esfuerzo','Un sensor','Una batería','Un engranaje']},
-    {p:'¿Qué motor gira un ángulo exacto?',c:'Servomotor',opts:['Servomotor','Motor común','Sensor','Batería']},
-    {p:'¿Qué es un motor paso a paso?',c:'Gira en pasos pequeños y precisos',opts:['Gira en pasos pequeños y precisos','Enciende una luz','Mide distancia','Es un sensor']},
-    {p:'¿Qué es un actuador?',c:'Pieza que mueve o empuja algo',opts:['Pieza que mueve o empuja algo','Un sensor','Una batería','Un cable']},
-    {p:'¿Qué une piezas y permite girar?',c:'Articulación (eje/ bisagra)',opts:['Articulación (eje/ bisagra)','Pegamento','Sensor','Batería']},
-    {p:'¿Qué es un robot articulado?',c:'Brazo con varias articulaciones',opts:['Brazo con varias articulaciones','Un coche','Un drone fijo','Una pantalla']}
-  ], 8),
-  '🤖 Robots Famosos': banco([
-    {p:'¿Qué robot limpia pisos solo?',c:'Roomba (aspiradora robot)',opts:['Roomba (aspiradora robot)','Un drone','Un robot industrial','Un androide']},
-    {p:'¿Qué robot de Boston Dynamics salta y corre?',c:'Atlas / Spot',opts:['Atlas / Spot','Roomba','Una calculadora','Un televisor']},
-    {p:'¿Qué robot explora Marte?',c:'Rovers (Curiosity, Perseverance)',opts:['Rovers (Curiosity, Perseverance)','Roomba','Un submarino','Un dron de carrera']},
-    {p:'¿Qué es un drone?',c:'Robot volador sin piloto',opts:['Robot volador sin piloto','Un robot con ruedas','Un robot humanoide','Un sensor']},
-    {p:'¿Qué robot es humanoide de Honda?',c:'ASIMO',opts:['ASIMO','Roomba','Spot','Voyager']},
-    {p:'¿Qué brazo robot fabrica autos?',c:'Robot industrial (KUKA, ABB)',opts:['Robot industrial (KUKA, ABB)','Roomba','Un drone','Un juguete']},
-    {p:'¿Qué robot operó por primera vez en el espacio?',c:'Canadarm2 (en la ISS)',opts:['Canadarm2 (en la ISS)','Roomba','Spot','Un coche']},
-    {p:'¿Qué pequeño helicóptero voló en Marte?',c:'Ingenuity',opts:['Ingenuity','Roomba','ASIMO','Voyager']}
-  ], 8),
-  '🧠 Programación y Ética': banco([
-    {p:'¿Cuántas leyes de la robótica propuso Asimov?',c:'3',opts:['3','10','1','5']},
-    {p:'¿Primera ley de Asimov?',c:'Un robot no puede dañar a un humano',opts:['Un robot no puede dañar a un humano','Obedecer siempre','Cuidarse a sí mismo','Cargar batería']},
-    {p:'¿Puede un robot sentir emociones?',c:'No, solo simula',opts:['No, solo simula','Sí, como las personas','Solo los robots grandes','Solo de noche']},
-    {p:'¿Qué es un autómata?',c:'Máquina que sigue instrucciones sola',opts:['Máquina que sigue instrucciones sola','Un animal','Una planta','Una piedra']},
-    {p:'¿Qué es un algoritmo para robots?',c:'Pasos para que el robot actúe',opts:['Pasos para que el robot actúe','Una batería','Un sensor','Una rueda']},
-    {p:'¿Qué es la retroalimentación (feedback)?',c:'El robot usa sensores para corregir',opts:['El robot usa sensores para corregir','Una luz','Un sonido','Un motor']},
-    {p:'¿Quién debe controlar a un robot?',c:'Una persona (programador/usuario)',opts:['Una persona (programador/usuario)','El robot solo','Otro robot','Nadie']},
-    {p:'¿Qué es la IA en un robot?',c:'Programa que le permite decidir',opts:['Programa que le permite decidir','Una batería más grande','Un motor nuevo','Una carcasa']}
-  ], 8),
-  '🚀 Robots en el Espacio': banco([
-    {p:'¿Qué robot explora la superficie de Marte?',c:'Rover',opts:['Rover','Roomba','Submarino','Ascensor']},
-    {p:'¿Qué es la ISS?',c:'Estación Espacial Internacional',opts:['Estación Espacial Internacional','Un robot','Un cohete de juguete','Un planeta']},
-    {p:'¿Qué hace un brazo robot en el espacio?',c:'Mueve satélites y repara',opts:['Mueve satélites y repara','Limpia pisos','Cocina','Pinta cuadros']},
-    {p:'¿Qué es una sonda espacial?',c:'Robot que viaja por el espacio sin tripulación',opts:['Robot que viaja por el espacio sin tripulación','Un avión','Un barco','Un auto']},
-    {p:'¿Qué mide un sensor de luz en un robot?',c:'Intensidad de luz',opts:['Intensidad de luz','Sonido','Temperatura','Distancia']},
-    {p:'¿Cómo se orienta un robot en Marte?',c:'Con cámaras y sensores',opts:['Con cámaras y sensores','Con un mapa de papel','Con olfato','No se orienta']},
-    {p:'¿Qué energía usan los rovers?',c:'Paneles solares / batería nuclear',opts:['Paneles solares / batería nuclear','Nafta','Carbón','Pilas comunes']},
-    {p:'¿Qué es un satélite artificial?',c:'Objeto robot que orbita la Tierra',opts:['Objeto robot que orbita la Tierra','Una estrella','Un planeta','Un cometa']}
-  ], 8),
-  '🦾 Robots que Ayudan (sociales/medicina)': banco([
-    {p:'¿Qué robot ayuda en cirugías?',c:'Da Vinci (brazo quirúrgico)',opts:['Da Vinci (brazo quirúrgico)','Roomba','Un drone','Un juguete']},
-    {p:'¿Qué robot acompaña a personas mayores o niños?',c:'Robot social (Pepper, Paro)',opts:['Robot social (Pepper, Paro)','Roomba','Un taladro','Una heladera']},
-    {p:'¿Qué es una prótesis robótica?',c:'Brazo/pierna artificial que se mueve',opts:['Brazo/pierna artificial que se mueve','Un juguete','Un sensor','Una rueda']},
-    {p:'¿Qué robot entrega medicamentos en hospitales?',c:'Robot de logística/entrega',opts:['Robot de logística/entrega','Roomba','Un drone de carrera','Una radio']},
-    {p:'¿Qué hace un exoesqueleto?',c:'Ayuda a caminar o levantar peso',opts:['Ayuda a caminar o levantar peso','Cocina','Limpia','Vuela']},
-    {p:'¿Pueden los robots ayudar a niños con autismo?',c:'Sí, algunos robots sociales lo hacen',opts:['Sí, algunos robots sociales lo hacen','No, nunca','Solo los robots grandes','Solo de noche']},
-    {p:'¿Qué sensor detecta a una persona cerca?',c:'Sensor de proximidad',opts:['Sensor de proximidad','Motor','Batería','Rueda']},
-    {p:'¿Qué es un robot de asistencia?',c:'Ayuda a personas en tareas diarias',opts:['Ayuda a personas en tareas diarias','Compite en carreras','Solo juega','Solo pinta']}
-  ], 8)
-};
-
-// Extender genRobotica sin romper el original (mismo patrón que genMate)
-var genRoboticaOriginal = genRobotica;
-genRobotica = function (nivel) {
-  var base = genRoboticaOriginal(nivel);
-  var cats = Object.keys(ROBOTICA);
-  var cat = ROBOTICA[cats[Math.min(Math.floor((nivel - 1) / 2), cats.length - 1)]];
-  return barajar(base.concat(cat.slice(0, 3)));
-};
-
   var PRODUCCION = {
-    version: '3.5 SUPER PREMIUM — LÓGICA ARREGLADA + 2 MUNDOS NUEVOS + GENERADORES DEFENSIVOS',
-    totalPalabrasIdioma: 550,
+    version: '3.1 PRODUCCION — 400 PALABRAS',
+    totalPalabrasIdioma: 400,
     totalIdiomas: 5,
     totalMundos: MUNDOS.length,
     totalModosJuego: MODOS_JUEGO.length,
@@ -2468,45 +2065,21 @@ genRobotica = function (nivel) {
     maxPreguntasPorQuiz: 10,
     tiempoPorPreguntaSeg: 30,
     privacidad: 'Todo local en el dispositivo, sin servidores',
-    compatibilidad: 'Chrome, Edge, Firefox, Safari (voz en Chrome/Edge con internet)',
-    totalDibujosColorear: DIBUJOS.length,
-    totalCategoriasRoboticaExtra: 5
+    compatibilidad: 'Chrome, Edge, Firefox, Safari (voz en Chrome/Edge con internet)'
   };
-
-
-  /* ===== SUPER PREMIUM: mundos nuevos ===== */
-  var PUZZLES_BANCO = {
-    1: [qc('¿Cuántos lados tiene un cuadrado?','4',['4','3','5','6']), qc('¿Qué figura tiene 3 lados?','Triángulo',['Triángulo','Cuadrado','Círculo','Rectángulo']), qc('¿Cuál es diferente? 🔴🔵🔴🔵🟢','🟢',['🟢','🔴','🔵','🔴']), qc('Completá: 2, 4, 6, 8, ?','10',['10','9','11','12']), qc('¿Cuántas esquinas tiene un rectángulo?','4',['4','3','5','6']), qc('¿Qué figura no tiene esquinas?','Círculo',['Círculo','Cuadrado','Triángulo','Rectángulo']), qc('¿Cuál es la mitad de 8?','4',['4','2','6','16']), qc('Si un rompecabezas tiene 12 piezas y ya armé 7, ¿cuántas faltan?','5',['5','4','6','3']), qc('¿Cuál es diferente? 🐱🐱🐶🐱','🐶',['🐶','🐱','🐱','🐱']), qc('1, 3, 5, 7, ¿qué sigue?','9',['9','8','10','11'])],
-    2: [qc('¿Cuántos triángulos forman un triángulo dividido en 4?','5 (4 chicos + 1 grande)',['5 (4 chicos + 1 grande)','4','3','6']), qc('Si un sudoku 4x4 tiene 12 números, ¿cuántos faltan completar?','4',['4','3','5','2']), qc('¿Cuál es el próximo? 1, 4, 9, 16, ?','25',['25','20','24','30']), qc('Si tengo 5 figuras y oculto 2, ¿cuántas se ven?','3',['3','2','4','5']), qc('¿Cuántos cubos forman un cubo 2x2x2?','8',['8','4','6','12']), qc('¿Cuál es diferente? 🌟🌟⭐🌟🌟','⭐',['⭐','🌟','🌟','🌟']), qc('Si un tangram tiene 7 piezas y usé 3, ¿cuántas faltan?','4',['4','3','5','2']), qc('10, 20, 30, ¿qué sigue?','40',['40','35','45','50']), qc('¿Cuántos lados tiene un pentágono?','5',['5','4','6','7']), qc('Si un rompecabezas de 20 piezas tiene 3 faltantes, ¿cuántas hay?','17',['17','18','16','15'])],
-    3: [qc('¿Cuántos cuadrados hay en una cuadrícula 2x2?','5 (4 chicos + 1 grande)',['5 (4 chicos + 1 grande)','4','6','3']), qc('¿Cuál es el próximo? 2, 4, 8, 16, ?','32',['32','20','24','28']), qc('Si un sudoku 9x9 tiene 45 números, ¿cuántos faltan?','36',['36','40','30','54']), qc('¿Cuántas diagonales tiene un cuadrado?','2',['2','1','3','4']), qc('¿Cuál es diferente? 🔴🔵🟡🔴🔵','🟡',['🟡','🔴','🔵','🔴']), qc('1, 1, 2, 3, 5, 8, ¿qué sigue?','13',['13','10','11','12']), qc('Si un tangram tiene 7 piezas, ¿cuántas son triangulares?','5',['5','4','6','3']), qc('¿Cuántos lados tiene un octógono?','8',['8','6','7','10']), qc('Si armé 3/4 de un rompecabezas de 40 piezas, ¿cuántas armé?','30',['30','20','25','35']), qc('¿Cuál es el próximo? 1, 8, 27, 64, ?','125',['125','100','81','96'])]
-  };
-  function genPuzzles(nivel) { var n = parseInt(nivel,10); if(isNaN(n)||n<1) n=1; if(n>3) n=3; return barajar(PUZZLES_BANCO[n]).slice(0,10); }
-
-  var EMPRENDIMIENTO_BANCO = {
-    1: [qc('Si vendés una pulsera a 5 pesos y vendés 3, ¿cuánto ganaste?','15 pesos',['15 pesos','8 pesos','10 pesos','12 pesos']), qc('¿Qué es ahorrar?','Guardar dinero para después',['Guardar dinero para después','Gastar todo','Regalarlo','Perderlo']), qc('Si un lápiz cuesta 2 pesos y tenés 10, ¿cuántos podés comprar?','5',['5','4','6','3']), qc('¿Qué es un cliente?','La persona que compra lo que vendés',['La persona que compra lo que vendés','El que fabrica','El que regala','El que roba']), qc('Si hiciste 6 dibujos y vendiste 4, ¿cuántos te quedan?','2',['2','3','1','4']), qc('¿Qué es una ganancia?','Lo que te queda después de restar los gastos',['Lo que te queda después de restar los gastos','Lo que gastas','Lo que perdés','Lo que regalás']), qc('Si una hoja cuesta 1 peso y un lápiz 3, ¿cuánto cuestan los dos?','4 pesos',['4 pesos','3 pesos','5 pesos','2 pesos']), qc('¿Qué es un producto?','Algo que hacés o conseguís para vender',['Algo que hacés o conseguís para vender','Un regalo','Una pérdida','Un amigo']), qc('Si vendés 4 galletas a 2 pesos cada una, ¿cuánto ganaste?','8 pesos',['8 pesos','6 pesos','10 pesos','4 pesos']), qc('¿Qué es mejor: gastar todo o ahorrar un poco?','Ahorrar un poco',['Ahorrar un poco','Gastar todo','Regalar todo','Perderlo'])],
-    2: [qc('Si invertís 10 pesos en materiales y vendés tu producto a 25, ¿cuánto ganaste?','15 pesos',['15 pesos','25 pesos','35 pesos','10 pesos']), qc('¿Qué es un presupuesto?','Planificar cuánto gastar y cuánto ahorrar',['Planificar cuánto gastar y cuánto ahorrar','Gastar sin control','Regalar dinero','Pedir prestado']), qc('Si vendés limonada a 3 pesos el vaso y vendés 12 vasos, ¿cuánto ganaste?','36 pesos',['36 pesos','24 pesos','30 pesos','15 pesos']), qc('¿Qué es la competencia?','Otras personas que venden lo mismo que vos',['Otras personas que venden lo mismo que vos','Tus amigos','Tus clientes','Tus proveedores']), qc('Si un producto te cuesta 5 pesos y lo vendés a 8, ¿cuál es tu ganancia?','3 pesos',['3 pesos','8 pesos','13 pesos','5 pesos']), qc('¿Qué es publicidad?','Decirle a la gente lo que vendés',['Decirle a la gente lo que vendés','Guardar un secreto','Regalar productos','Perder dinero']), qc('Si ahorrás 5 pesos por semana durante 4 semanas, ¿cuánto ahorraste?','20 pesos',['20 pesos','10 pesos','15 pesos','9 pesos']), qc('¿Qué es un descuento?','Vender más barato por tiempo limitado',['Vender más barato por tiempo limitado','Vender más caro','Regalar todo','Cerrar el negocio']), qc('Si vendés 10 stickers a 2 pesos cada uno y gastaste 5 en papel, ¿ganaste?','Sí, 15 pesos',['Sí, 15 pesos','No, perdí','Sí, 20 pesos','No, gané 5']), qc('¿Qué es un proveedor?','Quien te vende los materiales para trabajar',['Quien te vende los materiales para trabajar','Tu cliente','Tu competencia','Tu amigo'])],
-    3: [qc('Si tu negocio gana 50 pesos por día, ¿cuánto ganás en una semana (7 días)?','350 pesos',['350 pesos','300 pesos','400 pesos','250 pesos']), qc('¿Qué es inversión?','Poner dinero hoy para ganar más después',['Poner dinero hoy para ganar más después','Gastar en dulces','Regalar dinero','Guardar bajo el colchón']), qc('Si un producto cuesta 12 y lo vendés con 50% de ganancia, ¿a cuánto lo vendés?','18 pesos',['18 pesos','17 pesos','24 pesos','15 pesos']), qc('¿Qué es un préstamo?','Dinero que te prestan y tenés que devolver',['Dinero que te prestan y tenés que devolver','Un regalo','Una ganancia','Un robo']), qc('Si tenés 100 pesos y gastás 35 en materiales, ¿cuánto te queda?','65 pesos',['65 pesos','75 pesos','55 pesos','135 pesos']), qc('¿Qué es un socio?','Alguien que trabaja con vos y comparte ganancias y gastos',['Alguien que trabaja con vos y comparte ganancias y gastos','Tu cliente','Tu competencia','Un desconocido']), qc('Si vendés 20 productos a 5 pesos cada uno y tus gastos fueron 40, ¿cuál es tu ganancia?','60 pesos',['60 pesos','100 pesos','40 pesos','80 pesos']), qc('¿Qué es meta?','Un objetivo que querés lograr',['Un objetivo que querés lograr','Un problema','Un gasto','Un castigo']), qc('Si ahorrás 10 pesos por mes, ¿cuánto ahorrás en un año (12 meses)?','120 pesos',['120 pesos','100 pesos','110 pesos','60 pesos']), qc('¿Qué es beneficio?','Lo que ganás menos lo que gastaste',['Lo que ganás menos lo que gastaste','Lo que gastaste','Lo que perdiste','Lo que regalaste'])]
-  };
-  function genEmprendimiento(nivel) { var n = parseInt(nivel,10); if(isNaN(n)||n<1) n=1; if(n>3) n=3; return barajar(EMPRENDIMIENTO_BANCO[n]).slice(0,10); }
 
   var Mundos = {
-    version: '3.5 SUPER PREMIUM — LÓGICA ARREGLADA + 2 MUNDOS NUEVOS + GENERADORES DEFENSIVOS',
+    version: '3.1 PRODUCCION — 400 PALABRAS',
     MUNDOS: MUNDOS,
     NIVELES_EDAD: NIVELES_EDAD,
     genMate: genMate, genDinero: genDinero, genVerde: genVerde,
-    genLogica: genLogica, genPuzzles: genPuzzles, genEmprendimiento: genEmprendimiento, genProgramacion: genProgramacion, genIA: genIA, genRobotica: genRobotica,
+    genLogica: genLogica, genProgramacion: genProgramacion, genIA: genIA, genRobotica: genRobotica,
     CIENCIA: CIENCIA, GEOGRAFIA: GEOGRAFIA, LENGUA: LENGUA, SOCIALES: SOCIALES,
     MUSICA: MUSICA, HISTORIA: HISTORIA, EMOCIONES: EMOCIONES, DEPORTES: DEPORTES,
     SALUD: SALUD, ARTE: ARTE, MITOLOGIA: MITOLOGIA, PROFESIONES: PROFESIONES,
     COCINA: COCINA, ASTRONOMIA: ASTRONOMIA, AJEDREZ: AJEDREZ, SEGURIDAD: SEGURIDAD,
     PRIMEROS_AUXILIOS: PRIMEROS_AUXILIOS, ODS: ODS, FILOSOFIA: FILOSOFIA,
-    DANZA: DANZA, CINE: CINE, ARQUITECTURA: ARQUITECTURA, HUERTA: HUERTA,   ENERGIAS: ENERGIAS,
-  CREATIVIDAD: CREATIVIDAD,
-  DIBUJOS: DIBUJOS,
-  ROBOTICA: ROBOTICA,
-  genCreatividad: genCreatividad,
-  genDibujoColorear: genDibujoColorear,
-  genPersonajeColorear: genPersonajeColorear,
+    DANZA: DANZA, CINE: CINE, ARQUITECTURA: ARQUITECTURA, HUERTA: HUERTA, ENERGIAS: ENERGIAS,
     IDIOMAS: IDIOMAS, PALABRAS: PALABRAS, FRASES_AVANZADAS: FRASES_AVANZADAS,
     genQuizIdioma: genQuizIdioma, genQuizEscuchar: genQuizEscuchar,
     SUPERPREMIO: SUPERPREMIO, MODOS_JUEGO: MODOS_JUEGO, EVENTOS: EVENTOS,
@@ -2523,3 +2096,4 @@ genRobotica = function (nivel) {
   window.EK = window.EK || {};
   window.EK.Mundos = Mundos;
 })();
+
