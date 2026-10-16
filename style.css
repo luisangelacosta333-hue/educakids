@@ -940,3 +940,246 @@ input[type="text"]:focus, input[type="search"]:focus {
   .opciones-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
   .app { padding-top: 28px; }
 }
+
+/* ============================================================
+   v4.0 SUPER PREMIUM ADD-ON · Botones flotantes con luz · Fiesta final
+   (Agregado al final — NO toca los selectores originales, solo mejora)
+   ============================================================ */
+:root {
+  --halo-rosa: rgba(255, 61, 127, 0.55);
+  --halo-violeta: rgba(168, 85, 247, 0.5);
+  --halo-oro: rgba(240, 169, 59, 0.6);
+  --grad-arcoiris: conic-gradient(from 0deg, #FF3D7F, #F0A93B, #FFD93D, #0EC48A, #4F6DFE, #A855F7, #FF3D7F);
+}
+
+/* ——— Keyframes nuevos premium ——— */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+@keyframes haloPulse {
+  0%, 100% { box-shadow: 0 7px 0 #B0256B, 0 16px 34px var(--halo-rosa), 0 0 0 0 rgba(255,61,127,.45), inset 0 2px 6px rgba(255,255,255,.45); }
+  50%      { box-shadow: 0 7px 0 #B0256B, 0 18px 42px var(--halo-rosa), 0 0 0 10px rgba(255,61,127,0), inset 0 2px 6px rgba(255,255,255,.45); }
+}
+@keyframes haloPulseGold {
+  0%, 100% { box-shadow: 0 16px 38px var(--halo-oro), 0 0 0 0 rgba(240,169,59,.5), inset 0 4px 12px rgba(255,255,255,.9); }
+  50%      { box-shadow: 0 20px 48px var(--halo-oro), 0 0 0 14px rgba(240,169,59,0), inset 0 4px 12px rgba(255,255,255,.9); }
+}
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  50%      { opacity: 1; transform: scale(1.1) rotate(180deg); }
+}
+@keyframes trofeoSalto {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30%      { transform: translateY(-22px) scale(0.92, 1.12); }
+  55%      { transform: translateY(0) scale(1.15, 0.85); }
+  75%      { transform: translateY(-8px) scale(1, 1); }
+}
+@keyframes rainbowBorder {
+  to { background-position: 300% center; }
+}
+@keyframes glowText {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255,61,127,.6)) drop-shadow(0 6px 16px rgba(168,85,247,.3)); }
+  50%      { filter: drop-shadow(0 0 18px rgba(255,61,127,.9)) drop-shadow(0 6px 20px rgba(240,169,59,.5)); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
+}
+
+/* ——— BOTÓN PRIMARIO: flotando + halo de luz pulsante + anillo arcoíris ——— */
+.btn-pri {
+  animation: floaty 2.8s ease-in-out infinite, haloPulse 2.4s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+/* Anillo de luz arcoíris girando alrededor (solo en hover, para no distraer) */
+.btn-pri::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: var(--grad-arcoiris);
+  filter: blur(10px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.35s var(--smooth);
+  animation: spinSlow 4s linear infinite;
+}
+.btn-pri:hover::before { opacity: 0.85; }
+.btn-pri:hover {
+  animation: none;
+  transform: translateY(-4px) scale(1.04);
+}
+
+/* ——— Botón secundario: halo suave al pasar ——— */
+.btn-sec:hover {
+  box-shadow: 0 8px 0 rgba(190,198,225,0.6), 0 18px 40px var(--halo-violeta), var(--glass-edge);
+}
+
+/* ——— Tarjetas clickeables: luz de borde al pasar (sin romper layout) ——— */
+.mundo-card, .juego-btn, .nivel-btn:not(.lock), .cat-btn, .idioma-btn, .especial-card {
+  position: relative;
+}
+.mundo-card::after, .juego-btn::after, .nivel-btn:not(.lock)::after,
+.cat-btn::after, .idioma-btn::after, .especial-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: var(--grad-arcoiris);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s var(--smooth);
+  pointer-events: none;
+  animation: spinSlow 5s linear infinite;
+}
+.mundo-card:hover::after, .juego-btn:hover::after, .nivel-btn:not(.lock):hover::after,
+.cat-btn:hover::after, .idioma-btn:hover::after, .especial-card:hover::after {
+  opacity: 1;
+}
+
+/* ——— Opciones: halo de color al pasar ——— */
+.opcion-btn:hover:not(:disabled):not(.ok):not(.mal) {
+  box-shadow: 0 12px 0 rgba(190,198,225,0.55), 0 22px 50px var(--halo-violeta), 0 0 0 4px rgba(168,85,247,0.12), var(--glass-edge);
+}
+
+/* ——— Top buttons y back: halo dorado flotante ——— */
+.top-btn, .back-btn, .avatar-btn {
+  animation: floaty 3.2s ease-in-out infinite;
+}
+.top-btn:nth-child(2) { animation-delay: 0.4s; }
+.top-btn:nth-child(3) { animation-delay: 0.8s; }
+.avatar-btn {
+  animation: floaty 2.6s ease-in-out infinite, haloPulseGold 2.8s ease-in-out infinite;
+}
+
+/* ——— Stat pills: brillo sutil ——— */
+.stat-pill {
+  animation: floaty 3.6s ease-in-out infinite;
+}
+.stat-pill:nth-child(2) { animation-delay: 0.5s; }
+.stat-pill:nth-child(3) { animation-delay: 1s; }
+
+/* ============================================================
+   FIESTA FINAL · Premio / fin de juego — máxima diversión
+   ============================================================ */
+.premio-screen {
+  position: relative;
+}
+/* Chispas doradas flotando alrededor del trofeo */
+.premio-card::after {
+  content: '✦  ✧  ✦  ✧  ✦';
+  position: absolute;
+  top: 18px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  letter-spacing: 18px;
+  background: var(--grad-oro);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: sparkle 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+.premio-emoji {
+  font-size: 110px;
+  animation: trofeoSalto 1.4s ease-in-out infinite;
+  display: inline-block;
+  position: relative;
+  filter: drop-shadow(0 0 24px rgba(240,169,59,0.7)) drop-shadow(0 16px 26px rgba(240,169,59,0.4));
+}
+/* Halo arcoíris girando detrás del trofeo */
+.premio-emoji::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 150px; height: 150px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--grad-arcoiris);
+  filter: blur(28px);
+  opacity: 0.55;
+  z-index: -1;
+  animation: spinSlow 6s linear infinite;
+}
+.premio-card h2 {
+  font-size: 38px;
+  animation: glowText 2s ease-in-out infinite;
+  background: linear-gradient(90deg, #FF3D7F, #F0A93B, #FFD93D, #0EC48A, #4F6DFE, #A855F7, #FF3D7F);
+  background-size: 300% auto;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: rainbowBorder 4s linear infinite, glowText 2s ease-in-out infinite;
+}
+.premio-stat {
+  animation: floaty 3s ease-in-out infinite;
+}
+.premio-stat:nth-child(2) { animation-delay: 0.5s; }
+.premio-stat:nth-child(3) { animation-delay: 1s; }
+.unlock-msg, .medalla-nueva {
+  animation: wiggle 0.6s ease-in-out infinite, pop 0.5s var(--bounce);
+}
+/* Botones del premio: más grandes y con halo */
+.premio-btns .btn-pri {
+  padding: 18px 38px;
+  font-size: 18px;
+  animation: floaty 2.4s ease-in-out infinite, haloPulse 2s ease-in-out infinite;
+}
+
+/* ——— Cartas de memoria y celdas: halo al acertar ——— */
+.carta.ok .carta-frente {
+  box-shadow: 0 0 30px var(--ok-glow), 0 0 0 4px rgba(16,185,129,0.25), inset 0 2px 6px rgba(255,255,255,0.7);
+}
+.celda-dif.ok, .clasif-btn.ok {
+  box-shadow: 0 0 30px var(--ok-glow), 0 0 0 4px rgba(16,185,129,0.2);
+}
+
+/* ——— Feedback mensaje: glow ——— */
+.fb-msg.ok { box-shadow: 0 10px 28px var(--ok-glow), 0 0 0 4px rgba(16,185,129,0.15); }
+.fb-msg.mal { box-shadow: 0 10px 28px var(--mal-glow), 0 0 0 4px rgba(244,63,94,0.12); }
+
+/* ——— Atrapa bolas: halo extra ——— */
+.atrapa-bola {
+  position: relative;
+}
+.atrapa-bola::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(14px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* ——— Flashcard: flotación suave ——— */
+.flashcard {
+  animation: floaty 4s ease-in-out infinite;
+}
+
+/* ——— Certificado: brillo dorado pulsante ——— */
+.certificado {
+  animation: haloPulseGold 3s ease-in-out infinite;
+}
+
+/* ——— Nivel actual: glow ——— */
+.nivel-actual {
+  box-shadow: 0 4px 12px var(--acento-glow), 0 0 0 3px rgba(255,61,127,0.2);
+}
+
+/* ——— Progress fill: brillo animado más fuerte ——— */
+.progress-fill {
+  box-shadow: 0 0 22px rgba(236, 72, 153, 0.75), 0 0 8px rgba(255,255,255,0.8) inset;
+}
+
+/* ——— Respeta movimiento reducido ——— */
+@media (prefers-reduced-motion: reduce) {
+  .btn-pri, .top-btn, .back-btn, .avatar-btn, .stat-pill, .premio-emoji,
+  .premio-stat, .flashcard, .certificado, .floaty {
+    animation: none !important;
+  }
+}
