@@ -164,8 +164,8 @@
      ============================================================ */
   var NIVELES_EDAD = {
     inicial:    { rango: '3 a 5 años',  grados: 'Sala de 3, 4 y 5',     mundos: ['creatividad','emociones','profesiones','idiomas','matematicas','juegos','cocina','musica','salud','storybooks'] },
-    primario:   { rango: '6 a 12 años', grados: '1° a 7° grado',        mundos: ['matematicas','lengua','ciencia','geografia','sociales','dinero','verde','idiomas','historia','deportes','arte','mitologia','logica','programacion','robotica','musica','cocina','salud','juegos','storybooks'] },
-    secundario: { rango: '13 a 17 años',grados: 'Ciclo básico y orientado', mundos: ['matematicas','lengua','ciencia','geografia','sociales','historia','ia','programacion','robotica','filosofia','dinero','logica','arte','astronomia','ods','seguridad','primerosauxilios','idiomas','storybooks'] }
+    primario:   { rango: '6 a 12 años', grados: '1° a 7° grado',        mundos: ['matematicas','lengua','ciencia','geografia','sociales','dinero','verde','idiomas','historia','deportes','arte','mitologia','logica','puzzles','emprendimiento','programacion','robotica','musica','cocina','salud','juegos','storybooks'] },
+    secundario: { rango: '13 a 17 años',grados: 'Ciclo básico y orientado', mundos: ['matematicas','lengua','ciencia','geografia','sociales','historia','ia','programacion','robotica','filosofia','dinero','logica','puzzles','emprendimiento','arte','astronomia','ods','seguridad','primerosauxilios','idiomas','storybooks'] }
   };
 
   /* ============================================================
@@ -189,6 +189,8 @@
     { id: 'musica',       nombre: 'Música',         emoji: '🎵', color: '#FF6B6B', tipo: 'categorias',   nivel: 'todos',      desc: 'Notas, instrumentos, ritmos y composición' },
     { id: 'historia',     nombre: 'Historia',       emoji: '📜', color: '#D4A574', tipo: 'categorias',   nivel: 'primario',   desc: 'Prehistoria, Egipto, Edad Media, Argentina' },
     { id: 'logica',       nombre: 'Lógica',         emoji: '🧩', color: '#45B7D1', tipo: 'niveles',      nivel: 'todos',      desc: 'Acertijos, patrones, razonamiento y puzzles' },
+    { id: 'puzzles',      nombre: 'Puzzles y Retos', emoji: '🧩', color: '#96CEB4', tipo: 'niveles',      nivel: 'todos',      desc: 'Sudoku, tangram, diferencias y retos visuales' },
+    { id: 'emprendimiento', nombre: 'Emprendimiento', emoji: '🚀', color: '#FFEAA7', tipo: 'niveles',      nivel: 'primario',   desc: 'Ideas, ahorro, venta y proyectos creativos' },
     { id: 'emociones',    nombre: 'Emociones',      emoji: '❤️', color: '#FF8FA3', tipo: 'categorias',   nivel: 'inicial',    desc: 'Sentimientos, valores y convivencia' },
     { id: 'deportes',     nombre: 'Deportes',       emoji: '⚽', color: '#51CF66', tipo: 'categorias',   nivel: 'todos',      desc: 'Fútbol, olimpiadas, reglas y salud deportiva' },
     { id: 'salud',        nombre: 'Salud',          emoji: '🩺', color: '#FF8787', tipo: 'categorias',   nivel: 'todos',      desc: 'Cuerpo, alimentación, higiene y primeros auxilios' },
@@ -218,6 +220,7 @@
      ============================================================ */
   var EMO = ['🍎','🍌','⭐','🎈','🐶','🌸','🚗','⚽','🦄','🍪','🐱','🌈','🍓','🐸','🎁','🌻'];
   function genMate(nivel) {
+    nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
     var P = [], i, a, b, c, d, em, nn, mm, nums, den, num, x, y, base, exp, lado, n, suma;
     if (nivel === 1) {
       var n1 = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
@@ -327,6 +330,7 @@
      DINERO — 15 NIVELES (Inicial, Primario, Secundario con inversión)
      ============================================================ */
   function genDinero(nivel) {
+    nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
     var P = [], i, a, b, c2, tot, g1, g2, queda, semanas, precio, ahorro;
     if (nivel <= 2) {
       var v1 = [
@@ -432,7 +436,7 @@
       {p:'¿Qué es un parque nacional?',c:'Lugar protegido para la naturaleza',opts:['Lugar protegido para la naturaleza','Un shopping','Un estadio','Una fábrica']},
       {p:'¿Qué es el compost?',c:'Restos de comida que viran abono',opts:['Restos de comida que viran abono','Plástico','Metal','Vidrio']} ]
   ];
-  function genVerde(nivel) { return banco(VERDES[Math.min(nivel - 1, VERDES.length - 1)], 8); }
+  function genVerde(nivel) { var n = parseInt(nivel,10); if(isNaN(n)||n<1) n=1; return banco(VERDES[Math.min(n - 1, VERDES.length - 1)], 8); }
 
   /* ============================================================
      CIENCIA — 10 CATEGORÍAS (más del doble)
@@ -1451,11 +1455,73 @@
   };
 
   var LOGICA_BANCO = {
-    1: [qc('¿Qué sigue? 🔴🔵🔴🔵?','🔴',['🔴','🔵','🟢','🟡']), qc('¿Qué sigue? 🍎🍎🍌🍎🍎?','🍌',['🍌','🍎','🍇','🍊']), qc('¿Cuál es diferente? 🐶🐶🐱🐶','🐱',['🐱','🐶','🐶','🐶']), qc('2,4,6,? ¿qué sigue?','8',['8','7','9','10']), qc('Si tengo 3 manzanas y como 1, ¿cuántas quedan?','2',['2','3','1','4']), qc('¿Cuál pesa más? 1 kg de plumas o 1 kg de piedras','Igual',['Igual','Plumas','Piedras','No sé'])],
-    2: [qc('¿Qué se moja al secar?','Una toalla',['Una toalla','El sol','El fuego','Una piedra']), qc('¿Qué tiene cuello pero no cabeza?','Una botella',['Una botella','Un perro','Un árbol','Una mesa']), qc('¿Cuántos meses tienen 28 días?','Todos',['Todos','1','2','Ninguno']), qc('¿Qué sube pero no baja?','La edad',['La edad','Un ascensor','Una pelota','Un pájaro']), qc('Si 5 máquinas hacen 5 artículos en 5 min, 100 máquinas hacen 100 en?','5 min',['5 min','100 min','20 min','50 min']), qc('¿Cuánto es la mitad de 2 más 2?','3',['3','2','4','5'])],
-    3: [qc('Tres gatos en 3 min atrapan 3 ratones. ¿Cuántos para 100 ratones en 100 min?','3',['3','100','33','10']), qc('¿Qué número multiplicado por sí mismo da 49?','7',['7','6','8','9']), qc('¿Cuál es el próximo? 1,1,2,3,5,8,?','13',['13','10','11','12']), qc('¿Qué es lógicamente imposible?','Un cuadrado redondo',['Un cuadrado redondo','Un perro negro','Un día lluvioso','Un gato blanco']), qc('Si todos los gatos son animales y algunos animales vuelan, ¿algunos gatos vuelan?','No se puede saber',['No se puede saber','Sí','No','Ninguno']), qc('¿Qué es un silogismo?','Razonamiento de dos premisas',['Razonamiento de dos premisas','Un error','Un premio','Un juego'])]
+    1: [
+      qc('¿Qué sigue? 🔴🔵🔴🔵?','🔴',['🔴','🔵','🟢','🟡']),
+      qc('¿Qué sigue? 🍎🍎🍌🍎🍎?','🍌',['🍌','🍎','🍇','🍊']),
+      qc('¿Cuál es diferente? 🐶🐶🐱🐶','🐱',['🐱','🐶','🐶','🐶']),
+      qc('2, 4, 6, ¿qué sigue?','8',['8','7','9','10']),
+      qc('Si tengo 3 manzanas y como 1, ¿cuántas quedan?','2',['2','3','1','4']),
+      qc('¿Cuál pesa más: 1 kg de plumas o 1 kg de piedras?','Igual',['Igual','Plumas','Piedras','No sé']),
+      qc('¿Cuál es diferente? 🌟🌟⭐🌟','⭐',['⭐','🌟','🌟','🌟']),
+      qc('1, 3, 5, 7, ¿qué sigue?','9',['9','8','10','11']),
+      qc('¿Cuál es diferente? 🚗🚗🚲🚗','🚲',['🚲','🚗','🚗','🚗']),
+      qc('Si un lápiz cuesta 2 pesos, ¿cuánto cuestan 3 lápices?','6 pesos',['6 pesos','5 pesos','4 pesos','3 pesos'])
+    ],
+    2: [
+      qc('¿Qué se moja al secar?','Una toalla',['Una toalla','El sol','El fuego','Una piedra']),
+      qc('¿Qué tiene cuello pero no cabeza?','Una botella',['Una botella','Un perro','Un árbol','Una mesa']),
+      qc('¿Cuántos meses tienen 28 días?','Todos',['Todos','1','2','Ninguno']),
+      qc('¿Qué sube pero no baja?','La edad',['La edad','Un ascensor','Una pelota','Un pájaro']),
+      qc('Si 5 máquinas hacen 5 artículos en 5 min, 100 máquinas hacen 100 en?','5 min',['5 min','100 min','20 min','50 min']),
+      qc('¿Cuánto es la mitad de 2 más 2?','3',['3','2','4','5']),
+      qc('¿Qué tiene dientes pero no puede morder?','Un peine',['Un peine','Un león','Un tiburón','Un cocodrilo']),
+      qc('¿Qué se rompe al decir su nombre?','El silencio',['El silencio','Un vaso','Un huevo','Una rama']),
+      qc('2, 4, 8, 16, ¿qué sigue?','32',['32','20','24','18']),
+      qc('Si un gallo pone un huevo en la punta del techo, ¿para dónde cae?','Los gallos no ponen huevos',['Los gallos no ponen huevos','Para la izquierda','Para la derecha','Para abajo'])
+    ],
+    3: [
+      qc('Tres gatos en 3 min atrapan 3 ratones. ¿Cuántos gatos para 100 ratones en 100 min?','3',['3','100','33','10']),
+      qc('¿Qué número multiplicado por sí mismo da 49?','7',['7','6','8','9']),
+      qc('¿Cuál es el próximo? 1, 1, 2, 3, 5, 8, ?','13',['13','10','11','12']),
+      qc('¿Qué es lógicamente imposible?','Un cuadrado redondo',['Un cuadrado redondo','Un perro negro','Un día lluvioso','Un gato blanco']),
+      qc('Si todos los gatos son animales y algunos animales vuelan, ¿algunos gatos vuelan?','No se puede saber',['No se puede saber','Sí','No','Ninguno']),
+      qc('¿Qué es un silogismo?','Razonamiento de dos premisas y una conclusión',['Razonamiento de dos premisas y una conclusión','Un error de lógica','Un premio','Un juego de mesa']),
+      qc('¿Cuánto es 15 + 27?','42',['42','32','52','38']),
+      qc('Si ayer fue miércoles, ¿qué día es pasado mañana?','Sábado',['Sábado','Jueves','Viernes','Domingo']),
+      qc('¿Cuál es el próximo? 10, 20, 30, 40, ?','50',['50','45','60','42']),
+      qc('Un padre y un hijo tienen 36 años entre los dos. El padre tiene 30 más que el hijo. ¿Cuántos tiene el hijo?','3 años',['3 años','6 años','10 años','12 años'])
+    ],
+    4: [
+      qc('Si todos los A son B y todos los B son C, entonces...','Todos los A son C',['Todos los A son C','Todos los C son A','Ningún A es C','No se puede saber']),
+      qc('¿Cuánto es 7 × 8?','56',['56','54','64','48']),
+      qc('¿Cuál es el próximo número primo después de 7?','11',['11','9','10','12']),
+      qc('Si un tren recorre 60 km en 1 hora, ¿cuánto recorre en 2 horas y media?','150 km',['150 km','120 km','140 km','160 km']),
+      qc('¿Qué figura tiene 4 lados iguales y 4 ángulos rectos?','Un cuadrado',['Un cuadrado','Un triángulo','Un círculo','Un rectángulo']),
+      qc('Si 3 obreros construyen una pared en 6 horas, ¿cuánto tardan 6 obreros?','3 horas',['3 horas','6 horas','2 horas','12 horas']),
+      qc('¿Cuál es el próximo? 1, 4, 9, 16, 25, ?','36',['36','30','32','49']),
+      qc('Si hoy es martes 15, ¿qué día es el 22?','Martes',['Martes','Miércoles','Jueves','Lunes']),
+      qc('¿Cuántos lados tiene un hexágono?','6',['6','5','7','8']),
+      qc('Si mezclo 2 litros de agua con 3 litros de jugo, ¿cuánto líquido tengo?','5 litros',['5 litros','4 litros','6 litros','3 litros'])
+    ],
+    5: [
+      qc('¿Cuál es el próximo? 2, 6, 12, 20, 30, ?','42',['42','36','40','44']),
+      qc('Si un reloj se atrasa 5 minutos cada hora, ¿cuánto se atrasa en un día?','120 minutos',['120 minutos','60 minutos','100 minutos','24 minutos']),
+      qc('¿Cuánto es (3 + 4) × 2?','14',['14','11','10','18']),
+      qc('Si todos los pianistas son músicos y algunos músicos cantan, entonces...','Algunos pianistas pueden cantar o no',['Algunos pianistas pueden cantar o no','Todos los pianistas cantan','Ningún pianista canta','Todos los cantantes son pianistas']),
+      qc('¿Cuál es el número que sumado con 17 da 42?','25',['25','27','59','35']),
+      qc('Si un libro tiene 120 páginas y leo 15 por día, ¿cuántos días tardo en terminarlo?','8 días',['8 días','7 días','10 días','6 días']),
+      qc('¿Cuál es el próximo? 1, 1, 2, 6, 24, ?','120',['120','48','72','96']),
+      qc('Si la mitad de un número es 15, ¿cuál es el número?','30',['30','7.5','45','60']),
+      qc('¿Cuántos triángulos hay en un triángulo dividido en 4 triángulos pequeños?','5 (4 pequeños + 1 grande)',['5 (4 pequeños + 1 grande)','4','3','6']),
+      qc('Si tengo 5 medias en un cajón (3 negras y 2 blancas), ¿cuántas debo sacar para asegurarme un par del mismo color?','3',['3','2','4','5'])
+    ]
   };
-  function genLogica(nivel) { return barajar(LOGICA_BANCO[Math.min(nivel, 3)]).slice(0, 8); }
+  function genLogica(nivel) {
+    var n = parseInt(nivel, 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 5) n = 5;
+    return barajar(LOGICA_BANCO[n]).slice(0, 10);
+  }
 
   var EMOCIONES = {
     '😊 Sentimientos': banco([
@@ -1774,7 +1840,7 @@
   /* ============================================================
      PROGRAMACIÓN, IA y ROBÓTICA — por niveles
      ============================================================ */
-  function genProgramacion(nivel) {
+  function genProgramacion(nivel) { nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
     if (nivel <= 3) return banco([
       {p:'¿Qué es un algoritmo?',c:'Pasos para resolver algo',opts:['Pasos para resolver algo','Un juego','Un dibujo','Un animal']},
       {p:'¿Qué es un bucle?',c:'Repetir algo muchas veces',opts:['Repetir algo muchas veces','Una sola vez','Nunca','Un color']},
@@ -1807,7 +1873,7 @@
     ], 8);
   }
 
-  function genIA(nivel) {
+  function genIA(nivel) { nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
     if (nivel <= 4) return banco([
       {p:'¿Qué es la inteligencia artificial?',c:'Máquinas que piensan como humanos',opts:['Máquinas que piensan como humanos','Un robot de juguete','Un videojuego','Un idioma']},
       {p:'¿Qué es un robot?',c:'Máquina que hace tareas',opts:['Máquina que hace tareas','Un humano','Un animal','Un juguete de peluche']},
@@ -1830,7 +1896,7 @@
     ], 8);
   }
 
-  function genRobotica(nivel) {
+  function genRobotica(nivel) { nivel = parseInt(nivel,10); if(isNaN(nivel)||nivel<1) nivel=1;
     if (nivel <= 4) return banco([
       {p:'¿Qué es un sensor?',c:'Detecta luz, sonido, distancia',opts:['Detecta luz, sonido, distancia','Un motor','Una batería','Un engranaje']},
       {p:'¿Qué hace un motor?',c:'Mueve al robot',opts:['Mueve al robot','Detecta luz','Piensa','Da energía']},
@@ -2389,7 +2455,7 @@ genRobotica = function (nivel) {
 };
 
   var PRODUCCION = {
-    version: '3.4 PRODUCCION — 550 PALABRAS + DIBUJOS + STORYBOOKS BILINGÜES',
+    version: '3.5 SUPER PREMIUM — LÓGICA ARREGLADA + 2 MUNDOS NUEVOS + GENERADORES DEFENSIVOS',
     totalPalabrasIdioma: 550,
     totalIdiomas: 5,
     totalMundos: MUNDOS.length,
@@ -2407,12 +2473,28 @@ genRobotica = function (nivel) {
     totalCategoriasRoboticaExtra: 5
   };
 
+
+  /* ===== SUPER PREMIUM: mundos nuevos ===== */
+  var PUZZLES_BANCO = {
+    1: [qc('¿Cuántos lados tiene un cuadrado?','4',['4','3','5','6']), qc('¿Qué figura tiene 3 lados?','Triángulo',['Triángulo','Cuadrado','Círculo','Rectángulo']), qc('¿Cuál es diferente? 🔴🔵🔴🔵🟢','🟢',['🟢','🔴','🔵','🔴']), qc('Completá: 2, 4, 6, 8, ?','10',['10','9','11','12']), qc('¿Cuántas esquinas tiene un rectángulo?','4',['4','3','5','6']), qc('¿Qué figura no tiene esquinas?','Círculo',['Círculo','Cuadrado','Triángulo','Rectángulo']), qc('¿Cuál es la mitad de 8?','4',['4','2','6','16']), qc('Si un rompecabezas tiene 12 piezas y ya armé 7, ¿cuántas faltan?','5',['5','4','6','3']), qc('¿Cuál es diferente? 🐱🐱🐶🐱','🐶',['🐶','🐱','🐱','🐱']), qc('1, 3, 5, 7, ¿qué sigue?','9',['9','8','10','11'])],
+    2: [qc('¿Cuántos triángulos forman un triángulo dividido en 4?','5 (4 chicos + 1 grande)',['5 (4 chicos + 1 grande)','4','3','6']), qc('Si un sudoku 4x4 tiene 12 números, ¿cuántos faltan completar?','4',['4','3','5','2']), qc('¿Cuál es el próximo? 1, 4, 9, 16, ?','25',['25','20','24','30']), qc('Si tengo 5 figuras y oculto 2, ¿cuántas se ven?','3',['3','2','4','5']), qc('¿Cuántos cubos forman un cubo 2x2x2?','8',['8','4','6','12']), qc('¿Cuál es diferente? 🌟🌟⭐🌟🌟','⭐',['⭐','🌟','🌟','🌟']), qc('Si un tangram tiene 7 piezas y usé 3, ¿cuántas faltan?','4',['4','3','5','2']), qc('10, 20, 30, ¿qué sigue?','40',['40','35','45','50']), qc('¿Cuántos lados tiene un pentágono?','5',['5','4','6','7']), qc('Si un rompecabezas de 20 piezas tiene 3 faltantes, ¿cuántas hay?','17',['17','18','16','15'])],
+    3: [qc('¿Cuántos cuadrados hay en una cuadrícula 2x2?','5 (4 chicos + 1 grande)',['5 (4 chicos + 1 grande)','4','6','3']), qc('¿Cuál es el próximo? 2, 4, 8, 16, ?','32',['32','20','24','28']), qc('Si un sudoku 9x9 tiene 45 números, ¿cuántos faltan?','36',['36','40','30','54']), qc('¿Cuántas diagonales tiene un cuadrado?','2',['2','1','3','4']), qc('¿Cuál es diferente? 🔴🔵🟡🔴🔵','🟡',['🟡','🔴','🔵','🔴']), qc('1, 1, 2, 3, 5, 8, ¿qué sigue?','13',['13','10','11','12']), qc('Si un tangram tiene 7 piezas, ¿cuántas son triangulares?','5',['5','4','6','3']), qc('¿Cuántos lados tiene un octógono?','8',['8','6','7','10']), qc('Si armé 3/4 de un rompecabezas de 40 piezas, ¿cuántas armé?','30',['30','20','25','35']), qc('¿Cuál es el próximo? 1, 8, 27, 64, ?','125',['125','100','81','96'])]
+  };
+  function genPuzzles(nivel) { var n = parseInt(nivel,10); if(isNaN(n)||n<1) n=1; if(n>3) n=3; return barajar(PUZZLES_BANCO[n]).slice(0,10); }
+
+  var EMPRENDIMIENTO_BANCO = {
+    1: [qc('Si vendés una pulsera a 5 pesos y vendés 3, ¿cuánto ganaste?','15 pesos',['15 pesos','8 pesos','10 pesos','12 pesos']), qc('¿Qué es ahorrar?','Guardar dinero para después',['Guardar dinero para después','Gastar todo','Regalarlo','Perderlo']), qc('Si un lápiz cuesta 2 pesos y tenés 10, ¿cuántos podés comprar?','5',['5','4','6','3']), qc('¿Qué es un cliente?','La persona que compra lo que vendés',['La persona que compra lo que vendés','El que fabrica','El que regala','El que roba']), qc('Si hiciste 6 dibujos y vendiste 4, ¿cuántos te quedan?','2',['2','3','1','4']), qc('¿Qué es una ganancia?','Lo que te queda después de restar los gastos',['Lo que te queda después de restar los gastos','Lo que gastas','Lo que perdés','Lo que regalás']), qc('Si una hoja cuesta 1 peso y un lápiz 3, ¿cuánto cuestan los dos?','4 pesos',['4 pesos','3 pesos','5 pesos','2 pesos']), qc('¿Qué es un producto?','Algo que hacés o conseguís para vender',['Algo que hacés o conseguís para vender','Un regalo','Una pérdida','Un amigo']), qc('Si vendés 4 galletas a 2 pesos cada una, ¿cuánto ganaste?','8 pesos',['8 pesos','6 pesos','10 pesos','4 pesos']), qc('¿Qué es mejor: gastar todo o ahorrar un poco?','Ahorrar un poco',['Ahorrar un poco','Gastar todo','Regalar todo','Perderlo'])],
+    2: [qc('Si invertís 10 pesos en materiales y vendés tu producto a 25, ¿cuánto ganaste?','15 pesos',['15 pesos','25 pesos','35 pesos','10 pesos']), qc('¿Qué es un presupuesto?','Planificar cuánto gastar y cuánto ahorrar',['Planificar cuánto gastar y cuánto ahorrar','Gastar sin control','Regalar dinero','Pedir prestado']), qc('Si vendés limonada a 3 pesos el vaso y vendés 12 vasos, ¿cuánto ganaste?','36 pesos',['36 pesos','24 pesos','30 pesos','15 pesos']), qc('¿Qué es la competencia?','Otras personas que venden lo mismo que vos',['Otras personas que venden lo mismo que vos','Tus amigos','Tus clientes','Tus proveedores']), qc('Si un producto te cuesta 5 pesos y lo vendés a 8, ¿cuál es tu ganancia?','3 pesos',['3 pesos','8 pesos','13 pesos','5 pesos']), qc('¿Qué es publicidad?','Decirle a la gente lo que vendés',['Decirle a la gente lo que vendés','Guardar un secreto','Regalar productos','Perder dinero']), qc('Si ahorrás 5 pesos por semana durante 4 semanas, ¿cuánto ahorraste?','20 pesos',['20 pesos','10 pesos','15 pesos','9 pesos']), qc('¿Qué es un descuento?','Vender más barato por tiempo limitado',['Vender más barato por tiempo limitado','Vender más caro','Regalar todo','Cerrar el negocio']), qc('Si vendés 10 stickers a 2 pesos cada uno y gastaste 5 en papel, ¿ganaste?','Sí, 15 pesos',['Sí, 15 pesos','No, perdí','Sí, 20 pesos','No, gané 5']), qc('¿Qué es un proveedor?','Quien te vende los materiales para trabajar',['Quien te vende los materiales para trabajar','Tu cliente','Tu competencia','Tu amigo'])],
+    3: [qc('Si tu negocio gana 50 pesos por día, ¿cuánto ganás en una semana (7 días)?','350 pesos',['350 pesos','300 pesos','400 pesos','250 pesos']), qc('¿Qué es inversión?','Poner dinero hoy para ganar más después',['Poner dinero hoy para ganar más después','Gastar en dulces','Regalar dinero','Guardar bajo el colchón']), qc('Si un producto cuesta 12 y lo vendés con 50% de ganancia, ¿a cuánto lo vendés?','18 pesos',['18 pesos','17 pesos','24 pesos','15 pesos']), qc('¿Qué es un préstamo?','Dinero que te prestan y tenés que devolver',['Dinero que te prestan y tenés que devolver','Un regalo','Una ganancia','Un robo']), qc('Si tenés 100 pesos y gastás 35 en materiales, ¿cuánto te queda?','65 pesos',['65 pesos','75 pesos','55 pesos','135 pesos']), qc('¿Qué es un socio?','Alguien que trabaja con vos y comparte ganancias y gastos',['Alguien que trabaja con vos y comparte ganancias y gastos','Tu cliente','Tu competencia','Un desconocido']), qc('Si vendés 20 productos a 5 pesos cada uno y tus gastos fueron 40, ¿cuál es tu ganancia?','60 pesos',['60 pesos','100 pesos','40 pesos','80 pesos']), qc('¿Qué es meta?','Un objetivo que querés lograr',['Un objetivo que querés lograr','Un problema','Un gasto','Un castigo']), qc('Si ahorrás 10 pesos por mes, ¿cuánto ahorrás en un año (12 meses)?','120 pesos',['120 pesos','100 pesos','110 pesos','60 pesos']), qc('¿Qué es beneficio?','Lo que ganás menos lo que gastaste',['Lo que ganás menos lo que gastaste','Lo que gastaste','Lo que perdiste','Lo que regalaste'])]
+  };
+  function genEmprendimiento(nivel) { var n = parseInt(nivel,10); if(isNaN(n)||n<1) n=1; if(n>3) n=3; return barajar(EMPRENDIMIENTO_BANCO[n]).slice(0,10); }
+
   var Mundos = {
-    version: '3.4 PRODUCCION — 550 PALABRAS + DIBUJOS + STORYBOOKS BILINGÜES',
+    version: '3.5 SUPER PREMIUM — LÓGICA ARREGLADA + 2 MUNDOS NUEVOS + GENERADORES DEFENSIVOS',
     MUNDOS: MUNDOS,
     NIVELES_EDAD: NIVELES_EDAD,
     genMate: genMate, genDinero: genDinero, genVerde: genVerde,
-    genLogica: genLogica, genProgramacion: genProgramacion, genIA: genIA, genRobotica: genRobotica,
+    genLogica: genLogica, genPuzzles: genPuzzles, genEmprendimiento: genEmprendimiento, genProgramacion: genProgramacion, genIA: genIA, genRobotica: genRobotica,
     CIENCIA: CIENCIA, GEOGRAFIA: GEOGRAFIA, LENGUA: LENGUA, SOCIALES: SOCIALES,
     MUSICA: MUSICA, HISTORIA: HISTORIA, EMOCIONES: EMOCIONES, DEPORTES: DEPORTES,
     SALUD: SALUD, ARTE: ARTE, MITOLOGIA: MITOLOGIA, PROFESIONES: PROFESIONES,
